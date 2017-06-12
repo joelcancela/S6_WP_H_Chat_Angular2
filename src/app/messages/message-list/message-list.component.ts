@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import {Component, HostListener, OnInit} from "@angular/core";
 
-import { MessageService } from "../../../shared/services";
-import { MessageModel } from "../../../shared/models/MessageModel";
+import {MessageService} from "../../../shared/services";
+import {MessageModel} from "../../../shared/models/MessageModel";
 import {ChannelService} from "../../../shared/services/channel/channel.service";
 
 @Component({
@@ -13,9 +13,12 @@ export class MessageListComponent implements OnInit {
 
   public messageList: MessageModel[];
   private route: string;
+  private lastScrollTop = 0;
+  private maxPage = 0;
 
   constructor(private messageService: MessageService, private channelService: ChannelService){
     this.route = this.channelService.currentChannelID+"/messages";
+    window.onscroll = () => this.onScroll();
     // this.refreshMessages();
   }
 
@@ -39,4 +42,15 @@ export class MessageListComponent implements OnInit {
   //     this.refreshMessages();
   //   }, 2000);
   // }
+
+
+  @HostListener("window:scroll", [])
+  private onScroll(): void {
+    console.log("detected scroll");
+    const st = window.pageYOffset;
+    if (st === 0) {
+      // this.messageService.getHistory(this.route, this.maxPage);
+    }
+    this.lastScrollTop = st;
+  };
 }
