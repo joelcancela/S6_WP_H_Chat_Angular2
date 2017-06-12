@@ -3,5 +3,7 @@
   From: <strong>{{message.from}}</strong>
 </p>
 <div *ngIf="message.imgUrl">
-  <img [src]="message.imgUrl">
+  <a href={{message.imgUrl}} target="_blank">
+    <img [src]="message.imgUrl">
+  </a>
 </div>

@@ -103,12 +103,8 @@ export class MessageService {
     for (let i = 0; i < messageList.length; i++) {
       const imgUrl = this.extractImgUrl(messageList[i].content);
       console.log("url: " + imgUrl);
-      if (imgUrl != null) {
-        messageList[i].url = imgUrl;
-        console.log(messageList[i].url);
-      }
+      messageList[i].imgUrl = imgUrl;
     }
-    //
     // messageList prendra la valeur tableau vide: [];
     this.messageList$.next(messageList); // On pousse les nouvelles données dans l'attribut messageList$
   }

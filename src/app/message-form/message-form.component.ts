@@ -39,6 +39,6 @@ export class MessageFormComponent implements OnInit {
     setTimeout(() => {
       this.messageService.getMessages(this.route);
       this.refreshMessages();
-    }, 2000);
+    }, 10000000);
   }
 }
