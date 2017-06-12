@@ -69,6 +69,8 @@ export class MessageService {
       (response) => {
         /* this function is executed every time there's a new output */
         console.log("VALUE RECEIVED: " + response);
+        console.log(response);
+        this.extractMessageAndGetMessages(response, route);
       },
       (err) => {
         /* this function is executed when there's an ERROR */
@@ -112,7 +114,7 @@ export class MessageService {
    * @returns {any|{}}
    */
   private extractMessageAndGetMessages(response: Response, route: string): MessageModel {
-    // Je suis vide aussi ...
-    return new MessageModel(); // A remplacer ! On retourne ici un messageModel vide seulement pour que Typescript ne lève pas d'erreur !
+    this.getMessages(route);
+    return response.json(); // A remplacer ! On retourne ici un messageModel vide seulement pour que Typescript ne lève pas d'erreur !
   }
 }
