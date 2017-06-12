@@ -35,12 +35,18 @@ export class MessageModel {
    */
   public threadId: number;
 
-  constructor(id?: number, content?: string, from?: string, createdAt?: string, updatedAt?: string, threadId?: number) {
+  /**
+   * Contient l'url vers l'image
+   */
+  public imgUrl: string;
+
+  constructor(id?: number, content?: string, from?: string, createdAt?: string, updatedAt?: string, threadId?: number, imgUrl?: string) {
     this.id = id;
     this.content = content;
     this.from = from;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.threadId =  threadId;
+    this.imgUrl = imgUrl;
   }
 }
