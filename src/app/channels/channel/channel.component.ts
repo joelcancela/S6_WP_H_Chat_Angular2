@@ -30,5 +30,9 @@ export class ChannelComponent implements OnInit {
     }
   }
 
+  addChannel(name: string){//TODO
+    this.channelService.addChannel(name);
+  }
+
 
 }
