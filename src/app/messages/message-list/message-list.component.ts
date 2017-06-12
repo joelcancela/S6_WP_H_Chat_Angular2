@@ -36,13 +36,6 @@ export class MessageListComponent implements OnInit {
     this.messageService.messageList$.subscribe((messages) => this.messageList = messages);
   }
 
-  // refreshMessages() {
-  //   setTimeout(() => {
-  //     this.messageService.getMessages(this.route);
-  //     this.refreshMessages();
-  //   }, 2000);
-  // }
-
 
   @HostListener("window:scroll", [])
   private onScroll(): void {
