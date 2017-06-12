@@ -1,12 +1,12 @@
-import { Injectable } from "@angular/core";
-import { Http, RequestOptions, Response } from "@angular/http";
-import { Observable } from "rxjs/Observable";
-
+import {Injectable} from "@angular/core";
+import {Http, RequestOptions, Response} from "@angular/http";
+import {Observable} from "rxjs/Observable";
+import {Headers} from "@angular/http";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
-import { MessageModel } from "../../models/MessageModel";
-import { ReplaySubject } from "rxjs/ReplaySubject";
-import { URLSERVER } from "shared/constants/urls";
+import {MessageModel} from "../../models/MessageModel";
+import {ReplaySubject} from "rxjs/ReplaySubject";
+import {URLSERVER} from "shared/constants/urls";
 
 @Injectable()
 export class MessageService {
@@ -61,6 +61,26 @@ export class MessageService {
    * @param message
    */
   public sendMessage(route: string, message: MessageModel) {
+    console.log(this.url + route);
+    let headers = new Headers({"Content-Type": "application/json"});
+    let options = new RequestOptions({headers: headers});
+    console.log(message);
+    let answer = this.http.post(this.url + route, message, options).map((res: Response) => res.json()).subscribe(
+      (response) => {
+        /* this function is executed every time there's a new output */
+        console.log("VALUE RECEIVED: " + response);
+      },
+      (err) => {
+        /* this function is executed when there's an ERROR */
+        console.log("ERROR: " + err);
+      },
+      () => {
+        /* this function is executed when the observable ends (completes) its stream */
+        console.log("COMPLETED");
+      }
+    );
+    console.log(answer);
+    console.log("message sent");
     // Je suis vide :(
     // Tu peux trouver des infos sur moi dans le README !
   }
