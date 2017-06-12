@@ -31,13 +31,6 @@ export class MessageListComponent implements OnInit {
   ngOnInit() {
     this.messageService.getMessages(this.route);
     this.messageService.messageList$.subscribe((messages) => this.messageList = messages);
-    this.channelService.getChannelNumber().subscribe((number) => this.updateMessageBoard(number));
-  }
-
-  private updateMessageBoard(number: number) {
-    console.log("updating board "+number);
-    this.route = number+"/messages";
-    this.messageService.getMessages(this.route);
   }
 
   // refreshMessages() {
