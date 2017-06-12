@@ -39,7 +39,7 @@ export class MessageListComponent implements OnInit {
 
   @HostListener("window:scroll", [])
   private onScroll(): void {
-    console.log("detected scroll");
+    // console.log("detected scroll");
     const st = window.pageYOffset;
     if (st === 0) {
       // this.messageService.getHistory(this.route, this.maxPage);
