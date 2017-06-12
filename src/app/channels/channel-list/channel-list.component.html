@@ -1,3 +1,6 @@
 <p>
-  channel-list works!
+  Channels
 </p>
+<div *ngFor="let channel of channelList">
+  <app-channel [channel]="channel"></app-channel>
+</div>
