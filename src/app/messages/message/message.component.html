@@ -1,5 +1,7 @@
 <p>
   Message: <strong> {{message.content}} </strong> <br>
-  <img [src]="message.imgUrl" *ngIf="message.imgUrl != null">
   From: <strong>{{message.from}}</strong>
 </p>
+<div *ngIf="message.imgUrl">
+  <img [src]="message.imgUrl">
+</div>

@@ -100,26 +100,15 @@ export class MessageService {
     // fait CTRL + Click pour voir la déclaration et la documentation
     const messageList = response.json() || []; // ExtractMessage: Si response.json() est undefined ou null,
     console.dir(messageList);
-    const imgUrl = this.extractImgUrl(messageList[0].content);
-    console.log("url: " + imgUrl);
-    if (imgUrl != null) {
-      this.http.get(imgUrl)
-        .subscribe(
-          (rep) => {
-            if (rep.headers.get("Content-Type") === "image") {
-              rep.url = imgUrl;
-            }
-          },
-          (err) => {
-            /* this function is executed when there's an ERROR */
-            console.log("ERROR: " + err);
-          },
-          () => {
-            /* this function is executed when the observable ends (completes) its stream */
-            console.log("COMPLETED");
-          }
-        );
+    for (let i = 0; i < messageList.length; i++) {
+      const imgUrl = this.extractImgUrl(messageList[i].content);
+      console.log("url: " + imgUrl);
+      if (imgUrl != null) {
+        messageList[i].url = imgUrl;
+        console.log(messageList[i].url);
+      }
     }
+    //
     // messageList prendra la valeur tableau vide: [];
     this.messageList$.next(messageList); // On pousse les nouvelles données dans l'attribut messageList$
   }
@@ -141,9 +130,9 @@ export class MessageService {
 
   private extractImgUrl(messageText: string): string {
     console.log("Content: " + messageText);
-    const reg = new RegExp("(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.\-~]*)*\/?\g");
+    const reg = new RegExp("https?:\/\/[^ \t\n]*(.jpg|.png)");
     let result;
-    if ((result = messageText.match(reg) != null)) {
+    if ((result = messageText.match(reg)) != null) {
       console.log("result: " + result);
       return result[0];
     }
