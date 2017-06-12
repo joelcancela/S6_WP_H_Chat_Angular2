@@ -14,8 +14,9 @@ export class MessageFormComponent implements OnInit {
   private route: string;
 
   constructor(private messageService: MessageService) {
-    this.message = new MessageModel(1, "kektest", "moi", new Date().toISOString(), new Date().toISOString(), 1);
+    this.message = new MessageModel(1, "kektest", "tigli", new Date().toISOString(), new Date().toISOString(), 1);
     this.route = "1/messages";
+    this.refreshMessages();
   }
 
   ngOnInit() {
@@ -29,6 +30,15 @@ export class MessageFormComponent implements OnInit {
    */
   sendMessage() {
     console.log("Click!");
+    const inputElement = <HTMLInputElement>document.getElementById("name");
+    inputElement.value = "";
     this.messageService.sendMessage(this.route, this.message);
+  }
+
+  refreshMessages() {
+    setTimeout(() => {
+      this.messageService.getMessages(this.route);
+      this.refreshMessages();
+    }, 2000);
   }
 }

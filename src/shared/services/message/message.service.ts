@@ -99,6 +99,27 @@ export class MessageService {
     // Plus d'info sur Response ou sur la fonction .json()? si tu utilises Webstorm,
     // fait CTRL + Click pour voir la déclaration et la documentation
     const messageList = response.json() || []; // ExtractMessage: Si response.json() est undefined ou null,
+    console.dir(messageList);
+    const imgUrl = this.extractImgUrl(messageList[0].content);
+    console.log("url: " + imgUrl);
+    if (imgUrl != null) {
+      this.http.get(imgUrl)
+        .subscribe(
+          (rep) => {
+            if (rep.headers.get("Content-Type") === "image") {
+              rep.url = imgUrl;
+            }
+          },
+          (err) => {
+            /* this function is executed when there's an ERROR */
+            console.log("ERROR: " + err);
+          },
+          () => {
+            /* this function is executed when the observable ends (completes) its stream */
+            console.log("COMPLETED");
+          }
+        );
+    }
     // messageList prendra la valeur tableau vide: [];
     this.messageList$.next(messageList); // On pousse les nouvelles données dans l'attribut messageList$
   }
@@ -115,6 +136,17 @@ export class MessageService {
    */
   private extractMessageAndGetMessages(response: Response, route: string): MessageModel {
     this.getMessages(route);
-    return response.json() ||new MessageModel(); // A remplacer ! On retourne ici un messageModel vide seulement pour que Typescript ne lève pas d'erreur !
+    return new MessageModel(); // A remplacer ! On retourne ici un messageModel vide seulement pour que Typescript ne lève pas d'erreur !
+  }
+
+  private extractImgUrl(messageText: string): string {
+    console.log("Content: " + messageText);
+    const reg = new RegExp("(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.\-~]*)*\/?\g");
+    let result;
+    if ((result = messageText.match(reg) != null)) {
+      console.log("result: " + result);
+      return result[0];
+    }
+    return null;
   }
 }
