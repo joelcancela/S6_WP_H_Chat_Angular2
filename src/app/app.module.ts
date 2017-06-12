@@ -8,8 +8,9 @@ import { AppComponent } from "./app.component";
 import { MessageComponent, MessageListComponent } from "./messages";
 import { MessageFormComponent } from "./message-form";
 import { MessageService } from "../shared/services/message/message.service";
-import { ChannelsComponent } from './channels/channels.component';
 import { UsersComponent } from './users/users.component';
+import { ChannelComponent } from './channels/channel/channel.component';
+import { ChannelListComponent } from './channels/channel-list/channel-list.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { UsersComponent } from './users/users.component';
     MessageFormComponent,
     MessageListComponent,
     MessageComponent,
-    ChannelsComponent,
+    ChannelComponent,
+    ChannelListComponent,
     UsersComponent
   ],
   imports: [
