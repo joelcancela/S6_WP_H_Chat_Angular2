@@ -13,10 +13,9 @@ export class MessageListComponent implements OnInit {
 
   public messageList: MessageModel[];
   private route: string;
-  private refreshSwap = true;
 
   constructor(private messageService: MessageService, private channelService: ChannelService) {
-    this.route = "1/messages";
+    this.route = "209/messages";//TODO First id available
     this.refreshMessages();
   }
 
