@@ -17,7 +17,8 @@ export class ChannelListComponent implements OnInit {
   ngOnInit() {
     this.channelService.retrieveChannels().then(response => {
       this.channelList = response;
-    }).catch(error => {console.log("error",error)})
+    }).catch(error => {
+      console.log("error", error)
+    })
   }
-
 }

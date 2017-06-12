@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 
 import { MessageService } from "../../../shared/services";
 import { MessageModel } from "../../../shared/models/MessageModel";
+import {ChannelService} from "../../../shared/services/channel/channel.service";
 
 @Component({
   selector: "app-message-list",
@@ -13,7 +14,7 @@ export class MessageListComponent implements OnInit {
   public messageList: MessageModel[];
   private route: string;
 
-  constructor(private messageService: MessageService) {
+  constructor(private messageService: MessageService, private channelService: ChannelService) {
     this.route = "1/messages";
   }
 
@@ -29,6 +30,15 @@ export class MessageListComponent implements OnInit {
   ngOnInit() {
     this.messageService.getMessages(this.route);
     this.messageService.messageList$.subscribe((messages) => this.messageList = messages);
+    this.channelService.getChannelNumber().subscribe((number) => this.updateMessageBoard(number))
+  }
+
+  private updateMessageBoard(number: number) {
+    console.log(number);
+    console.log("updated");
+    let route = number+"/messages";
+    console.log(route);
+    this.messageService.getMessages(route);
   }
 
 }
