@@ -118,7 +118,7 @@ export class MessageService {
   }
 
   private extractImgUrl(messageText: string): string {
-    const reg = new RegExp("https?:\/\/[^ \t\n]*(.jpg|.png)");
+    const reg = new RegExp("https?:\/\/[^ \t\n]*(.jpg|.png|.svg)");
     let result;
     if ((result = messageText.match(reg)) != null) {
       return result[0];
@@ -131,11 +131,9 @@ export class MessageService {
     const rep = ["🙂", "😉", "😢", "☹", "😃", "😛", "💗", "😯"];
     let result;
     for (const i in emotes) {
-      if (emotes.hasOwnProperty(i)) {
-        if ((result = message.content.match(emotes[i])) != null) {
-          console.log("Emote found: " + emotes[i]);
-          message.content = message.content.replace(emotes[i], rep[i]);
-        }
+      if ((result = message.content.match(emotes[i])) != null) {
+        console.log("Emote found: " + emotes[i]);
+        message.content = message.content.replace(emotes[i], rep[i]);
       }
     }
   }
