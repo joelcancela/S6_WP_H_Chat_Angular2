@@ -7,12 +7,13 @@ import {Headers} from "@angular/http";
 import {of} from "rxjs/observable/of";
 import "rxjs/Rx";
 import {Observer} from "rxjs/Observer";
+import {current} from "codelyzer/util/syntaxKind";
 
 @Injectable()
 export class ChannelService {
 
   private url: string;
-  currentChannelID: number = 1;
+  currentChannelID: number = 0;
   currentChannelIDUpdate: Observable<number>;
   currentChannelIDObserver: Observer<number>;
 
@@ -21,6 +22,7 @@ export class ChannelService {
     this.currentChannelIDUpdate = Observable.create((observer: Observer<number>) => {
       this.currentChannelIDObserver = observer;
     });
+    this.retrieveChannels().then(number => this.currentChannelID = number[0].id);
   }
 
   updateChannelID(newValue: number) {

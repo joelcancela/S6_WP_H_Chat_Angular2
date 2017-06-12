@@ -35,6 +35,7 @@ export class MessageListComponent implements OnInit {
   }
 
   private updateMessageBoard(number: number) {
+    console.log("updating board "+number);
     this.route = number+"/messages";
     this.messageService.getMessages(this.route);
   }
