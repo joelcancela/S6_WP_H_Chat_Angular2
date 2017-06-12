@@ -32,11 +32,4 @@ export class MessageListComponent implements OnInit {
     this.messageService.getMessages(this.route);
     this.messageService.messageList$.subscribe((messages) => this.messageList = messages);
   }
-
-  // refreshMessages() {
-  //   setTimeout(() => {
-  //     this.messageService.getMessages(this.route);
-  //     this.refreshMessages();
-  //   }, 2000);
-  // }
 }

@@ -21,12 +21,21 @@ export class MessageFormComponent implements OnInit {
 
   ngOnInit() {
     this.channelService.getChannelNumber().subscribe((channelID) => this.updateRoute(channelID));
+    this.refreshMessages();
   }
 
 
   updateRoute(number: number){
     this.route = number+"/messages";
     this.messageService.getMessages(this.route);
+  }
+
+  refreshMessages() {
+    console.log("wow");
+    setTimeout(() => {
+      this.messageService.getMessages(this.route);
+      this.refreshMessages();
+    }, 2000);
   }
 
   /**
