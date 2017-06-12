@@ -24,6 +24,7 @@ export class ChannelService {
   }
 
   updateChannelID(newValue: number) {
+    console.log(newValue);
     this.currentChannelID = newValue;
     this.currentChannelIDObserver.next(this.currentChannelID);
   }
