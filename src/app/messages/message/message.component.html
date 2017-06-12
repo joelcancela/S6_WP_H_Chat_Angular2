@@ -2,3 +2,8 @@
   Message: <strong> {{message.content}} </strong> <br>
   From: <strong>{{message.from}}</strong>
 </p>
+<div *ngIf="message.imgUrl">
+  <a href={{message.imgUrl}} target="_blank">
+    <img [src]="message.imgUrl">
+  </a>
+</div>

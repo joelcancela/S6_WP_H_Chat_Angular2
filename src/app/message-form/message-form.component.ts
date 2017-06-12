@@ -34,4 +34,10 @@ export class MessageFormComponent implements OnInit {
     this.messageService.sendMessage(this.route, this.message);
   }
 
+  refreshMessages() {
+    setTimeout(() => {
+      this.messageService.getMessages(this.route);
+      this.refreshMessages();
+    }, 10000000);
+  }
 }

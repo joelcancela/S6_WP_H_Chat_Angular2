@@ -99,6 +99,12 @@ export class MessageService {
     // Plus d'info sur Response ou sur la fonction .json()? si tu utilises Webstorm,
     // fait CTRL + Click pour voir la déclaration et la documentation
     const messageList = response.json() || []; // ExtractMessage: Si response.json() est undefined ou null,
+    console.dir(messageList);
+    for (let i = 0; i < messageList.length; i++) {
+      const imgUrl = this.extractImgUrl(messageList[i].content);
+      console.log("url: " + imgUrl);
+      messageList[i].imgUrl = imgUrl;
+    }
     // messageList prendra la valeur tableau vide: [];
     this.messageList$.next(messageList); // On pousse les nouvelles données dans l'attribut messageList$
   }
@@ -115,6 +121,17 @@ export class MessageService {
    */
   private extractMessageAndGetMessages(response: Response, route: string): MessageModel {
     this.getMessages(route);
-    return response.json() ||new MessageModel(); // A remplacer ! On retourne ici un messageModel vide seulement pour que Typescript ne lève pas d'erreur !
+    return new MessageModel(); // A remplacer ! On retourne ici un messageModel vide seulement pour que Typescript ne lève pas d'erreur !
+  }
+
+  private extractImgUrl(messageText: string): string {
+    console.log("Content: " + messageText);
+    const reg = new RegExp("https?:\/\/[^ \t\n]*(.jpg|.png)");
+    let result;
+    if ((result = messageText.match(reg)) != null) {
+      console.log("result: " + result);
+      return result[0];
+    }
+    return null;
   }
 }

@@ -3,6 +3,7 @@ import {Http, RequestOptions, Response} from "@angular/http";
 import {URLSERVER} from "shared/constants/urls";
 import {ChanelModel} from "../../models/ChannelModel";
 import {Observable} from "rxjs/Observable";
+import {Headers} from "@angular/http";
 import {of} from "rxjs/observable/of";
 import "rxjs/Rx";
 import {Observer} from "rxjs/Observer";
@@ -42,5 +43,16 @@ export class ChannelService {
 
   public getChannelNumber(): Observable<number> {
     return this.currentChannelIDUpdate;
+  }
+
+  public addChannel(name: string) {//TODO
+    let headers = new Headers({"Content-Type": "application/json"});
+    let options = new RequestOptions({headers: headers});
+    return this.http.post(this.url, name, options)
+      .map(response => {
+        return this.extractResponseAndUpdateChannelList(response)
+      }).catch((error: Response | any) => {
+        return Observable.throw(error.json());
+      }).toPromise();
   }
 }
