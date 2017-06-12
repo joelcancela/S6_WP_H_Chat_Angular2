@@ -16,7 +16,6 @@ export class MessageFormComponent implements OnInit {
   constructor(private messageService: MessageService) {
     this.message = new MessageModel(1, "kektest", "tigli", new Date().toISOString(), new Date().toISOString(), 1);
     this.route = "1/messages";
-    this.refreshMessages();
   }
 
   ngOnInit() {
@@ -35,10 +34,4 @@ export class MessageFormComponent implements OnInit {
     this.messageService.sendMessage(this.route, this.message);
   }
 
-  refreshMessages() {
-    setTimeout(() => {
-      this.messageService.getMessages(this.route);
-      this.refreshMessages();
-    }, 2000);
-  }
 }

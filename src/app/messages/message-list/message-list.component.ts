@@ -13,9 +13,11 @@ export class MessageListComponent implements OnInit {
 
   public messageList: MessageModel[];
   private route: string;
+  private refreshSwap = true;
 
   constructor(private messageService: MessageService, private channelService: ChannelService) {
     this.route = "1/messages";
+    this.refreshMessages();
   }
 
   /**
@@ -30,15 +32,21 @@ export class MessageListComponent implements OnInit {
   ngOnInit() {
     this.messageService.getMessages(this.route);
     this.messageService.messageList$.subscribe((messages) => this.messageList = messages);
-    this.channelService.getChannelNumber().subscribe((number) => this.updateMessageBoard(number))
+    this.channelService.getChannelNumber().subscribe((number) => this.updateMessageBoard(number));
   }
 
   private updateMessageBoard(number: number) {
     console.log(number);
     console.log("updated");
-    let route = number+"/messages";
-    console.log(route);
-    this.messageService.getMessages(route);
+    this.route = number+"/messages";
+    console.log(this.route);
+    this.messageService.getMessages(this.route);
   }
 
+  refreshMessages() {
+    setTimeout(() => {
+      this.messageService.getMessages(this.route);
+      this.refreshMessages();
+    }, 2000);
+  }
 }
