@@ -61,28 +61,18 @@ export class MessageService {
    * @param message
    */
   public sendMessage(route: string, message: MessageModel) {
-    console.log(this.url + route);
     let headers = new Headers({"Content-Type": "application/json"});
     let options = new RequestOptions({headers: headers});
-    console.log(message);
     let answer = this.http.post(this.url + route, message, options).map((res: Response) => res.json()).subscribe(
       (response) => {
-        /* this function is executed every time there's a new output */
-        console.log("VALUE RECEIVED: " + response);
-        console.log(response);
         this.extractMessageAndGetMessages(response, route);
       },
       (err) => {
         /* this function is executed when there's an ERROR */
-        console.log("ERROR: " + err);
       },
       () => {
-        /* this function is executed when the observable ends (completes) its stream */
-        console.log("COMPLETED");
       }
     );
-    console.log(answer);
-    console.log("message sent");
     // Je suis vide :(
     // Tu peux trouver des infos sur moi dans le README !
   }
@@ -102,7 +92,6 @@ export class MessageService {
     console.dir(messageList);
     for (let i = 0; i < messageList.length; i++) {
       const imgUrl = this.extractImgUrl(messageList[i].content);
-      console.log("url: " + imgUrl);
       messageList[i].imgUrl = imgUrl;
     }
     // messageList prendra la valeur tableau vide: [];
@@ -125,11 +114,9 @@ export class MessageService {
   }
 
   private extractImgUrl(messageText: string): string {
-    console.log("Content: " + messageText);
     const reg = new RegExp("https?:\/\/[^ \t\n]*(.jpg|.png)");
     let result;
     if ((result = messageText.match(reg)) != null) {
-      console.log("result: " + result);
       return result[0];
     }
     return null;

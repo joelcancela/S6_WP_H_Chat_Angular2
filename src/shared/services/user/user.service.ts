@@ -13,7 +13,6 @@ export class UserService {
 
   public getUsers(): Promise<any> {
     return this.http.get(this.url).map((response) => {
-      console.log(response.json());
       return response.json();
     }).catch((error: Response | any) => {
       return Observable.throw(error.json());

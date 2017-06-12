@@ -16,7 +16,7 @@ export class MessageListComponent implements OnInit {
 
   constructor(private messageService: MessageService, private channelService: ChannelService){
     this.route = this.channelService.currentChannelID+"/messages";
-    this.refreshMessages();
+    // this.refreshMessages();
   }
 
   /**
@@ -35,17 +35,14 @@ export class MessageListComponent implements OnInit {
   }
 
   private updateMessageBoard(number: number) {
-    console.log(number);
-    console.log("updated");
     this.route = number+"/messages";
-    console.log(this.route);
     this.messageService.getMessages(this.route);
   }
 
-  refreshMessages() {
-    setTimeout(() => {
-      this.messageService.getMessages(this.route);
-      this.refreshMessages();
-    }, 2000);
-  }
+  // refreshMessages() {
+  //   setTimeout(() => {
+  //     this.messageService.getMessages(this.route);
+  //     this.refreshMessages();
+  //   }, 2000);
+  // }
 }
