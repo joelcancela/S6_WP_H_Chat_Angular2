@@ -20,7 +20,8 @@ export class MessageFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.channelService.getChannelNumber().subscribe(channelID => this.route = channelID+"/messages");
+    // this.channelService.getChannelNumber().subscribe(channelID => this.route = channelID+"/messages");
+    //TODO FUCKTARD PROBLEM LIST
   }
 
   /**
