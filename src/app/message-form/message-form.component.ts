@@ -31,7 +31,7 @@ export class MessageFormComponent implements OnInit {
   }
 
   refreshMessages() {
-    console.log("wow");
+    console.log("Refreshed");
     setTimeout(() => {
       this.messageService.getMessages(this.route);
       this.refreshMessages();

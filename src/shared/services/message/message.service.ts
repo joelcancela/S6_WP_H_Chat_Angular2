@@ -127,10 +127,16 @@ export class MessageService {
   }
 
   private replaceEmotes(message: MessageModel) {
-    const emotes = [":)", ";)", ":'(", ":(", ":D", ":p", "<3", ":o"];
+    const emotes = [":\\)", ";\\)", ":'\\(", ":\\(", ":D", ":p", "<3", ":o"];
     const rep = ["🙂", "😉", "😢", "☹", "😃", "😛", "💗", "😯"];
-    for (let i in emotes) {
-      message.content.replace(emotes[i], rep[i]);
+    let result;
+    for (const i in emotes) {
+      if (emotes.hasOwnProperty(i)) {
+        if ((result = message.content.match(emotes[i])) != null) {
+          console.log("Emote found: " + emotes[i]);
+          message.content = message.content.replace(emotes[i], rep[i]);
+        }
+      }
     }
   }
 }
