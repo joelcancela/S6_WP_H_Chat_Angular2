@@ -1,6 +1,13 @@
-<p>
-  <input type="text" class="form-control" id="name" required  [(ngModel)]="message.content" name="name">
-  <button class="btn btn-primary" (click)="sendMessage()"> Send </button>
+<div class="send-wrap">
+  <div class="send-message">
+    <div class="message-text">
+      <input type="text" class="no-resize-bar form-control form-control" id="name" required  [(ngModel)]="message.content" name="name">
+    </div>
+    <div class="send-button">
+      <button class="btn btn-primary" (click)="sendMessage()"> Send </button>
+    </div>
+  </div>
+</div>
 
-  <br>Message model: {{message | json}}
-</p>
+<br>Message model: {{message | json}}
+

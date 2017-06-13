@@ -17,9 +17,13 @@
     </div>
   </div>
 </div>
-<p>
-  Channels <button type="button" data-toggle="modal" data-target="#channelModal" class="btn btn-secondary">+</button>
-</p>
-<div *ngFor="let channel of channelList">
-  <app-channel [channel]="channel"></app-channel>
+
+<div class="header-wrap chat-header col-sm-12">
+  <h1> Channels <button type="button" data-toggle="modal" data-target="#channelModal" class="btn btn-secondary">+</button></h1>
+</div>
+
+<div class="pre-scrollable nav-pills chanels-list col-sm-12 row-sm-12" >
+  <div *ngFor="let channel of channelList" role="tablist">
+    <app-channel [channel]="channel"></app-channel>
+  </div>
 </div>
