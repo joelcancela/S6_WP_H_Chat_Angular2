@@ -4,33 +4,32 @@ import {URLSERVER} from "shared/constants/urls";
 import {ChanelModel} from "../../models/ChannelModel";
 import {Observable} from "rxjs/Observable";
 import "rxjs/Rx";
-import {Observer} from "rxjs/Observer";
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class ChannelService {
 
   private url: string;
-  currentChannelID: number = 2;
-  currentChannelIDUpdate: Observable<number>;
-  currentChannelIDObserver: Observer<number>;
+  currentChannelID: number = 350;
+  currentChannelSubject: Subject<number>;
+  currentChannelUpdate: Observable<number>;
 
   constructor(private http: Http) {
     this.url = URLSERVER;
-    this.currentChannelIDUpdate = Observable.create((observer: Observer<number>) => {
-      this.currentChannelIDObserver = observer;
-    });
+    this.currentChannelSubject = new Subject();
+    this.currentChannelUpdate = this.currentChannelSubject.asObservable();
     this.retrieveChannels().then(number => this.currentChannelID = number[0].id);
   }
 
   updateChannelID(newValue: number) {
     this.currentChannelID = newValue;
-    this.currentChannelIDObserver.next(this.currentChannelID);
+    this.currentChannelSubject.next(this.currentChannelID);
   }
 
   public retrieveChannels(): Promise<any> {
     return this.http.get(this.url)
       .map(response => {
-        return this.extractResponseAndUpdateChannelList(response)
+        return this.extractResponseAndUpdateChannelList(response);
       }).catch((error: Response | any) => {
         return Observable.throw(error.json());
       }).toPromise();
@@ -41,7 +40,7 @@ export class ChannelService {
   }
 
   public getChannelNumber(): Observable<number> {
-    return this.currentChannelIDUpdate;
+    return this.currentChannelUpdate;
   }
 
   public addChannel(name: string) {//TODO

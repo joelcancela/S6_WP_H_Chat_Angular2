@@ -16,16 +16,18 @@ export class MessageFormComponent implements OnInit {
 
   constructor(private messageService: MessageService, private channelService: ChannelService) {
     this.message = new MessageModel(1, "kektest", "tigli", new Date().toISOString(), new Date().toISOString(), 1);
-    this.route = this.channelService.currentChannelID+"/messages";
+    this.route = this.channelService.currentChannelID + "/messages";
   }
 
   ngOnInit() {
-    this.channelService.getChannelNumber().subscribe((channelID) => this.updateRoute(channelID));
+    this.channelService.getChannelNumber().subscribe((channelID) => {
+      this.updateRoute(channelID);
+    });
   }
 
 
-  updateRoute(number: number){
-    this.route = number+"/messages";
+  updateRoute(number: number) {
+    this.route = number + "/messages";
     this.messageService.getMessages(this.route);
   }
 

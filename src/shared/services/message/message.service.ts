@@ -48,10 +48,13 @@ export class MessageService {
       .subscribe((response) => this.extractAndUpdateMessageList(response));
   }
 
-  public getHistory(route: string, page: number) {
+  public getHistory(route: string, page: number): Promise<any> {
     const finalUrl = this.url + route + "?page=" + page;
-    this.http.get(finalUrl)
-      .subscribe((response) => this.extractAndUpdateMessageList(response));
+    return this.http.get(finalUrl).map((response => {
+      return response.json() || [];
+    })).catch((error: Response | any) => {
+      return Observable.throw(error.json());
+    }).toPromise();
   }
 
   /**
@@ -127,12 +130,12 @@ export class MessageService {
   }
 
   private replaceEmotes(message: MessageModel) {
-    const emotes = [":\\)", ";\\)", ":'\\(", ":\\(", ":D", ":p", "<3", ":o"];
+    const emotes = [new RegExp(":\\)"), new RegExp(";\\)"), new RegExp(":'\\("), new RegExp(":\\("), new RegExp(":D"),
+      new RegExp(":p"), new RegExp("<3"), new RegExp(":o")];
     const rep = ["🙂", "😉", "😢", "☹", "😃", "😛", "💗", "😯"];
     let result;
     for (const i in emotes) {
       if ((result = message.content.match(emotes[i])) != null) {
-        console.log("Emote found: " + emotes[i]);
         message.content = message.content.replace(emotes[i], rep[i]);
       }
     }
