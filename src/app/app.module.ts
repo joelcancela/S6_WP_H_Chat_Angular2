@@ -35,4 +35,5 @@ import {UserService} from "../shared/services/user/user.service";
   bootstrap: [AppComponent]
 })
 export class AppModule {
+
 }

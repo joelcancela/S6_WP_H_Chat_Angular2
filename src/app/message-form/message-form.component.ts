@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 
 import {MessageService} from "../../shared/services";
 import {MessageModel} from "../../shared/models/MessageModel";
+import {ChannelService} from "../../shared/services/channel/channel.service";
 
 @Component({
   selector: "app-message-form",
@@ -13,12 +14,19 @@ export class MessageFormComponent implements OnInit {
   public message: MessageModel;
   private route: string;
 
-  constructor(private messageService: MessageService) {
+  constructor(private messageService: MessageService, private channelService: ChannelService) {
     this.message = new MessageModel(1, "kektest", "tigli", new Date().toISOString(), new Date().toISOString(), 1);
-    this.route = "1/messages";
+    this.route = this.channelService.currentChannelID+"/messages";
   }
 
   ngOnInit() {
+    this.channelService.getChannelNumber().subscribe((channelID) => this.updateRoute(channelID));
+  }
+
+
+  updateRoute(number: number){
+    this.route = number+"/messages";
+    this.messageService.getMessages(this.route);
   }
 
   /**
@@ -28,16 +36,8 @@ export class MessageFormComponent implements OnInit {
    * ainsi que le message à envoyer. Ce dernier correspond à l'objet MessageModel que l'utilisateur rempli à travers l'input.
    */
   sendMessage() {
-    console.log("Click!");
     const inputElement = <HTMLInputElement>document.getElementById("name");
     inputElement.value = "";
     this.messageService.sendMessage(this.route, this.message);
-  }
-
-  refreshMessages() {
-    setTimeout(() => {
-      this.messageService.getMessages(this.route);
-      this.refreshMessages();
-    }, 10000000);
   }
 }

@@ -1,10 +1,8 @@
 import {Injectable} from "@angular/core";
-import {Http, RequestOptions, Response} from "@angular/http";
+import {Headers, Http, RequestOptions, Response} from "@angular/http";
 import {URLSERVER} from "shared/constants/urls";
 import {ChanelModel} from "../../models/ChannelModel";
 import {Observable} from "rxjs/Observable";
-import {Headers} from "@angular/http";
-import {of} from "rxjs/observable/of";
 import "rxjs/Rx";
 import {Observer} from "rxjs/Observer";
 
@@ -12,7 +10,7 @@ import {Observer} from "rxjs/Observer";
 export class ChannelService {
 
   private url: string;
-  currentChannelID: number = 1;
+  currentChannelID: number = 2;
   currentChannelIDUpdate: Observable<number>;
   currentChannelIDObserver: Observer<number>;
 
@@ -21,6 +19,7 @@ export class ChannelService {
     this.currentChannelIDUpdate = Observable.create((observer: Observer<number>) => {
       this.currentChannelIDObserver = observer;
     });
+    this.retrieveChannels().then(number => this.currentChannelID = number[0].id);
   }
 
   updateChannelID(newValue: number) {

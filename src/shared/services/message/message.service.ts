@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
-import {Http, RequestOptions, Response} from "@angular/http";
+import {Headers, Http, RequestOptions, Response} from "@angular/http";
 import {Observable} from "rxjs/Observable";
-import {Headers} from "@angular/http";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import {MessageModel} from "../../models/MessageModel";
@@ -49,6 +48,12 @@ export class MessageService {
       .subscribe((response) => this.extractAndUpdateMessageList(response));
   }
 
+  public getHistory(route: string, page: number) {
+    const finalUrl = this.url + route + "?page=" + page;
+    this.http.get(finalUrl)
+      .subscribe((response) => this.extractAndUpdateMessageList(response));
+  }
+
   /**
    * Fonction sendMessage.
    * Cette fonction permet l'envoi d'un message. Elle prend en paramêtre:
@@ -61,30 +66,18 @@ export class MessageService {
    * @param message
    */
   public sendMessage(route: string, message: MessageModel) {
-    console.log(this.url + route);
     let headers = new Headers({"Content-Type": "application/json"});
     let options = new RequestOptions({headers: headers});
-    console.log(message);
     let answer = this.http.post(this.url + route, message, options).map((res: Response) => res.json()).subscribe(
       (response) => {
-        /* this function is executed every time there's a new output */
-        console.log("VALUE RECEIVED: " + response);
-        console.log(response);
         this.extractMessageAndGetMessages(response, route);
       },
       (err) => {
         /* this function is executed when there's an ERROR */
-        console.log("ERROR: " + err);
       },
       () => {
-        /* this function is executed when the observable ends (completes) its stream */
-        console.log("COMPLETED");
       }
     );
-    console.log(answer);
-    console.log("message sent");
-    // Je suis vide :(
-    // Tu peux trouver des infos sur moi dans le README !
   }
 
   /**
@@ -102,11 +95,11 @@ export class MessageService {
     console.dir(messageList);
     for (let i = 0; i < messageList.length; i++) {
       const imgUrl = this.extractImgUrl(messageList[i].content);
-      console.log("url: " + imgUrl);
       messageList[i].imgUrl = imgUrl;
+      this.replaceEmotes(messageList[i]);
     }
     // messageList prendra la valeur tableau vide: [];
-    this.messageList$.next(messageList); // On pousse les nouvelles données dans l'attribut messageList$
+    this.messageList$.next(messageList.slice().reverse()); // On pousse les nouvelles données dans l'attribut messageList$
   }
 
   /**
@@ -125,13 +118,23 @@ export class MessageService {
   }
 
   private extractImgUrl(messageText: string): string {
-    console.log("Content: " + messageText);
-    const reg = new RegExp("https?:\/\/[^ \t\n]*(.jpg|.png)");
+    const reg = new RegExp("https?:\/\/[^ \t\n]*(.jpg|.png|.svg)");
     let result;
     if ((result = messageText.match(reg)) != null) {
-      console.log("result: " + result);
       return result[0];
     }
     return null;
+  }
+
+  private replaceEmotes(message: MessageModel) {
+    const emotes = [":\\)", ";\\)", ":'\\(", ":\\(", ":D", ":p", "<3", ":o"];
+    const rep = ["🙂", "😉", "😢", "☹", "😃", "😛", "💗", "😯"];
+    let result;
+    for (const i in emotes) {
+      if ((result = message.content.match(emotes[i])) != null) {
+        console.log("Emote found: " + emotes[i]);
+        message.content = message.content.replace(emotes[i], rep[i]);
+      }
+    }
   }
 }
