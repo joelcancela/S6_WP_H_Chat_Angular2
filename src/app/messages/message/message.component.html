@@ -7,3 +7,6 @@
     <img [src]="message.imgUrl">
   </a>
 </div>
+<div>
+  <iframe *ngIf="message.ytUrl" width="100%" height="300" [src]="message.ytUrl | safe" ></iframe>
+</div>

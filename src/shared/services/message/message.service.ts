@@ -70,9 +70,9 @@ export class MessageService {
    * @param message
    */
   public sendMessage(route: string, message: MessageModel) {
-    let headers = new Headers({"Content-Type": "application/json"});
-    let options = new RequestOptions({headers: headers});
-    let answer = this.http.post(this.url + route, message, options).map((res: Response) => res.json()).subscribe(
+    const headers = new Headers({"Content-Type": "application/json"});
+    const options = new RequestOptions({headers: headers});
+    this.http.post(this.url + route, message, options).map((res: Response) => res.json()).subscribe(
       (response) => {
         this.extractMessageAndGetMessages(response, route);
       },
@@ -98,8 +98,14 @@ export class MessageService {
     const messageList = response.json() || []; // ExtractMessage: Si response.json() est undefined ou null,
     console.dir(messageList);
     for (let i = 0; i < messageList.length; i++) {
-      const imgUrl = this.extractImgUrl(messageList[i].content);
-      messageList[i].imgUrl = imgUrl;
+      let url;
+      if ((url = this.extractImgUrl(messageList[i].content)) != null) {
+        messageList[i].imgUrl = url;
+      }
+      if ((url = this.extractYTURL(messageList[i].content)) != null) {
+        messageList[i].ytUrl = url;
+      }
+
       this.replaceEmotes(messageList[i]);
     }
     // messageList prendra la valeur tableau vide: [];
@@ -122,10 +128,21 @@ export class MessageService {
   }
 
   private extractImgUrl(messageText: string): string {
-    const reg = new RegExp("https?:\/\/[^ \t\n]*(.jpg|.png|.svg)");
+    const reg = new RegExp("https?:\/\/[^ \t\n]*(.jpg|.png|.jpeg)");
     let result;
     if ((result = messageText.match(reg)) != null) {
       return result[0];
+    }
+    return null;
+  }
+
+  private extractYTURL(messageText: string): string {
+    const reg = new RegExp("https?:\/\/(www\.youtube\.com\/watch\?v=|youtu\.be)\/?([\w\d]+)");
+    let result;
+    console.log("YO LE RAP");
+    if ((result = reg.exec(messageText)) != null) {
+      console.log("JOHN CENA: " + result);
+      return "https://www.youtube.com/embed/" + result[1];
     }
     return null;
   }
@@ -140,5 +157,17 @@ export class MessageService {
         message.content = message.content.replace(emotes[i], rep[i]);
       }
     }
+  }
+
+  private setUrl(message: MessageModel, url: string) {
+    const headers = new Headers({"Origin": "http://www.jqueryscript.net"});
+    const options = new RequestOptions({headers: headers});
+    this.http.get(url, options)
+      .subscribe(
+        (rep) => {
+          if (rep.headers.get("Content-Type").startsWith("image")) {
+            message.imgUrl = url;
+          }
+        });
   }
 }

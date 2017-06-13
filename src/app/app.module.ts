@@ -15,7 +15,8 @@ import {UserComponent} from "./users/user/user.component";
 import {UserListComponent} from "./users/user-list/user-list.component";
 import {UserService} from "../shared/services/user/user.service";
 import {ChannelModalComponent, ChannelModalContent} from "./channels/channel-modal/channel-modal.component";
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {SafePipe} from "../shared/pipes/safe.pipe";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     UserComponent,
     UserListComponent,
     ChannelModalComponent,
+    SafePipe,
     ChannelModalContent
   ],
   imports: [
@@ -36,7 +38,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     HttpModule,
     NgbModule.forRoot(),
   ],
-  entryComponents:[ChannelModalContent],
+  entryComponents: [ChannelModalContent],
   providers: [MessageService, ChannelService, UserService],
   bootstrap: [AppComponent]
 })
