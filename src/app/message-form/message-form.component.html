@@ -1,7 +1,7 @@
 <div class="form-group typing-zone">
   <div class="input-group input-group-lg icon-addon addon-lg">
-    <input (keyup.enter)="sendMessage()" type="text" placeholder="Message..." rows="3" id="name" required
-           [(ngModel)]="message.content" name="name" class="form-control input-lg message-text">
+    <textarea (keyup.enter)="sendMessage()" type="text" placeholder="Message..." rows="3" col="50" id="name" required
+              [(ngModel)]="message.content" name="name" class="form-control input-lg message-text"></textarea>
     <i class="icon icon-search"></i>
     <span class="input-group-btn">
       <button class="btn btn-inverse" (click)="sendMessage()">Envoyer !</button>

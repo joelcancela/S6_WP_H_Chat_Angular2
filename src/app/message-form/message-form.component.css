@@ -12,6 +12,7 @@
 
 .message-text{
   padding: 0;
+  resize: none !important;
 }
 
 .send-message{
