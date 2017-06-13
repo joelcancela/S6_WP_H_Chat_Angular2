@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 
 import {MessageService} from "../../../shared/services";
 import {MessageModel} from "../../../shared/models/MessageModel";
@@ -108,9 +108,9 @@ export class MessageListComponent implements OnInit {
     }
   }
 
-  @HostListener("scroll", ["$event"])
   public onScroll(event: Event) {
     if (event.srcElement.scrollTop === 0) {
+      console.log("Reached top of the page, retrieving messages");
       this.retrieveHistory();
     }
   };
