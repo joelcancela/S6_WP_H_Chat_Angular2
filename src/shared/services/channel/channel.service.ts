@@ -43,10 +43,10 @@ export class ChannelService {
     return this.currentChannelUpdate;
   }
 
-  public addChannel(name: string) {//TODO
+  public addChannel(name: string) {
     let headers = new Headers({"Content-Type": "application/json"});
     let options = new RequestOptions({headers: headers});
-    return this.http.post(this.url, name, options)
+    return this.http.post(this.url, {"name":name}, options)
       .map(response => {
         return this.extractResponseAndUpdateChannelList(response)
       }).catch((error: Response | any) => {
