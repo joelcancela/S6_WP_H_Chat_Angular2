@@ -137,14 +137,13 @@ export class MessageService {
   }
 
   private extractYTURL(messageText: string): string {
-    const reg = new RegExp("https?:\/\/(www\.youtube\.com\/watch\?v=|youtu\.be)\/?([\w\d]+)");
-    let result;
-    console.log("YO LE RAP");
-    if ((result = reg.exec(messageText)) != null) {
-      console.log("JOHN CENA: " + result);
-      return "https://www.youtube.com/embed/" + result[1];
+    var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = messageText.match(regExp);
+    if (match && match[2].length == 11) {
+      return "https://www.youtube.com/embed/" + match[2];
+    } else {
+      return null;
     }
-    return null;
   }
 
   private replaceEmotes(message: MessageModel) {
