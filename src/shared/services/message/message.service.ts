@@ -137,9 +137,9 @@ export class MessageService {
   }
 
   private extractYTURL(messageText: string): string {
-    var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\? \t\n]*).*/;
     var match = messageText.match(regExp);
-    if (match && match[2].length == 11) {
+    if (match && match[2].length === 11) {
       return "https://www.youtube.com/embed/" + match[2];
     } else {
       return null;
