@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {UserModel} from "../../../shared/models/UserModel";
+import {UserService} from "../../../shared/services/user/user.service";
 
 @Component({
   selector: "app-user",
@@ -7,13 +8,17 @@ import {UserModel} from "../../../shared/models/UserModel";
   styleUrls: ["./user.component.css"]
 })
 export class UserComponent implements OnInit {
-   @Input() user: UserModel;
+  @Input() user: UserModel;
 
-  constructor() {
+  constructor(private userService: UserService) {
     this.user = new UserModel("test");
   }
 
   ngOnInit() {
+  }
+
+  loadMP(name: string) {
+    this.userService.updateUserMP(name);
   }
 
 }

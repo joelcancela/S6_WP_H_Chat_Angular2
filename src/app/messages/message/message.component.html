@@ -4,6 +4,9 @@
 </p>
 <div *ngIf="message.imgUrl">
   <a href={{message.imgUrl}} target="_blank">
-    <img [src]="message.imgUrl">
+    <img class="embedImage" [src]="message.imgUrl">
   </a>
+</div>
+<div>
+  <iframe class="embedVideo" *ngIf="message.ytUrl" [src]="message.ytUrl | safe" ></iframe>
 </div>

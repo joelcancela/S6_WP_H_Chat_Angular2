@@ -29,3 +29,8 @@ h1 {
   border-radius: 5px;
   background-color: #212121;
 }
+
+.current{
+  background-color: #90CAF9;
+  font-weight: bold;
+}

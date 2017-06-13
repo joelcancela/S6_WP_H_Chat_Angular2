@@ -36,17 +36,21 @@ export class MessageModel {
   public threadId: number;
 
   /**
+   * Url vers la vidéo youtube
+   */
+  public ytUrl: string;
+
+  /**
    * Contient l'url vers l'image
    */
   public imgUrl: string;
 
-  constructor(id?: number, content?: string, from?: string, createdAt?: string, updatedAt?: string, threadId?: number, imgUrl?: string) {
+  constructor(id?: number, content?: string, from?: string, createdAt?: string, updatedAt?: string, threadId?: number) {
     this.id = id;
     this.content = content;
     this.from = from;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-    this.threadId =  threadId;
-    this.imgUrl = imgUrl;
+    this.threadId = threadId;
   }
 }
