@@ -76,7 +76,7 @@ export class MessageListComponent implements OnInit {
     setTimeout(() => {
       this.messageService.getMessages(this.route);
       this.refreshMessages();
-    }, 10000);
+    }, 2000);
   }
 
   public retrieveHistory() {
