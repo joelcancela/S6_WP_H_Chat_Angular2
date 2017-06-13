@@ -31,17 +31,17 @@ input{
 }
 
 .send-message .btn:hover {
--webkit-transition : background-color 2s ease;
--moz-transition : background-color 2s ease;
--o-transition : background-color 2s ease;
-transition : background-color 2s ease;
+  -webkit-transition : background-color 2s ease;
+  -moz-transition : background-color 2s ease;
+  -o-transition : background-color 2s ease;
+  transition : background-color 2s ease;
 
-background-color: #0D47A1;
+  background-color: #0D47A1;
 }
 
 .btn-primary{
-background-color: #2196F3;
-border:0;
+  background-color: #2196F3;
+  border:0;
 }
 
 .btn{

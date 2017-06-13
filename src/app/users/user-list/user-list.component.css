@@ -6,6 +6,7 @@
 .users-list {
   height: 95vh;
   min-height: 95vh;
+  overflow-x: hidden;
 }
 
 .chat-header {

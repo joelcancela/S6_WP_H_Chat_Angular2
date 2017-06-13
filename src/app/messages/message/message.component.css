@@ -1,7 +1,13 @@
+.embedImage{
+  width: 100%;
+  height: auto;
+}
+
 .embedVideo {
   width: 400px;
   height: 400px;
 }
+
 
 .embedTweet {
   width: 500px;
@@ -9,7 +15,32 @@
   border-width: 0;
 }
 
-.embedImage {
-  width: 400px;
-  height: auto;
+.embedImage, .embedVideo, .embedTweet {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.autor{
+  font-size: 2.5vh;
+  font-weight: bold;
+}
+
+.hour{
+  font-size: 1.5vh;
+  font-style: italic;
+}
+
+.message-content{
+  font-size: 2vh;
+}
+
+.media-object{
+  max-width: 2vw;
+  max-height: 2vw;
+}
+
+.message{
+  width: 100%;
+  border-top: solid 1px #E0E0E0;
 }

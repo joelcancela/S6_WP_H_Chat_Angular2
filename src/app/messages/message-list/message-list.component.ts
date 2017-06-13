@@ -47,12 +47,12 @@ export class MessageListComponent implements OnInit {
 
   /**
    * Fonction ngOnInit.
-   * Cette fonction est appelée après l'execution de tous les constructeurs de toutes les classes typescript.
-   * Cette dernière s'avère très utile lorsque l'on souhaite attendre des valeurs venant de d'autres composants.
+   * Cette fonction est appelée après l"execution de tous les constructeurs de toutes les classes typescript.
+   * Cette dernière s"avère très utile lorsque l"on souhaite attendre des valeurs venant de d"autres composants.
    * Le composant MessageComponent prend en @Input un message. Les @Input ne sont accessibles uniquement à partir du ngOnInit,
    * pas dans le constructeur.
-   * En general, l'utilisation des services dans le NgOnInit est une bonne practice. Le constructeur ne doit servir qu'à
-   * l'initialisation simple des variables. Pour plus d'information sur le ngOnInit, il y a un lien dans le README.
+   * En general, l"utilisation des services dans le NgOnInit est une bonne practice. Le constructeur ne doit servir qu"à
+   * l"initialisation simple des variables. Pour plus d"information sur le ngOnInit, il y a un lien dans le README.
    */
   ngOnInit() {
     this.messageService.getMessages(this.route);
@@ -79,6 +79,10 @@ export class MessageListComponent implements OnInit {
         }
       }
     });
+    setTimeout(function () {
+      const objDiv = document.getElementById("messages-list");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }, 400);
     this.refreshMessages();
   }
 
@@ -97,9 +101,18 @@ export class MessageListComponent implements OnInit {
         if (response.length < 20) {
           this.reachedEnd = true;
         }
+        const objDiv = document.getElementById("messages-list");
+        objDiv.scrollTop = 30;
       });
       this.maxPage++;
     }
   }
+
+  public onScroll(event: Event) {
+    if (event.srcElement.scrollTop === 0) {
+      console.log("Reached top of the page, retrieving messages");
+      this.retrieveHistory();
+    }
+  };
 
 }

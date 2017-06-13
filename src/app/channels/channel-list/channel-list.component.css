@@ -6,6 +6,7 @@
 .chanels-list {
   height: 95vh;
   min-height: 95vh;
+  overflow-x: hidden;
 }
 
 .chat-header {
@@ -15,10 +16,11 @@
   margin: auto;
 }
 
-h1 {
+.header-wrap span {
   color: #212121;
   font-size: 3vh;
   line-height: 3vh;
+  font-weight: bold;
 }
 
 ::-webkit-scrollbar {
