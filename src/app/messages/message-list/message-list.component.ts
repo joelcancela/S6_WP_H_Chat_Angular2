@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 
 import {MessageService} from "../../../shared/services";
 import {MessageModel} from "../../../shared/models/MessageModel";
@@ -13,12 +13,19 @@ export class MessageListComponent implements OnInit {
 
   public messageList: MessageModel[];
   private route: string;
-  private lastScrollTop = 0;
-  private maxPage = 0;
+  private maxPage;
+  private reachedEnd: boolean;
 
-  constructor(private messageService: MessageService, private channelService: ChannelService){
-    this.route = this.channelService.currentChannelID+"/messages";
-    window.onscroll = () => this.onScroll();
+  constructor(private messageService: MessageService, private channelService: ChannelService) {
+    this.route = this.channelService.currentChannelID + "/messages";
+    this.channelService.getChannelNumber().subscribe(() => {
+      this.messageList = [];
+      console.log("Switching channels, resetting messages...");
+      this.route = this.route = this.channelService.currentChannelID + "/messages";
+    });
+    this.maxPage = 0;
+    this.reachedEnd = false;
+    this.messageList = [];
   }
 
   /**
@@ -32,7 +39,28 @@ export class MessageListComponent implements OnInit {
    */
   ngOnInit() {
     this.messageService.getMessages(this.route);
-    this.messageService.messageList$.subscribe((messages) => this.messageList = messages);
+    this.messageService.messageList$.subscribe((messages) => {
+      if (this.messageList === null || this.messageList.length === 0) {
+        this.messageList = messages;
+        console.log("Replaced messages");
+      } else if (messages !== null) {
+        let i = messages.length - 1;
+        const last = this.messageList[this.messageList.length - 1];
+        console.log("last message id was " + last.id);
+        while (i > 0 && last.id !== messages[i].id) {
+          i--;
+        }
+        if (last.id === messages[i].id) {
+          return;
+        }
+        console.log(20 - i + " new messages");
+        while (i < messages.length) {
+          console.log("loading new message of id " + messages[i].id);
+          this.messageList.push(messages[i]);
+          i++;
+        }
+      }
+    });
     this.refreshMessages();
   }
 
@@ -44,13 +72,16 @@ export class MessageListComponent implements OnInit {
     }, 2000);
   }
 
-
-  @HostListener("window:scroll", [])
-  private onScroll(): void {
-    const st = window.pageYOffset;
-    if (st === 0) {
-      // this.messageService.getHistory(this.route, this.maxPage);
+  public retrieveHistory() {
+    if (!this.reachedEnd) {
+      this.messageService.getHistory(this.route, this.maxPage).then((response) => {
+        this.messageList = response.slice().reverse().concat(this.messageList);
+        if (response.length < 20) {
+          this.reachedEnd = true;
+        }
+      });
+      this.maxPage++;
     }
-    this.lastScrollTop = st;
-  };
+  }
+
 }
