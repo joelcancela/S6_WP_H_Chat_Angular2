@@ -129,7 +129,7 @@ export class MessageService {
   }
 
   private extractImgUrl(messageText: string): string {
-    const reg = new RegExp("https?:\/\/[^ \t\n]*(.jpg|.png|.jpeg)");
+    const reg = new RegExp("https?:\/\/[^ \t\n]*(.jpg|.png|.jpeg|.svg)");
     let result;
     if ((result = messageText.match(reg)) != null) {
       return result[0];
