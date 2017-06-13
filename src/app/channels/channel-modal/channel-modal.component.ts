@@ -1,4 +1,3 @@
-///<reference path="channel-modal-content/channel-modal-content.component.ts"/>
 import {Component, Input, OnInit} from "@angular/core";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ChannelService} from "../../../shared/services/channel/channel.service";
