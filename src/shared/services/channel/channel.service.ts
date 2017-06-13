@@ -15,7 +15,7 @@ export class ChannelService {
   currentChannelUpdate: Observable<number>;
 
   constructor(private http: Http) {
-    this.url = URLSERVER;
+    this.url = URLSERVER + "/threads/";
     this.currentChannelSubject = new Subject();
     this.currentChannelUpdate = this.currentChannelSubject.asObservable();
     this.retrieveChannels().then(number => this.currentChannelID = number[0].id);

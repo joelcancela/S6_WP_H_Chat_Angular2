@@ -3,6 +3,7 @@ import {Component, OnInit} from "@angular/core";
 import {MessageService} from "../../../shared/services";
 import {MessageModel} from "../../../shared/models/MessageModel";
 import {ChannelService} from "../../../shared/services/channel/channel.service";
+import {UserService} from "../../../shared/services/user/user.service";
 
 @Component({
   selector: "app-message-list",
@@ -16,16 +17,21 @@ export class MessageListComponent implements OnInit {
   private maxPage;
   private reachedEnd: boolean;
 
-  constructor(private messageService: MessageService, private channelService: ChannelService) {
-    this.route = this.channelService.currentChannelID + "/messages";
+  constructor(private messageService: MessageService, private channelService: ChannelService,
+              private userService: UserService) {
+    this.route = "threads/" + this.channelService.currentChannelID + "/messages";
     this.channelService.getChannelNumber().subscribe(() => {
       this.messageList = [];
       console.log("Switching channels, resetting messages...");
-      this.route = this.route = this.channelService.currentChannelID + "/messages";
+      this.route = "threads/" + this.channelService.currentChannelID + "/messages";
     });
     this.maxPage = 0;
     this.reachedEnd = false;
     this.messageList = [];
+    this.userService.currentUserMP.subscribe(() => {
+      this.messageList = [];
+      this.route = "users/" + this.userService.currentMP + "/messages?currentUserId=" + "tigli";
+    });
   }
 
   /**
@@ -46,13 +52,14 @@ export class MessageListComponent implements OnInit {
       } else if (messages !== null) {
         let i = messages.length - 1;
         const last = this.messageList[this.messageList.length - 1];
+        if (last.id === messages[i].id) {
+          return;
+        }
         console.log("last message id was " + last.id);
         while (i > 0 && last.id !== messages[i].id) {
           i--;
         }
-        if (last.id === messages[i].id) {
-          return;
-        }
+        i++;
         console.log(20 - i + " new messages");
         while (i < messages.length) {
           console.log("loading new message of id " + messages[i].id);
@@ -69,7 +76,7 @@ export class MessageListComponent implements OnInit {
     setTimeout(() => {
       this.messageService.getMessages(this.route);
       this.refreshMessages();
-    }, 2000);
+    }, 10000);
   }
 
   public retrieveHistory() {

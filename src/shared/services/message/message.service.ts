@@ -44,6 +44,7 @@ export class MessageService {
    */
   public getMessages(route: string) {
     const finalUrl = this.url + route;
+    console.log("requested " + finalUrl);
     this.http.get(finalUrl)
       .subscribe((response) => this.extractAndUpdateMessageList(response));
   }

@@ -3,6 +3,7 @@ import {Component, OnInit} from "@angular/core";
 import {MessageService} from "../../shared/services";
 import {MessageModel} from "../../shared/models/MessageModel";
 import {ChannelService} from "../../shared/services/channel/channel.service";
+import {UserService} from "../../shared/services/user/user.service";
 
 @Component({
   selector: "app-message-form",
@@ -14,7 +15,8 @@ export class MessageFormComponent implements OnInit {
   public message: MessageModel;
   private route: string;
 
-  constructor(private messageService: MessageService, private channelService: ChannelService) {
+  constructor(private messageService: MessageService, private channelService: ChannelService,
+              private userService: UserService) {
     this.message = new MessageModel(1, "kektest", "tigli", new Date().toISOString(), new Date().toISOString(), 1);
     this.route = this.channelService.currentChannelID + "/messages";
   }
@@ -23,11 +25,14 @@ export class MessageFormComponent implements OnInit {
     this.channelService.getChannelNumber().subscribe((channelID) => {
       this.updateRoute(channelID);
     });
+    this.userService.currentUserMP.subscribe(() => {
+      this.route = "users/" + this.userService.currentMP + "/messages?currentUserId=" + "tigli";
+    });
   }
 
 
   updateRoute(number: number) {
-    this.route = number + "/messages";
+    this.route = "threads/" + number + "/messages";
     this.messageService.getMessages(this.route);
   }
 
