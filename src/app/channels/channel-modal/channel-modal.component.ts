@@ -1,6 +1,5 @@
 ///<reference path="channel-modal-content/channel-modal-content.component.ts"/>
 import { Component, OnInit } from '@angular/core';
-import {ChannelModalContentComponent} from "./channel-modal-content/channel-modal-content.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
