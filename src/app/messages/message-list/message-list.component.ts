@@ -19,7 +19,6 @@ export class MessageListComponent implements OnInit {
   constructor(private messageService: MessageService, private channelService: ChannelService){
     this.route = this.channelService.currentChannelID+"/messages";
     window.onscroll = () => this.onScroll();
-    // this.refreshMessages();
   }
 
   /**
@@ -34,6 +33,15 @@ export class MessageListComponent implements OnInit {
   ngOnInit() {
     this.messageService.getMessages(this.route);
     this.messageService.messageList$.subscribe((messages) => this.messageList = messages);
+    this.refreshMessages();
+  }
+
+  refreshMessages() {
+    console.log("Refreshed");
+    setTimeout(() => {
+      this.messageService.getMessages(this.route);
+      this.refreshMessages();
+    }, 2000);
   }
 
 

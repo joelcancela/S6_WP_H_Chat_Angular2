@@ -1,0 +1,20 @@
+.header-wrap {
+  height: 10%;
+}
+
+.users-list{
+  height: 90vh;
+  min-height: 90vh;
+}
+
+.chat-header{
+  height: 10vh;
+  min-height: 10vh;
+  text-align: center;
+  margin: auto;
+}
+
+h1{
+  color: #212121;
+  font-size: 3vh;
+}
