@@ -18,6 +18,7 @@ import {ChannelModalComponent, ChannelModalContent} from "./channels/channel-mod
 import {SafePipe} from "../shared/pipes/safe.pipe";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {InfoBarComponent} from "./infobar/infobar.component";
+import { LinkifyPipe } from "../shared/pipes/linkify.pipe";
 import {InfoService} from "../shared/services/info/info.service";
 
 @NgModule({
@@ -33,7 +34,8 @@ import {InfoService} from "../shared/services/info/info.service";
     ChannelModalComponent,
     SafePipe,
     ChannelModalContent,
-    InfoBarComponent
+    InfoBarComponent,
+    LinkifyPipe
   ],
   imports: [
     BrowserModule,

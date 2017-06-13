@@ -45,6 +45,8 @@ export class MessageModel {
    */
   public imgUrl: string;
 
+  public tweet: string;
+
   constructor(id?: number, content?: string, from?: string, createdAt?: string, updatedAt?: string, threadId?: number) {
     this.id = id;
     this.content = content;

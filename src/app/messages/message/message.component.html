@@ -1,5 +1,5 @@
-<p class="message">
-  Message: <strong> {{message.content}} </strong> <br>
+<p class="message" >
+  Message: <strong [innerHTML]="message.content | linkify"></strong> <br>
   From: <strong>{{message.from}}</strong>
 </p>
 <div *ngIf="message.imgUrl">
@@ -7,6 +7,8 @@
     <img class="embedImage" [src]="message.imgUrl">
   </a>
 </div>
-<div>
-  <iframe class="embedVideo" *ngIf="message.ytUrl" [src]="message.ytUrl | safe" ></iframe>
+<div *ngIf="message.ytUrl">
+  <iframe class="embedVideo" [src]="message.ytUrl | safe" ></iframe>
 </div>
+<iframe class="embedTweet" *ngIf="message.tweet" [src]="message.tweet | safe" frameborder="0"></iframe>
+

@@ -1,9 +1,15 @@
 .embedVideo {
-  width: 300px;
-  height: auto;
+  width: 400px;
+  height: 400px;
+}
+
+.embedTweet {
+  width: 500px;
+  height: 550px;
+  border-width: 0;
 }
 
 .embedImage {
-  width: 200px;
+  width: 400px;
   height: auto;
 }
