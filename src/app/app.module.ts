@@ -18,6 +18,7 @@ import {ChannelModalComponent, ChannelModalContent} from "./channels/channel-mod
 import {SafePipe} from "../shared/pipes/safe.pipe";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {InfoBarComponent} from "./infobar/infobar.component";
+import {InfoService} from "../shared/services/info/info.service";
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import {InfoBarComponent} from "./infobar/infobar.component";
     NgbModule.forRoot(),
   ],
   entryComponents: [ChannelModalContent],
-  providers: [MessageService, ChannelService, UserService],
+  providers: [MessageService, ChannelService, UserService, InfoService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
