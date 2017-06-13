@@ -6,3 +6,13 @@ h5{
 .nav-link:hover{
   background-color: #03A9F4;
 }
+
+.user-item{
+  background-color: #EEEEEE;
+  border:none;
+}
+
+.user-item:hover{
+  color: #E3F2FD;
+  background-color: #2196F3;
+}

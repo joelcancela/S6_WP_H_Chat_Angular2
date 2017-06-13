@@ -50,3 +50,11 @@ body {
 .section-wrap {
   height: 100%;
 }
+
+.chat-header{
+  height: 10vh;
+  min-height: 10vh;
+  text-align: center;
+  margin: auto;
+}
+

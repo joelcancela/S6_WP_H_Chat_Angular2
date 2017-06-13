@@ -3,6 +3,17 @@ h5{
   font-size: 2vh;
 }
 
-.nav-link:hover{
-  background-color: #03A9F4;
+  .channel-item{
+    background-color: #EEEEEE;
+    border:none;
+  }
+
+.channel-item:hover{
+  color: #E3F2FD;
+  background-color: #2196F3;
+}
+
+.current{
+  background-color: #90CAF9;
+  font-weight: bold;
 }

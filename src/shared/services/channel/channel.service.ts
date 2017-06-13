@@ -23,6 +23,11 @@ export class ChannelService {
   }
 
   updateChannelID(newValue: number) {
+    const channelId = "channel" + newValue;
+    const element = document.getElementById(channelId);
+    element.classList.remove("current");
+
+    console.log(channelId);
     this.currentChannelID = newValue;
     this.currentChannelIDObserver.next(this.currentChannelID);
   }

@@ -22,7 +22,7 @@
   <h1> Channels <button type="button" data-toggle="modal" data-target="#channelModal" class="btn btn-secondary">+</button></h1>
 </div>
 
-<div class="pre-scrollable nav-pills chanels-list col-sm-12 row-sm-12" >
+<div class="pre-scrollable chanels-list col-sm-12 row-sm-12 list-group list-group-info" >
   <div *ngFor="let channel of channelList" role="tablist">
     <app-channel [channel]="channel"></app-channel>
   </div>

@@ -1,15 +1,16 @@
 .header-wrap {
-  height: 10%;
+  width: 100%;
+  padding: 0;
 }
 
-.chanels-list{
-  height: 90vh;
-  min-height: 90vh;
+.chanels-list {
+  height: 95vh;
+  min-height: 95vh;
 }
 
-.chat-header{
-  height: 10vh;
-  min-height: 10vh;
+.chat-header {
+  height: 5vh;
+  min-height: 5vh;
   text-align: center;
   margin: auto;
 }
@@ -17,4 +18,14 @@
 h1 {
   color: #212121;
   font-size: 3vh;
+  line-height: 3vh;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #212121;
 }
