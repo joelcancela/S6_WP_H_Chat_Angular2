@@ -7,17 +7,14 @@
       <div class="col-sm-6" id="content">
         <div class="section-wrap">
           <div class="header-wrap">
-            <div class="chat-header col-sm-12">
-              <h1> {{title}} </h1>
-            </div>
+            <app-infobar></app-infobar>
           </div>
-          <app-infobar></app-infobar>
           <app-message-list></app-message-list>
           <app-message-form></app-message-form>
         </div>
       </div>
       <div class="col-md-3 hidden-xs-down bg-faded sidebar row-lg-12" id="right-sidebar">
-        <div id ="users">
+        <div id="users">
           <app-user-list></app-user-list>
         </div>
       </div>
