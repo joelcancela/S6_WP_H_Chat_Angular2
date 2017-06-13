@@ -20,5 +20,12 @@ export class ChannelListComponent implements OnInit {
       this.channelList = response;
     }).catch(error => {
     });
+
+  }
+
+  onScroll(event){
+    if((event.target.scrollTop >= (event.target.scrollHeight)/3)){
+      this.channelService.getChannelPage().then(number => this.channelList = this.channelList.concat(number));
+    }
   }
 }

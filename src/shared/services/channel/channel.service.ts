@@ -10,6 +10,7 @@ import {Subject} from "rxjs/Subject";
 export class ChannelService {
 
   private url: string;
+  private pageNumber: number = 1;
   currentChannelID: number = 350;
   currentChannelSubject: Subject<number>;
   currentChannelUpdate: Observable<number>;
@@ -43,10 +44,21 @@ export class ChannelService {
     return this.currentChannelUpdate;
   }
 
+  public getChannelPage(): Promise<any> {
+    var request = this.http.get(this.url + "?page=" + this.pageNumber)
+      .map(response => {
+        return this.extractResponseAndUpdateChannelList(response);
+      }).catch((error: Response | any) => {
+        return Observable.throw(error.json());
+      }).toPromise();
+    this.pageNumber++;
+    return request;
+  }
+
   public addChannel(name: string) {
     let headers = new Headers({"Content-Type": "application/json"});
     let options = new RequestOptions({headers: headers});
-    return this.http.post(this.url, {"name":name}, options)
+    return this.http.post(this.url, {"name": name}, options)
       .map(response => {
         return this.extractResponseAndUpdateChannelList(response)
       }).catch((error: Response | any) => {

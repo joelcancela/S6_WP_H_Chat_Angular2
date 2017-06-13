@@ -2,7 +2,7 @@
   <span>Channels </span>
   <channel-modal-component></channel-modal-component>
 </div>
-<div class="pre-scrollable nav-pills chanels-list col-sm-12 row-sm-12 list-group list-group-info">
+<div class="pre-scrollable nav-pills chanels-list col-sm-12 row-sm-12 list-group list-group-info" (scroll)="onScroll($event)">
   <div *ngFor="let channel of channelList" role="tablist">
     <app-channel [channel]="channel"></app-channel>
   </div>
