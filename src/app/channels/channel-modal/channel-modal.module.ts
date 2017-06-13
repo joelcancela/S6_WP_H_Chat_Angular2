@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChannelModalContentComponent } from './channel-modal-content/channel-modal-content.component';
+import {ChannelModalContent} from "./channel-modal.component";
 
 @NgModule({
   imports: [
     CommonModule
   ],
-  declarations: [ChannelModalContentComponent]
+  declarations: [ChannelModalContent]
 })
 export class ChannelModalModule { }
