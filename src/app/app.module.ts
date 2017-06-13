@@ -17,6 +17,9 @@ import {UserService} from "../shared/services/user/user.service";
 import {ChannelModalComponent, ChannelModalContent} from "./channels/channel-modal/channel-modal.component";
 import {SafePipe} from "../shared/pipes/safe.pipe";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {InfoBarComponent} from "./infobar/infobar.component";
+import { LinkifyPipe } from "../shared/pipes/linkify.pipe";
+import {InfoService} from "../shared/services/info/info.service";
 
 @NgModule({
   declarations: [
@@ -30,7 +33,9 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     UserListComponent,
     ChannelModalComponent,
     SafePipe,
-    ChannelModalContent
+    ChannelModalContent,
+    InfoBarComponent,
+    LinkifyPipe
   ],
   imports: [
     BrowserModule,
@@ -39,7 +44,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     NgbModule.forRoot(),
   ],
   entryComponents: [ChannelModalContent],
-  providers: [MessageService, ChannelService, UserService],
+  providers: [MessageService, ChannelService, UserService, InfoService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

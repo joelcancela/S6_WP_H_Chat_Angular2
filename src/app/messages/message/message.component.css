@@ -1,14 +1,21 @@
 .embedImage{
   width: 100%;
   height: auto;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .embedVideo {
-  width: auto;
-  height: auto;
+  width: 400px;
+  height: 400px;
+}
+
+
+.embedTweet {
+  width: 500px;
+  height: 550px;
+  border-width: 0;
+}
+
+.embedImage, .embedVideo, .embedTweet {
   display: block;
   margin-left: auto;
   margin-right: auto;

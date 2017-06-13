@@ -2,6 +2,7 @@ import {CommonModule} from "@angular/common";
 import {NgModule} from "@angular/core";
 
 import {UserComponent} from "./user.component";
+import {InfoService} from "../../../shared/services/info/info.service";
 
 @NgModule({
   declarations: [
@@ -11,7 +12,7 @@ import {UserComponent} from "./user.component";
     CommonModule
   ],
   exports: [UserComponent],
-  providers: []
+  providers: [InfoService]
 })
 export class UserModule {
 }

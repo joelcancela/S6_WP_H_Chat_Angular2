@@ -101,9 +101,10 @@ export class MessageService {
       let url;
       if ((url = this.extractImgUrl(messageList[i].content)) != null) {
         messageList[i].imgUrl = url;
-      }
-      if ((url = this.extractYTURL(messageList[i].content)) != null) {
+      } else if ((url = this.extractYTURL(messageList[i].content)) != null) {
         messageList[i].ytUrl = url;
+      } else if ((url = this.extractTweetURL(messageList[i].content)) != null) {
+        messageList[i].tweet = url;
       }
 
       this.replaceEmotes(messageList[i]);
@@ -137,10 +138,20 @@ export class MessageService {
   }
 
   private extractYTURL(messageText: string): string {
-    var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\? \t\n]*).*/;
-    var match = messageText.match(regExp);
+    const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\? \t\n]*).*/;
+    const match = messageText.match(regExp);
     if (match && match[2].length === 11) {
       return "https://www.youtube.com/embed/" + match[2];
+    } else {
+      return null;
+    }
+  }
+
+  private extractTweetURL(messageText: string): string {
+    const regExp = /^.*(https?:\/\/twitter.com\/[^ \t\n]+\/status\/[\d]+).*/;
+    const match = messageText.match(regExp);
+    if (match) {
+      return "http://twitframe.com/show?url=" + match[0];
     } else {
       return null;
     }

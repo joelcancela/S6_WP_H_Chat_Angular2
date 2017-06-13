@@ -28,10 +28,21 @@ export class MessageListComponent implements OnInit {
     this.maxPage = 0;
     this.reachedEnd = false;
     this.messageList = [];
-    this.userService.currentUserMP.subscribe(() => {
-      this.messageList = [];
-      this.route = "users/" + this.userService.currentMP + "/messages?currentUserId=" + "tigli";
+    this.userService.currentMPUserUpdate.subscribe(() => {
+      this.resetRouteAndMessages();
     });
+    this.userService.currentNickUpdate.subscribe(() => {
+      console.log("Nick change detected in component");
+      if (this.route.match("users")) {
+        this.resetRouteAndMessages();
+      }
+    });
+  }
+
+  private resetRouteAndMessages() {
+    this.messageList = [];
+    this.route = "users/" + this.userService.currentMP + "/messages?currentUserId=" + this.userService.currentNick;
+    console.log("Changing route to: " + this.route);
   }
 
   /**
