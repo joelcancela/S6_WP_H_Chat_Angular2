@@ -46,5 +46,9 @@ export class MessageFormComponent implements OnInit {
     const inputElement = <HTMLInputElement>document.getElementById("name");
     inputElement.value = "";
     this.messageService.sendMessage(this.route, this.message);
+    setTimeout(function () {
+      var objDiv = document.getElementById("messages-list");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }, 200);
   }
 }

@@ -33,11 +33,11 @@ export class ChannelComponent implements OnInit {
       this.channelService.updateChannelID(id);
       channel = document.getElementById("channel" + id);
       channel.classList.add("current");
+      setTimeout(function () {
+        var objDiv = document.getElementById("messages-list");
+        objDiv.scrollTop = objDiv.scrollHeight;
+      }, 500);
     }
-  }
-
-  addChannel(name: string) {//TODO
-    this.channelService.addChannel(name);
   }
 
 
