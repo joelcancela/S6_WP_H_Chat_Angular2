@@ -1,14 +1,10 @@
-<div class="send-wrap">
-  <div class="send-message">
-    <div class="message-text">
-      <input (keyup.enter)="sendMessage()" type="text"
-             class="no-resize-bar form-control form-control" id="name" required
-             [(ngModel)]="message.content" name="name">
-    </div>
-    <div class="send-button">
-      <button class="btn btn-primary" (click)="sendMessage()"> Send</button>
-    </div>
+<div class="form-group typing-zone">
+  <div class="input-group input-group-lg icon-addon addon-lg">
+    <input (keyup.enter)="sendMessage()" type="text" placeholder="Message..." rows="3" id="name" required
+           [(ngModel)]="message.content" name="name" class="form-control input-lg message-text">
+    <i class="icon icon-search"></i>
+    <span class="input-group-btn">
+      <button class="btn btn-inverse" (click)="sendMessage()">Envoyer !</button>
+    </span>
   </div>
 </div>
-<br>Message model: {{message | json}}
-

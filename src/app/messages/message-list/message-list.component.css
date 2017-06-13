@@ -1,0 +1,16 @@
+.messages-list{
+  height: 80vh;
+  min-height: 80vh;
+  position: absolute;
+  bottom:10vh;
+  left: 0;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #2196F3;
+}

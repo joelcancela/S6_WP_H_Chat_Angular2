@@ -1,7 +1,7 @@
 <div class="header-wrap chat-header col-sm-12">
   <h1> Users </h1>
 </div>
-<div class="pre-scrollable nav-pills users-list col-sm-12 row-sm-12">
+<div class="pre-scrollable users-list col-sm-12 row-sm-12 list-group list-group-info">
   <div *ngFor="let current of userList" role="tablist">
     <app-user [user]="current"></app-user>
   </div>
