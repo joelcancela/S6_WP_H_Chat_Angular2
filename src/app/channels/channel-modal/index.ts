@@ -1,2 +1,2 @@
-export {ChannelListComponent} from "./channel-list.component";
-export {ChannelListModule} from "./channel-list.module";
+export {ChannelModalComponent} from "./channel-modal.component";
+export {ChannelModalModule} from "./channel-modal.module";

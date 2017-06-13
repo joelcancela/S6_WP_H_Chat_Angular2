@@ -14,6 +14,7 @@ import {ChannelService} from "../shared/services/channel/channel.service";
 import {UserComponent} from "./users/user/user.component";
 import {UserListComponent} from "./users/user-list/user-list.component";
 import {UserService} from "../shared/services/user/user.service";
+import {ChannelModalComponent} from "./channels/channel-modal/channel-modal.component";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {UserService} from "../shared/services/user/user.service";
     ChannelComponent,
     ChannelListComponent,
     UserComponent,
-    UserListComponent
+    UserListComponent,
+    ChannelModalComponent
   ],
   imports: [
     BrowserModule,
