@@ -17,7 +17,8 @@ export class MessageFormComponent implements OnInit {
 
   constructor(private messageService: MessageService, private channelService: ChannelService,
               private userService: UserService) {
-    this.message = new MessageModel(1, "kektest", "tigli", new Date().toISOString(), new Date().toISOString(), 1);
+    this.message = new MessageModel(1, "", userService.currentNick, new Date().toISOString(),
+      new Date().toISOString(), 1);
     this.route = this.channelService.currentChannelID + "/messages";
   }
 
@@ -25,8 +26,13 @@ export class MessageFormComponent implements OnInit {
     this.channelService.getChannelNumber().subscribe((channelID) => {
       this.updateRoute(channelID);
     });
-    this.userService.currentUserMP.subscribe(() => {
-      this.route = "users/" + this.userService.currentMP + "/messages?currentUserId=" + "tigli";
+    this.userService.currentMPUserUpdate.subscribe(() => {
+      this.route = "users/" + this.userService.currentMP + "/messages?currentUserId=" + this.userService.currentNick;
+    });
+    this.userService.currentNickUpdate.subscribe(() => {
+      this.route = "users/" + this.userService.currentMP + "/messages?currentUserId=" + this.userService.currentNick;
+      this.message = new MessageModel(1, "", this.userService.currentNick, new Date().toISOString(),
+        new Date().toISOString(), 1);
     });
   }
 
@@ -44,7 +50,7 @@ export class MessageFormComponent implements OnInit {
    */
   sendMessage() {
     const inputElement = <HTMLInputElement>document.getElementById("name");
-    inputElement.value = "";
     this.messageService.sendMessage(this.route, this.message);
+    inputElement.value = "";
   }
 }
