@@ -19,6 +19,8 @@ export class ChannelComponent implements OnInit {
   }
 
   ngOnInit() {
+    const element = document.getElementById("channel" + this.channelService.currentChannelID);
+    element.classList.add("current");
   }
 
   switchChannel(id: number) {
@@ -26,7 +28,11 @@ export class ChannelComponent implements OnInit {
       return;
     }
     else {
+      let channel = document.getElementById("channel" + this.channelService.currentChannelID);
+      channel.classList.remove("current");
       this.channelService.updateChannelID(id);
+      channel = document.getElementById("channel" + id);
+      channel.classList.add("current");
     }
   }
 
