@@ -80,7 +80,7 @@ export class MessageListComponent implements OnInit {
     setTimeout(function () {
       const objDiv = document.getElementById("messages-list");
       objDiv.scrollTop = objDiv.scrollHeight;
-    }, 600);
+    }, 400);
   }
 
   private addNewMessages(messages: MessageModel[]) {
@@ -89,7 +89,7 @@ export class MessageListComponent implements OnInit {
     } else if (messages !== null) {
       let i = messages.length - 1;
       const last = this.messageList[this.messageList.length - 1];
-      if (last.id === messages[i].id) {
+      if (i === -1 || last.id === messages[i].id) {
         return;
       }
       while (i > 0 && last.id !== messages[i].id) {
