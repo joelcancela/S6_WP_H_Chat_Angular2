@@ -73,12 +73,12 @@ export class ChannelService {
     return request;
   }
 
-  public addChannel(name: string) {
+  public addChannel(name: string): Promise<any> {
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
     return this.http.post(this.url, {"name": name}, options)
       .map(response => {
-        return this.extractResponseAndUpdateChannelList(response);
+        this.extractResponseAndUpdateChannelList(response);
       }).catch((error: Response | any) => {
         return Observable.throw(error.json());
       }).toPromise();
