@@ -29,6 +29,9 @@
     <div>
       <iframe class="embedTweet" *ngIf="message.tweet" [src]="message.tweet | safe" frameborder="0"></iframe>
     </div>
+    <div *ngIf="message.instagram">
+      <iframe class="embedInstagram" [src]="message.instagram | safe" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+    </div>
   </div>
   <div class="col-md-3"></div>
 </div>
