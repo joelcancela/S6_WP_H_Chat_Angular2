@@ -74,7 +74,12 @@ export class MessageService {
   }
 
   public getHistory(page: number): Promise<any> {
-    const finalUrl = this.url + this.route + "?page=" + page;
+    let finalUrl = this.url + this.route;
+    if (this.mpMode) {
+      finalUrl = finalUrl + "&page=" + page;
+    } else {
+      finalUrl = finalUrl + "?page=" + page;
+    }
     return this.http.get(finalUrl).map((response => {
       const messageList = response.json() || [];
       this.analyzeMessageContent(messageList);
