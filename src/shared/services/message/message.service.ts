@@ -117,9 +117,13 @@ export class MessageService {
 
   private extractYTURL(messageText: string): string {
     const match = messageText.match(YOUTUBEURL);
-    if (match[2].length === 11) {
-      return "https://www.youtube.com/embed/" + match[2];
+    console.log(match);
+    if (match[2].includes("list")) {
+      return "https://www.youtube.com/embed/watch?v=" + match[2];
+    } else if (match[1].includes("playlist?list=")) {
+      return "https://www.youtube.com/embed/playlist?list=" + match[2];
     }
+    return "https://www.youtube.com/embed/" + match[2];
   }
 
   private extractTweetURL(messageText: string): string {
@@ -129,7 +133,6 @@ export class MessageService {
 
   private extractInstaURL(messageText: string): string {
     const match = messageText.match(INSTAGRAMURL);
-    console.log(match);
     return match[1] + "/embed/";
   }
 
