@@ -33,18 +33,19 @@ export class MessageService {
     this.url = URLSERVER;
     this.messageList$ = new ReplaySubject(1);
     this.messageList$.next([new MessageModel()]);
+    this.mpMode = false;
   }
 
   public switchToThreadMode(id?: number) {
-    console.log("Switching to thread mode");
     this.mpMode = false;
     this.route = "threads/" + id + "/messages";
+    this.getMessages();
   }
 
   public switchToMPMode(currentMP?: string, currentNick?: string) {
-    console.log("Switching to MP mode");
     this.mpMode = true;
     this.route = "users/" + currentMP + "/messages?currentUserId=" + currentNick;
+    this.getMessages();
   }
 
   /**
@@ -63,7 +64,10 @@ export class MessageService {
   }
 
   public getHistory(page: number): Promise<any> {
-    const finalUrl = this.url + this.route + "?page=" + page;
+    let finalUrl = this.url + this.route;
+    if (page !== 0) {
+      finalUrl = finalUrl + "?page=" + page;
+    }
     return this.http.get(finalUrl).map((response => {
       return response.json() || [];
     })).catch((error: Response | any) => {
@@ -77,7 +81,6 @@ export class MessageService {
    * @param message Le message à envoyer. Ce message est de type MessageModel.
    */
   public sendMessage(message: MessageModel) {
-    console.log("post route: " + this.route);
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
     this.http.post(this.url + this.route, message, options).map((res: Response) => res.json()).subscribe(
@@ -108,8 +111,10 @@ export class MessageService {
       }
       this.replaceEmotes(messageList[i]);
     }
-    if (messageList.length !== 0) {
+    if (messageList !== null && messageList.length !== 0) {
       this.messageList$.next(messageList.slice().reverse());
+    } else {
+      this.messageList$.next([]);
     }
   }
 

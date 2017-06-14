@@ -54,10 +54,6 @@ export class ChannelService {
     return response.json() || [];
   }
 
-  public getChannelNumber(): Observable<number> {
-    return this.currentChannelUpdate;
-  }
-
   public getChannelList(): Observable<ChanelModel[]> {
     return this.channelListUpdate;
   }

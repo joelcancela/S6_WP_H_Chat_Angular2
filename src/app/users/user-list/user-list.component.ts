@@ -10,6 +10,7 @@ export class UserListComponent implements OnInit {
   public userList: string[];
 
   constructor(private userService: UserService) {
+    this.userList = [];
   }
 
   ngOnInit() {
