@@ -10,6 +10,7 @@ import {ChannelService} from "../../../shared/services/channel/channel.service";
 export class ChannelListComponent implements OnInit {
 
   public channelList: ChanelModel[];
+  timer: any;
 
   constructor(private channelService: ChannelService) {
   }
@@ -21,11 +22,17 @@ export class ChannelListComponent implements OnInit {
     }).catch(error => {
     });
 
+
+    this.timer = setInterval(() => {
+      this.channelService.getChannelPage().then(array => this.updateChannelList(array));
+    }, 100);
   }
 
-  onScroll(event){
-    if((event.target.scrollTop >= (event.target.scrollHeight)/3)){
-      this.channelService.getChannelPage().then(number => this.channelList = this.channelList.concat(number));
+  updateChannelList(array) {
+    if (array.length == 0) {
+      clearInterval(this.timer);
+      return;
     }
+    this.channelList = this.channelList.concat(array);
   }
 }
