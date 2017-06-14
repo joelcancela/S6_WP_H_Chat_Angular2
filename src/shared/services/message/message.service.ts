@@ -117,7 +117,6 @@ export class MessageService {
 
   private extractYTURL(messageText: string): string {
     const match = messageText.match(YOUTUBEURL);
-    console.log(match);
     if (match[2].includes("list")) {
       return "https://www.youtube.com/embed/watch?v=" + match[2];
     } else if (match[1].includes("playlist?list=")) {

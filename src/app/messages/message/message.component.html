@@ -1,6 +1,6 @@
 <div class="message row" id="message{{message.id}}">
   <div class="col-md-1">
-    <img class="media-object" src="https://avatars0.githubusercontent.com/u/3139051?v=3&s=88">
+    <img class="media-object" [src]="getAvatar(message.from)">
   </div>
   <div class="col-md-5">
     <span class="autor">{{message.from}}</span>
