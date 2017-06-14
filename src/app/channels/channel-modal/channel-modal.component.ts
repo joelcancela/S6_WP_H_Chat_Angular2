@@ -17,12 +17,13 @@ import {ChannelService} from "../../../shared/services/channel/channel.service";
           <label for="channelName">Nom du channel:</label>
         </div>
         <div class="col-md-5">
-          <input [(ngModel)]="channelName" type="text" class="form-control" id="channelName"></div>
+          <input [(ngModel)]="channelName" type="text" class="form-control" id="channelName" (keyup.enter)="createChannel()"></div>
         <div class="col-md-3">
-          <button type="button" class="btn btn-primary btn-sm" (click)="createChannel()">Créer channel</button>
+          <button type="button" class="btn btn-primary btn-sm" (click)="createChannel()">Créer channel
+          </button>
         </div>
       </div>
-      <span class="text-danger" *ngIf="isError">{{channelNameSubmitted}} n'est pas disponible</span>
+      <span class="text-danger" *ngIf="isError">Impossible de créer le channel: "{{channelNameSubmitted}}"</span>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Fermer</button>
