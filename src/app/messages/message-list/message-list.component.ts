@@ -53,12 +53,22 @@ export class MessageListComponent implements OnInit {
       }
     });
     this.messageService.getMessages();
-    this.messageService.messageList$.subscribe((messages) => (this.addNewMessages(messages)));
+    this.messageService.messageList$.subscribe((messages) => {
+      const objDiv = document.getElementById("messages-list");
+      if (objDiv.scrollTop + objDiv.offsetHeight === objDiv.scrollHeight) {
+        this.scrollDownMessages();
+      }
+      this.addNewMessages(messages);
+    });
+    this.scrollDownMessages();
+    this.refreshMessages();
+  }
+
+  public scrollDownMessages() {
     setTimeout(function () {
       const objDiv = document.getElementById("messages-list");
       objDiv.scrollTop = objDiv.scrollHeight;
-    }, 400);
-    this.refreshMessages();
+    }, 600);
   }
 
   private addNewMessages(messages: MessageModel[]) {
