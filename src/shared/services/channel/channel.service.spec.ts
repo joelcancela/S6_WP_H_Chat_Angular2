@@ -1,15 +1,15 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed, inject } from "@angular/core/testing";
 
-import { ChannelService } from './channel.service';
+import { ChannelService } from "./channel.service";
 
-describe('ChannelService', () => {
+describe("ChannelService", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [ChannelService]
     });
   });
 
-  it('should ...', inject([ChannelService], (service: ChannelService) => {
+  it("should ...", inject([ChannelService], (service: ChannelService) => {
     expect(service).toBeTruthy();
   }));
 });

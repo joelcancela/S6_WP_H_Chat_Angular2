@@ -14,7 +14,7 @@ import {ChannelService} from "../shared/services/channel/channel.service";
 import {UserComponent} from "./users/user/user.component";
 import {UserListComponent} from "./users/user-list/user-list.component";
 import {UserService} from "../shared/services/user/user.service";
-import {ChannelModalComponent, ChannelModalContent} from "./channels/channel-modal/channel-modal.component";
+import {ChannelModalComponent, ChannelModalContentComponent} from "./channels/channel-modal/channel-modal.component";
 import {SafePipe} from "../shared/pipes/safe.pipe";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {InfoBarComponent} from "./infobar/infobar.component";
@@ -33,7 +33,7 @@ import {InfoService} from "../shared/services/info/info.service";
     UserListComponent,
     ChannelModalComponent,
     SafePipe,
-    ChannelModalContent,
+    ChannelModalContentComponent,
     InfoBarComponent,
     LinkifyPipe
   ],
@@ -43,7 +43,7 @@ import {InfoService} from "../shared/services/info/info.service";
     HttpModule,
     NgbModule.forRoot(),
   ],
-  entryComponents: [ChannelModalContent],
+  entryComponents: [ChannelModalContentComponent],
   providers: [MessageService, ChannelService, UserService, InfoService],
   bootstrap: [AppComponent]
 })

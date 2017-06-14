@@ -19,7 +19,11 @@ export class InfoBarComponent implements OnInit {
   ngOnInit() {
     document.getElementById("switchbar").style.visibility = "hidden";
     this.infoService.currentInfoUpdate.subscribe(() => {
-      this.info = this.infoService.currentInfo;
+      let newInfo = this.infoService.currentInfo;
+      if (newInfo.length > 40) {
+        newInfo = newInfo.slice(0, 40) + "...";
+      }
+      this.info = newInfo;
     });
   }
 

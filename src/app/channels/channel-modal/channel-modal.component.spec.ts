@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ChannelModalComponent } from './channel-modal.component';
+import { ChannelModalComponent } from "./channel-modal.component";
 
-describe('ChannelModalComponent', () => {
+describe("ChannelModalComponent", () => {
   let component: ChannelModalComponent;
   let fixture: ComponentFixture<ChannelModalComponent>;
 
@@ -19,7 +19,7 @@ describe('ChannelModalComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
