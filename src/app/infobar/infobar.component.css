@@ -1,25 +1,33 @@
+#channelsButton, #usersButton{
+  display: none;
+}
+
 @media (max-width: 780px) {
 
   .chat-header {
-    font-size:2vw;
+    font-size: 2vw;
   }
 
-  #info{
+  #info {
     display: none;
   }
 
-  .input-group{
-    width:50%;
+  .input-group {
+    width: 50%;
     height: 10vh;
   }
 
-  #channelsButton, #usersButton{
+  #channelsButton, #usersButton {
     width: 25%;
     height: 10vh;
   }
 
-  .fa{
+  .fa {
     height: 100%;
-    width:100%;
+    width: 100%;
+  }
+
+  #channelsButton, #usersButton {
+    display: block;
   }
 }

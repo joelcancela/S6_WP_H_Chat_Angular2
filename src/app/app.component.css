@@ -57,14 +57,16 @@ h1 {
   margin: auto;
 }
 
-
 @media (max-width: 760px) {
-  #content{
+  #content, #right-sidebar{
     left: 0;
     right:0;
     top:0;
     bottom: 0;
     min-width: 100%;
     min-height: 100%;
+  }
+
+  #content{
   }
 }
