@@ -1,12 +1,17 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <div class="chat-header header-wrap row">
-  <div class="col-md-9">
-    <span>{{info}} - User name :  </span>
+  <div class="col-md-3" id="channelsButton">
+    <i class="fa fa-comments-o fa-5x"  aria-hidden="true"></i>
   </div>
-  <button class="btn btn-default" id="pseudo" lass="col-md-3" (click)="switchBar()" type="button"><span>{{currentPseudo}}</span></button>
-  <div class="input-group col-md-3" id="switchbar">
-    <input type="text" id="newNick" class="form-control" placeholder="{{currentPseudo}}" (keyup.enter)="switchPseudo()">
-    <span class="input-group-btn" (click)="switchPseudo()">
-        <button class="btn btn-default" type="button">Switch !</button>
-      </span>
-  </div><!-- /input-group -->
+  <div class="col-md-6" id="info">
+    <span >{{info}}</span>
+  </div>
+  <div class="col-md-3 input-group">
+    <input type="text" id="newNick" class="form-control" value="{{currentPseudo}}" (blur)="switchPseudo()">
+  </div>
+  <div class="col-md-3" id="usersButton" (click)="usersView()">
+    <i class="fa fa-user fa-5x" aria-hidden="true"></i>
+  </div>
 </div>
+

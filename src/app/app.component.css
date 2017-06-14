@@ -6,12 +6,6 @@ h1 {
   height: 100%;
 }
 
-body {
-  height:100%;
-  width: 100%;
-  position:relative;
-}
-
 #left-sidebar, #content, #right-sidebar {
   position:absolute;
   top:0;
@@ -37,6 +31,10 @@ body {
   background-color: #FAFAFA;
 }
 
+#channelButton{
+  display: none;
+}
+
 #right-sidebar {
   left: 80%;
   width: 20%;
@@ -59,3 +57,16 @@ body {
   margin: auto;
 }
 
+@media (max-width: 760px) {
+  #content, #right-sidebar{
+    left: 0;
+    right:0;
+    top:0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+  }
+
+  #content{
+  }
+}
