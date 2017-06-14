@@ -74,15 +74,7 @@ export class MessageService {
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
     this.http.post(this.url + route, message, options).map((res: Response) => res.json()).subscribe(
-      (response) => {
-        this.extractMessageAndGetMessages(response, route);
-      },
-      (err) => {
-        /* this function is executed when there's an ERROR */
-      },
-      () => {
-      }
-    );
+      () => (this.getMessages(route)), (err) => (console.log(err)));
   }
 
   /**
@@ -94,9 +86,7 @@ export class MessageService {
    * @param response
    */
   extractAndUpdateMessageList(response: Response) {
-    // Plus d'info sur Response ou sur la fonction .json()? si tu utilises Webstorm,
-    // fait CTRL + Click pour voir la déclaration et la documentation
-    const messageList = response.json() || []; // ExtractMessage: Si response.json() est undefined ou null,
+    const messageList = response.json() || [];
     console.dir(messageList);
     for (let i = 0; i < messageList.length; i++) {
       const messageContent = messageList[i].content;
@@ -112,23 +102,7 @@ export class MessageService {
 
       this.replaceEmotes(messageList[i]);
     }
-    // messageList prendra la valeur tableau vide: [];
-    this.messageList$.next(messageList.slice().reverse()); // On pousse les nouvelles données dans l'attribut messageList$
-  }
-
-  /**
-   * Fonction extractMessage.
-   * Cette fonction permet d'extraire les données reçues à travers les requêtes HTTP. Elle est appelée dans la fonction
-   * sendMessage et permet de directement récuperer un MessageModel.
-   * Elle va également faire un nouvel appel pour récupérer la liste complete des messages pour pouvoir mettre à jour la
-   * liste des messages dans les composants.
-   * @param response
-   * @param route
-   * @returns {any|{}}
-   */
-  private extractMessageAndGetMessages(response: Response, route: string): MessageModel {
-    this.getMessages(route);
-    return new MessageModel(); // A remplacer ! On retourne ici un messageModel vide seulement pour que Typescript ne lève pas d'erreur !
+    this.messageList$.next(messageList.slice().reverse());
   }
 
   private extractImgUrl(messageText: string): string {
