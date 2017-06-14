@@ -1,19 +1,19 @@
 <div class="message" id="message{{message.id}}">
   <div class="row">
     <div class="col-md-1 avatar">
-      <img class="media-object" src="https://avatars0.githubusercontent.com/u/3139051?v=3&s=88">
+      <img class="media-object" [src]="getAvatar(message.from)">
     </div>
     <div class="col-md-5 autor">
-      <span>{{message.from}}</span>
+      <span class="autor">{{message.from}}</span>
     </div>
     <div class="col-md-3 separator"></div>
     <div class="col-md-3 hour">
-      <span>{{message.createdAt}}</span>
+      <span class="hour">{{message.createdAt | dateFormat}}</span>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <span class="message-content" [innerHTML]="message.content | linkify">{{message.content}}</span>
+    <div class="row">
+      <div class="col-md-12">
+        <span class="message-content" [innerHTML]="message.content | linkify">{{message.content}}</span>
+      </div>
     </div>
   </div>
 </div>
@@ -30,6 +30,9 @@
     </div>
     <div>
       <iframe class="embedTweet" *ngIf="message.tweet" [src]="message.tweet | safe" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="message.instagram">
+      <iframe class="embedInstagram" [src]="message.instagram | safe" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
     </div>
   </div>
   <div class="col-md-3"></div>

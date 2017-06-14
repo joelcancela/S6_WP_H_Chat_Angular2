@@ -15,6 +15,11 @@
   border-width: 0;
 }
 
+.embedInstagram {
+  width: 500px;
+  height: 500px;
+}
+
 .embedImage, .embedVideo, .embedTweet {
   display: block;
   margin-left: auto;
@@ -36,8 +41,8 @@
 }
 
 .media-object{
-  max-width: 2vw;
-  max-height: 2vw;
+  max-width: 4vw;
+  max-height: 4vw;
 }
 
 .message{
@@ -64,7 +69,7 @@
   }
 
   .autor{
-    width: 25%;
+    width: 50%;
     font-size: 3vh;
   }
 

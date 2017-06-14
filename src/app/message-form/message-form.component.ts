@@ -2,7 +2,6 @@ import {Component, OnInit} from "@angular/core";
 
 import {MessageService} from "../../shared/services";
 import {MessageModel} from "../../shared/models/MessageModel";
-import {ChannelService} from "../../shared/services/channel/channel.service";
 import {UserService} from "../../shared/services/user/user.service";
 
 @Component({
@@ -13,33 +12,17 @@ import {UserService} from "../../shared/services/user/user.service";
 export class MessageFormComponent implements OnInit {
 
   public message: MessageModel;
-  private route: string;
 
-  constructor(private messageService: MessageService, private channelService: ChannelService,
-              private userService: UserService) {
+  constructor(private messageService: MessageService, private userService: UserService) {
     this.message = new MessageModel(1, "", userService.currentNick, new Date().toISOString(),
       new Date().toISOString(), 1);
-    this.route = this.channelService.currentChannelID + "/messages";
   }
 
   ngOnInit() {
-    this.channelService.getChannelNumber().subscribe((channelID) => {
-      this.updateRoute(channelID);
-    });
-    this.userService.currentMPUserUpdate.subscribe(() => {
-      this.route = "users/" + this.userService.currentMP + "/messages?currentUserId=" + this.userService.currentNick;
-    });
     this.userService.currentNickUpdate.subscribe(() => {
-      this.route = "users/" + this.userService.currentMP + "/messages?currentUserId=" + this.userService.currentNick;
       this.message = new MessageModel(1, "", this.userService.currentNick, new Date().toISOString(),
         new Date().toISOString(), 1);
     });
-  }
-
-
-  updateRoute(number: number) {
-    this.route = "threads/" + number + "/messages";
-    this.messageService.getMessages(this.route);
   }
 
   /**
@@ -50,7 +33,7 @@ export class MessageFormComponent implements OnInit {
    */
   sendMessage() {
     const inputElement = <HTMLInputElement>document.getElementById("name");
-    this.messageService.sendMessage(this.route, this.message);
+    this.messageService.sendMessage(this.message);
     inputElement.value = "";
     setTimeout(function () {
       const objDiv = document.getElementById("messages-list");

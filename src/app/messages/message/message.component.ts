@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 
-import { MessageModel } from "../../../shared/models/MessageModel";
+import {MessageModel} from "../../../shared/models/MessageModel";
 import {getComponent} from "@angular/core/src/linker/component_factory_resolver";
 
 @Component({
@@ -15,6 +15,7 @@ export class MessageComponent implements OnInit {
   constructor() {
     this.message = new MessageModel(0, "Hello!");
   }
+
   /**
    * Fonction ngOnInit.
    * Cette fonction est appelée après l'execution de tous les constructeurs de toutes les classes typescript.
@@ -24,6 +25,10 @@ export class MessageComponent implements OnInit {
    * le faire dans le ngOnInit.
    */
   ngOnInit() {
+  }
+
+  getAvatar(pseudo: string): string {
+    return "https://robohash.org/" + pseudo;
   }
 }
 

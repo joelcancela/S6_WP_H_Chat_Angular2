@@ -20,8 +20,8 @@ export class InfoBarComponent implements OnInit {
     document.getElementById("switchbar").style.visibility = "hidden";
     this.infoService.currentInfoUpdate.subscribe(() => {
       let newInfo = this.infoService.currentInfo;
-      if (newInfo.length > 40) {
-        newInfo = newInfo.slice(0, 40) + "...";
+      if (newInfo.length > 37) {
+        newInfo = newInfo.slice(0, 37) + "...";
       }
       this.info = newInfo;
     });
@@ -42,8 +42,7 @@ export class InfoBarComponent implements OnInit {
       strname = strname.toLocaleLowerCase();
       this.userService.updateNick(strname);
       this.currentPseudo = strname;
-      console.log(strname);
-      window.location.reload();
+      console.log("witched name to " + strname);
     }
   }
 }

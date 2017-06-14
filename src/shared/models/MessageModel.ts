@@ -45,7 +45,15 @@ export class MessageModel {
    */
   public imgUrl: string;
 
+  /**
+   * Contient l'embed url vers le tweet
+   */
   public tweet: string;
+
+  /**
+   * Contient l'embed url vers l'instagram
+   */
+  public instagram: string;
 
   constructor(id?: number, content?: string, from?: string, createdAt?: string, updatedAt?: string, threadId?: number) {
     this.id = id;
