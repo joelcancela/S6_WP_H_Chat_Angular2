@@ -1,12 +1,14 @@
 <div class="chat-header header-wrap row">
-  <div class="col-md-9">
-    <span>{{info}} - User name :  </span>
+  <div class="col-md-9" id="info">
+    <span >{{info}}</span>
   </div>
-  <button class="btn btn-default" id="pseudo" lass="col-md-3" (click)="switchBar()" type="button"><span>{{currentPseudo}}</span></button>
-  <div class="input-group col-md-3" id="switchbar">
+  <div class="col-xs-3"></div>
+  <button class="btn btn-default" id="pseudo" lass="col-xs-9" (click)="switchBar()" type="button"><span>{{currentPseudo}}</span></button>
+  <div class="input-group col-md-9" id="switchbar">
     <input type="text" id="newNick" class="form-control" placeholder="{{currentPseudo}}" (keyup.enter)="switchPseudo()">
     <span class="input-group-btn" (click)="switchPseudo()">
         <button class="btn btn-default" type="button">Switch !</button>
       </span>
   </div><!-- /input-group -->
+  <div class="col-xs-3"></div>
 </div>

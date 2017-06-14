@@ -2,6 +2,21 @@
 /* You can add global styles to this file, and also import other style files */
 
 
+body {
+  height:100%;
+  width: 100%;
+  position:relative;
+}
+
+
+
+@media (max-width: 760px) {
+  #left-sidebar, #right-sidebar{
+    width: 0%;
+  }
+
+}
+
 
 .chat-header {
   height: 5vh;
@@ -12,7 +27,22 @@
   font-family: 'Lato', sans-serif;
 }
 
+@media (max-width: 780px) {
 
+  .chat-header {
+    height: 20vh;
+    width: auto;
+  }
+
+  #pseudo{
+    width: 50vw;
+    margin-right:25%;
+    margin-left: 25%;
+  }
+
+
+
+}
 
 .header-wrap span {
   color: #212121;

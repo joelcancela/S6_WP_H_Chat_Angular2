@@ -46,3 +46,29 @@
   font-family: 'Open Sans', sans-serif;
 
 }
+
+@media (max-width: 780px) {
+
+  .media-object{
+    max-width: 15vw;
+    max-height: 15vh;
+  }
+
+  .col-xs-3{
+    width: auto;
+  }
+
+  .avatar, .hour {
+    width: 25%;
+    font-size: 2vh;
+  }
+
+  .autor{
+    width: 25%;
+    font-size: 3vh;
+  }
+
+  .separator{
+    display: none;
+  }
+}

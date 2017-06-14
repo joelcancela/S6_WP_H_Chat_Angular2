@@ -1,0 +1,11 @@
+@media (max-width: 780px) {
+
+  .chat-header {
+    font-size:2vw;
+  }
+
+  #info{
+    display: none;
+  }
+
+}
