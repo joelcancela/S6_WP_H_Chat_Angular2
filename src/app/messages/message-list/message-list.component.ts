@@ -103,7 +103,7 @@ export class MessageListComponent implements OnInit {
     setTimeout(() => {
       this.messageService.getMessages();
       this.refreshMessages();
-    }, 5000);
+    }, 2000);
   }
 
   public retrieveHistory() {
