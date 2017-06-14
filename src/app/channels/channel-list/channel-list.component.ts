@@ -26,7 +26,7 @@ export class ChannelListComponent implements OnInit {
   }
 
   public searchChannels() {
-    const search = <HTMLInputElement>document.getElementById("searchbar");
+    const search = <HTMLInputElement>document.getElementById("searchbarChannel");
     const strsearch: string = search.value.toLowerCase();
     this.channelList.forEach(function (element) {
       document.getElementById("channel" + element.id).style.display = "block";
