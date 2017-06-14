@@ -17,6 +17,7 @@ export class MessageService {
    * La documentation des methodes du service permet d'avoir plus d'information concernant la façon d'accèder aux messages.
    */
   private url: string;
+  private route: string;
 
   /**
    * MessageList$ est un type d'Observable particulier appelé ReplaySubject.
@@ -26,11 +27,24 @@ export class MessageService {
    * dans lequel vous trouverez une première explication sur les observables ainsi qu'une vidéo tutoriel.
    */
   public messageList$: ReplaySubject<MessageModel[]>;
+  public mpMode: boolean;
 
   constructor(private http: Http) {
     this.url = URLSERVER;
     this.messageList$ = new ReplaySubject(1);
     this.messageList$.next([new MessageModel()]);
+  }
+
+  public switchToThreadMode(id?: number) {
+    console.log("Switching to thread mode");
+    this.mpMode = false;
+    this.route = "threads/" + id + "/messages";
+  }
+
+  public switchToMPMode(currentMP?: string, currentNick?: string) {
+    console.log("Switching to MP mode");
+    this.mpMode = true;
+    this.route = "users/" + currentMP + "/messages?currentUserId=" + currentNick;
   }
 
   /**
@@ -40,19 +54,18 @@ export class MessageService {
    *          Pour l'envoie des messages la route doit avoir la structure suivante: :id/messages avec ":id" étant
    *          un nombre entier correspondant à l'identifiant (id) du channel.
    * Exemple de route: 1/messages
-   * @param route
    * @returns {Observable<R>}
    */
-  public getMessages(route: string) {
-    const finalUrl = this.url + route;
+  public getMessages() {
+    const finalUrl = this.url + this.route;
     this.http.get(finalUrl)
       .subscribe((response) => this.extractAndUpdateMessageList(response),
         (error) => {
         });
   }
 
-  public getHistory(route: string, page: number): Promise<any> {
-    const finalUrl = this.url + route + "?page=" + page;
+  public getHistory(page: number): Promise<any> {
+    const finalUrl = this.url + this.route + "?page=" + page;
     return this.http.get(finalUrl).map((response => {
       return response.json() || [];
     })).catch((error: Response | any) => {
@@ -63,19 +76,14 @@ export class MessageService {
   /**
    * Fonction sendMessage.
    * Cette fonction permet l'envoi d'un message. Elle prend en paramêtre:
-   * - route: La route est la fin de l'url. Elle sera concaténée à l'attribut this.url pour former l'url complète. Pour
-   *          l'envoie des messages la route doit avoir la structure suivante: :id/messages avec ":id" étant un nombre
-   *          entier correspondant à l'identifiant (id) du channel.
-   *          Exemple de route: 1/messages
-   * - message: Le message à envoyer. Ce message est de type MessageModel.
-   * @param route
-   * @param message
+   * @param message Le message à envoyer. Ce message est de type MessageModel.
    */
-  public sendMessage(route: string, message: MessageModel) {
+  public sendMessage(message: MessageModel) {
+    console.log("post route: " + this.route);
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
-    this.http.post(this.url + route, message, options).map((res: Response) => res.json()).subscribe(
-      () => (this.getMessages(route)), (err) => (console.log(err)));
+    this.http.post(this.url + this.route, message, options).map((res: Response) => res.json()).subscribe(
+      () => (this.getMessages()), (err) => (console.log(err)));
   }
 
   /**
@@ -100,7 +108,6 @@ export class MessageService {
       } else if (INSTAGRAMURL.test(messageContent)) {
         messageList[i].instagram = this.extractInstaURL(messageContent);
       }
-
       this.replaceEmotes(messageList[i]);
     }
     if (messageList.length !== 0) {
@@ -116,7 +123,6 @@ export class MessageService {
 
   private extractYTURL(messageText: string): string {
     const match = messageText.match(YOUTUBEURL);
-    console.log(match);
     if (match[2].includes("list")) {
       return "https://www.youtube.com/embed/watch?v=" + match[2];
     } else if (match[1].includes("playlist?list=")) {

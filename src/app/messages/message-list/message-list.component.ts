@@ -13,33 +13,26 @@ import {UserService} from "../../../shared/services/user/user.service";
 export class MessageListComponent implements OnInit {
 
   public messageList: MessageModel[];
-  private route: string;
   private maxPage;
   private reachedEnd: boolean;
 
   constructor(private messageService: MessageService, private channelService: ChannelService,
               private userService: UserService) {
-    this.route = "threads/" + this.channelService.currentChannelID + "/messages";
-    this.channelService.getChannelNumber().subscribe(() => {
-      this.messageList = [];
-      this.route = "threads/" + this.channelService.currentChannelID + "/messages";
-    });
+    this.messageList = [];
     this.maxPage = 0;
     this.reachedEnd = false;
-    this.messageList = [];
-    this.userService.currentMPUserUpdate.subscribe(() => {
-      this.resetRouteAndMessages();
-    });
-    this.userService.currentNickUpdate.subscribe(() => {
-      if (this.route.match("users")) {
-        this.resetRouteAndMessages();
-      }
-    });
   }
 
-  private resetRouteAndMessages() {
+  private enableMpMode() {
     this.messageList = [];
-    this.route = "users/" + this.userService.currentMP + "/messages?currentUserId=" + this.userService.currentNick;
+    this.messageService.switchToMPMode(this.userService.currentMP, this.userService.currentNick);
+    this.messageService.getMessages();
+  }
+
+  private enableThreadMode() {
+    this.messageList = [];
+    this.messageService.switchToThreadMode(this.channelService.currentChannelID);
+    this.messageService.getMessages();
   }
 
   /**
@@ -52,26 +45,15 @@ export class MessageListComponent implements OnInit {
    * l"initialisation simple des variables. Pour plus d"information sur le ngOnInit, il y a un lien dans le README.
    */
   ngOnInit() {
-    this.messageService.getMessages(this.route);
-    this.messageService.messageList$.subscribe((messages) => {
-      if (this.messageList === null || this.messageList.length === 0) {
-        this.messageList = messages;
-      } else if (messages !== null) {
-        let i = messages.length - 1;
-        const last = this.messageList[this.messageList.length - 1];
-        if (last.id === messages[i].id) {
-          return;
-        }
-        while (i > 0 && last.id !== messages[i].id) {
-          i--;
-        }
-        i++;
-        while (i < messages.length) {
-          this.messageList.push(messages[i]);
-          i++;
-        }
+    this.channelService.getChannelNumber().subscribe(() => (this.enableThreadMode()));
+    this.userService.currentMPUserUpdate.subscribe(() => (this.enableMpMode()));
+    this.userService.currentNickUpdate.subscribe(() => {
+      if (this.messageService.mpMode) {
+        this.enableMpMode();
       }
     });
+    this.messageService.getMessages();
+    this.messageService.messageList$.subscribe((messages) => (this.addNewMessages(messages)));
     setTimeout(function () {
       const objDiv = document.getElementById("messages-list");
       objDiv.scrollTop = objDiv.scrollHeight;
@@ -79,16 +61,36 @@ export class MessageListComponent implements OnInit {
     this.refreshMessages();
   }
 
+  private addNewMessages(messages: MessageModel[]) {
+    if (this.messageList === null || this.messageList.length === 0) {
+      this.messageList = messages;
+    } else if (messages !== null) {
+      let i = messages.length - 1;
+      const last = this.messageList[this.messageList.length - 1];
+      if (last.id === messages[i].id) {
+        return;
+      }
+      while (i > 0 && last.id !== messages[i].id) {
+        i--;
+      }
+      i++;
+      while (i < messages.length) {
+        this.messageList.push(messages[i]);
+        i++;
+      }
+    }
+  }
+
   refreshMessages() {
     setTimeout(() => {
-      this.messageService.getMessages(this.route);
+      this.messageService.getMessages();
       this.refreshMessages();
     }, 2000);
   }
 
   public retrieveHistory() {
     if (!this.reachedEnd) {
-      this.messageService.getHistory(this.route, this.maxPage).then((response) => {
+      this.messageService.getHistory(this.maxPage).then((response) => {
         this.messageList = response.slice().reverse().concat(this.messageList);
         if (response.length < 20) {
           this.reachedEnd = true;

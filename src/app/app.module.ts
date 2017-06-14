@@ -37,7 +37,7 @@ import { DateFormatPipe } from "../shared/pipes/date-format.pipe";
     ChannelModalContentComponent,
     InfoBarComponent,
     LinkifyPipe,
-    DateFormatPipe
+    DateFormatPipe,
   ],
   imports: [
     BrowserModule,

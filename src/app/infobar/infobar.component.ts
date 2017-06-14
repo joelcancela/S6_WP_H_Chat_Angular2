@@ -43,7 +43,7 @@ export class InfoBarComponent implements OnInit {
       this.userService.updateNick(strname);
       this.currentPseudo = strname;
       console.log(strname);
-      window.location.reload();
+      // window.location.reload();
     }
   }
 }
