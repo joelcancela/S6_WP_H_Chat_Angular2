@@ -10,16 +10,27 @@ import {Subject} from "rxjs/Subject";
 export class ChannelService {
 
   private url: string;
-  private pageNumber: number = 1;
-  currentChannelID: number = 350;
+  private pageNumber: number = 0;
+  private timer: any;
+  //Channel ID
+  currentChannelID: number = 0;
   currentChannelSubject: Subject<number>;
   currentChannelUpdate: Observable<number>;
+  //Channel list
+  channelList: ChanelModel[] = [];
+  channelListSubject: Subject<ChanelModel[]>;
+  channelListUpdate: Observable<ChanelModel[]>;
 
   constructor(private http: Http) {
     this.url = URLSERVER + "/threads/";
+    // Observable for channel ID
     this.currentChannelSubject = new Subject();
     this.currentChannelUpdate = this.currentChannelSubject.asObservable();
-    this.retrieveChannels().then(number => this.currentChannelID = number[0].id);
+    // Observable for channel list
+    this.channelListSubject = new Subject();
+    this.channelListUpdate = this.channelListSubject.asObservable();
+    //
+    this.update();
   }
 
   updateChannelID(newValue: number) {
@@ -27,13 +38,15 @@ export class ChannelService {
     this.currentChannelSubject.next(this.currentChannelID);
   }
 
-  public retrieveChannels(): Promise<any> {
-    return this.http.get(this.url)
-      .map(response => {
-        return this.extractResponseAndUpdateChannelList(response);
-      }).catch((error: Response | any) => {
-        return Observable.throw(error.json());
-      }).toPromise();
+  updateChannelList(array) {
+    if (array.length == 0) {
+      clearInterval(this.timer);
+      return;
+    }
+    this.channelList = this.channelList.concat(array);
+    this.channelListSubject.next(this.channelList);
+    if (this.pageNumber == 1)
+      this.updateChannelID(this.channelList[0].id);
   }
 
   private extractResponseAndUpdateChannelList(response: Response): ChanelModel[] {
@@ -42,6 +55,10 @@ export class ChannelService {
 
   public getChannelNumber(): Observable<number> {
     return this.currentChannelUpdate;
+  }
+
+  public getChannelList(): Observable<ChanelModel[]> {
+    return this.channelListUpdate;
   }
 
   public getChannelPage(): Promise<any> {
@@ -65,4 +82,19 @@ export class ChannelService {
         return Observable.throw(error.json());
       }).toPromise();
   }
+
+  resetChannels() {
+    this.channelList = [];
+    this.pageNumber = 0;
+    this.update();
+  }
+
+  private update() {
+    this.timer = setInterval(() => {
+      this.getChannelPage().then(array => this.updateChannelList(array));
+    }, 100);
+
+  }
+
+
 }

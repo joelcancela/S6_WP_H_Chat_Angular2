@@ -22,7 +22,6 @@ export class MessageListComponent implements OnInit {
     this.route = "threads/" + this.channelService.currentChannelID + "/messages";
     this.channelService.getChannelNumber().subscribe(() => {
       this.messageList = [];
-      console.log("Switching channels, resetting messages...");
       this.route = "threads/" + this.channelService.currentChannelID + "/messages";
     });
     this.maxPage = 0;
@@ -32,7 +31,6 @@ export class MessageListComponent implements OnInit {
       this.resetRouteAndMessages();
     });
     this.userService.currentNickUpdate.subscribe(() => {
-      console.log("Nick change detected in component");
       if (this.route.match("users")) {
         this.resetRouteAndMessages();
       }
@@ -42,7 +40,6 @@ export class MessageListComponent implements OnInit {
   private resetRouteAndMessages() {
     this.messageList = [];
     this.route = "users/" + this.userService.currentMP + "/messages?currentUserId=" + this.userService.currentNick;
-    console.log("Changing route to: " + this.route);
   }
 
   /**
@@ -59,21 +56,17 @@ export class MessageListComponent implements OnInit {
     this.messageService.messageList$.subscribe((messages) => {
       if (this.messageList === null || this.messageList.length === 0) {
         this.messageList = messages;
-        console.log("Replaced messages");
       } else if (messages !== null) {
         let i = messages.length - 1;
         const last = this.messageList[this.messageList.length - 1];
         if (last.id === messages[i].id) {
           return;
         }
-        console.log("last message id was " + last.id);
         while (i > 0 && last.id !== messages[i].id) {
           i--;
         }
         i++;
-        console.log(20 - i + " new messages");
         while (i < messages.length) {
-          console.log("loading new message of id " + messages[i].id);
           this.messageList.push(messages[i]);
           i++;
         }
@@ -87,7 +80,6 @@ export class MessageListComponent implements OnInit {
   }
 
   refreshMessages() {
-    console.log("Refreshed");
     setTimeout(() => {
       this.messageService.getMessages(this.route);
       this.refreshMessages();
@@ -110,7 +102,6 @@ export class MessageListComponent implements OnInit {
 
   public onScroll(event: Event) {
     if (event.srcElement.scrollTop === 0) {
-      console.log("Reached top of the page, retrieving messages");
       this.retrieveHistory();
     }
   };

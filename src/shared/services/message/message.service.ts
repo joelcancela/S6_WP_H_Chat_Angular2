@@ -44,7 +44,6 @@ export class MessageService {
    */
   public getMessages(route: string) {
     const finalUrl = this.url + route;
-    console.log("requested " + finalUrl);
     this.http.get(finalUrl)
       .subscribe((response) => this.extractAndUpdateMessageList(response));
   }
@@ -96,7 +95,6 @@ export class MessageService {
     // Plus d'info sur Response ou sur la fonction .json()? si tu utilises Webstorm,
     // fait CTRL + Click pour voir la déclaration et la documentation
     const messageList = response.json() || []; // ExtractMessage: Si response.json() est undefined ou null,
-    console.dir(messageList);
     for (let i = 0; i < messageList.length; i++) {
       let url;
       if ((url = this.extractImgUrl(messageList[i].content)) != null) {
