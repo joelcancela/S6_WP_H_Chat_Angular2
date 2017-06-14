@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {UserService} from "../../shared/services/user/user.service";
 import {InfoService} from "../../shared/services/info/info.service";
+import {el} from "@angular/platform-browser/testing/src/browser_util";
 
 @Component({
   selector: "app-infobar",
@@ -37,5 +38,10 @@ export class InfoBarComponent implements OnInit {
       this.currentPseudo = strname;
       console.log("witched name to " + strname);
     }
+    document.getElementById("swapButton").style.display = "none";
+  }
+
+  displayButton() {
+    document.getElementById("swapButton").style.display = "inline";
   }
 }
