@@ -88,6 +88,7 @@ export class MessageService {
    */
   extractAndUpdateMessageList(response: Response) {
     const messageList = response.json() || [];
+    console.log("yop");
     console.dir(messageList);
     for (let i = 0; i < messageList.length; i++) {
       const messageContent = messageList[i].content;
@@ -103,7 +104,9 @@ export class MessageService {
 
       this.replaceEmotes(messageList[i]);
     }
-    this.messageList$.next(messageList.slice().reverse());
+    if (messageList.length !== 0) {
+      this.messageList$.next(messageList.slice().reverse());
+    }
   }
 
   private extractImgUrl(messageText: string): string {

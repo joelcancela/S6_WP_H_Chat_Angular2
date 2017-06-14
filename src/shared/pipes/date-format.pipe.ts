@@ -7,6 +7,9 @@ import {DatePipe} from "@angular/common";
 export class DateFormatPipe implements PipeTransform {
 
   transform(date: any, args?: any): any {
+    if (date == null) {
+      return null;
+    }
     const currentDate = new Date();
     const day = currentDate.getDay();
     const dateA = new Date(date);
