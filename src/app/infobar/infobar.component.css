@@ -2,6 +2,14 @@
   display: none;
 }
 
+#swapButton{
+  display: none;
+}
+
+#swapButton button{
+  height: 100%;
+}
+
 @media (max-width: 780px) {
 
   .chat-header {
@@ -20,11 +28,6 @@
   #channelsButton, #usersButton {
     width: 25%;
     height: 10vh;
-  }
-
-  .fa {
-    height: 100%;
-    width: 100%;
   }
 
   #channelsButton, #usersButton {
