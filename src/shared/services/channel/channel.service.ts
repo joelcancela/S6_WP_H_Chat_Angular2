@@ -13,7 +13,7 @@ export class ChannelService {
   private pageNumber = 0;
   private timer: any;
   // Channel ID
-  currentChannelID = 0;
+  currentChannelID = -1;
   currentChannelSubject: Subject<number>;
   currentChannelUpdate: Observable<number>;
   // Channel list
@@ -54,10 +54,6 @@ export class ChannelService {
     return response.json() || [];
   }
 
-  public getChannelNumber(): Observable<number> {
-    return this.currentChannelUpdate;
-  }
-
   public getChannelList(): Observable<ChanelModel[]> {
     return this.channelListUpdate;
   }
@@ -73,12 +69,12 @@ export class ChannelService {
     return request;
   }
 
-  public addChannel(name: string) {
+  public addChannel(name: string): Promise<any> {
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
     return this.http.post(this.url, {"name": name}, options)
       .map(response => {
-        return this.extractResponseAndUpdateChannelList(response);
+        this.extractResponseAndUpdateChannelList(response);
       }).catch((error: Response | any) => {
         return Observable.throw(error.json());
       }).toPromise();

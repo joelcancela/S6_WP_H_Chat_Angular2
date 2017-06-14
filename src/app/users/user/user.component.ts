@@ -23,7 +23,9 @@ export class UserComponent implements OnInit {
     this.userService.updateUserMP(name);
     this.infoService.updateTitle("MP: " + name);
     const channel = document.getElementById("channel" + this.channelService.currentChannelID);
-    channel.classList.remove("current");
+    if (channel !== null) {
+      channel.classList.remove("current");
+    }
     this.channelService.updateChannelID(-1);
   }
 

@@ -25,14 +25,16 @@ export class MessageListComponent implements OnInit {
 
   private enableMpMode() {
     this.messageList = [];
+    this.reachedEnd = false;
+    this.maxPage = 0;
     this.messageService.switchToMPMode(this.userService.currentMP, this.userService.currentNick);
-    this.messageService.getMessages();
   }
 
   private enableThreadMode() {
     this.messageList = [];
+    this.reachedEnd = false;
+    this.maxPage = 0;
     this.messageService.switchToThreadMode(this.channelService.currentChannelID);
-    this.messageService.getMessages();
   }
 
   /**
@@ -45,14 +47,20 @@ export class MessageListComponent implements OnInit {
    * l"initialisation simple des variables. Pour plus d"information sur le ngOnInit, il y a un lien dans le README.
    */
   ngOnInit() {
-    this.channelService.getChannelNumber().subscribe(() => (this.enableThreadMode()));
-    this.userService.currentMPUserUpdate.subscribe(() => (this.enableMpMode()));
+    this.enableThreadMode();
+    this.channelService.currentChannelUpdate.subscribe(() => {
+      if (this.channelService.currentChannelID !== -1) {
+        this.enableThreadMode();
+      }
+    });
+    this.userService.currentMPUserUpdate.subscribe(() => {
+      this.enableMpMode();
+    });
     this.userService.currentNickUpdate.subscribe(() => {
       if (this.messageService.mpMode) {
         this.enableMpMode();
       }
     });
-    this.messageService.getMessages();
     this.messageService.messageList$.subscribe((messages) => {
       const objDiv = document.getElementById("messages-list");
       if (objDiv.scrollTop + objDiv.offsetHeight === objDiv.scrollHeight) {
@@ -95,7 +103,7 @@ export class MessageListComponent implements OnInit {
     setTimeout(() => {
       this.messageService.getMessages();
       this.refreshMessages();
-    }, 2000);
+    }, 5000);
   }
 
   public retrieveHistory() {
