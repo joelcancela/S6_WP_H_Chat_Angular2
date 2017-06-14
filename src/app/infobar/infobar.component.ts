@@ -36,7 +36,7 @@ export class InfoBarComponent implements OnInit {
       strname = strname.toLocaleLowerCase();
       this.userService.updateNick(strname);
       this.currentPseudo = strname;
-      console.log("witched name to " + strname);
+      console.log("switched name to " + strname);
     }
     document.getElementById("swapButton").style.display = "none";
   }

@@ -20,7 +20,8 @@ export class MessageFormComponent implements OnInit {
 
   ngOnInit() {
     this.userService.currentNickUpdate.subscribe(() => {
-      this.message = new MessageModel(1, "", this.userService.currentNick, new Date().toISOString(),
+      const inputElement = <HTMLInputElement>document.getElementById("name");
+      this.message = new MessageModel(1, inputElement.value, this.userService.currentNick, new Date().toISOString(),
         new Date().toISOString(), 1);
     });
   }
