@@ -72,7 +72,6 @@ export class MessageListComponent implements OnInit {
       }
       this.addNewMessages(messages);
     });
-    this.scrollDownMessages();
     this.refreshMessages();
   }
 
