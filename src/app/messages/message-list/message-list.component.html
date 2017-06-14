@@ -1,9 +1,8 @@
-<div class="pre-scrollable messages-list col-sm-12 row-sm-12" id="messages-list">
-<!-- On boucle sur tous les messages de notre liste de messages stockés dans messageList -->
-<button (click)="retrieveHistory()">^</button>
-<div class="chatbody" *ngFor="let currentMessage of messageList" role="tablist" >
+<div class="pre-scrollable messages-list col-sm-12 row-sm-12" id="messages-list" (scroll)="onScroll($event)">
+  <!-- On boucle sur tous les messages de notre liste de messages stockés dans messageList -->
+  <div class="chatbody" *ngFor="let currentMessage of messageList" role="tablist">
     <!--CurrentMessage est le message courant dans la boucle -->
     <!--On donne notre message courant en Input (en entrée, parametre) du composant Message qui va lui l'afficher.-->
     <app-message [message]="currentMessage"></app-message>
-</div>
+  </div>
 

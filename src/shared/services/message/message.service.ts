@@ -6,6 +6,7 @@ import "rxjs/add/operator/catch";
 import {MessageModel} from "../../models/MessageModel";
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {URLSERVER} from "shared/constants/urls";
+import {IMGURL, INSTAGRAMURL, TWEETURL, YOUTUBEURL} from "../../constants/regexs";
 
 @Injectable()
 export class MessageService {
@@ -44,7 +45,6 @@ export class MessageService {
    */
   public getMessages(route: string) {
     const finalUrl = this.url + route;
-    console.log("requested " + finalUrl);
     this.http.get(finalUrl)
       .subscribe((response) => this.extractAndUpdateMessageList(response));
   }
@@ -73,15 +73,7 @@ export class MessageService {
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
     this.http.post(this.url + route, message, options).map((res: Response) => res.json()).subscribe(
-      (response) => {
-        this.extractMessageAndGetMessages(response, route);
-      },
-      (err) => {
-        /* this function is executed when there's an ERROR */
-      },
-      () => {
-      }
-    );
+      () => (this.getMessages(route)), (err) => (console.log(err)));
   }
 
   /**
@@ -93,68 +85,46 @@ export class MessageService {
    * @param response
    */
   extractAndUpdateMessageList(response: Response) {
-    // Plus d'info sur Response ou sur la fonction .json()? si tu utilises Webstorm,
-    // fait CTRL + Click pour voir la déclaration et la documentation
-    const messageList = response.json() || []; // ExtractMessage: Si response.json() est undefined ou null,
+    const messageList = response.json() || [];
     console.dir(messageList);
     for (let i = 0; i < messageList.length; i++) {
-      let url;
-      if ((url = this.extractImgUrl(messageList[i].content)) != null) {
-        messageList[i].imgUrl = url;
-      } else if ((url = this.extractYTURL(messageList[i].content)) != null) {
-        messageList[i].ytUrl = url;
-      } else if ((url = this.extractTweetURL(messageList[i].content)) != null) {
-        messageList[i].tweet = url;
+      const messageContent = messageList[i].content;
+      if (IMGURL.test(messageContent)) {
+        messageList[i].imgUrl = this.extractImgUrl(messageContent);
+      } else if (YOUTUBEURL.test(messageContent)) {
+        messageList[i].ytUrl = this.extractYTURL(messageContent);
+      } else if (TWEETURL.test(messageContent)) {
+        messageList[i].tweet = this.extractTweetURL(messageContent);
+      } else if (INSTAGRAMURL.test(messageContent)) {
+        messageList[i].tweet = this.extractInstaURL(messageContent);
       }
 
       this.replaceEmotes(messageList[i]);
     }
-    // messageList prendra la valeur tableau vide: [];
-    this.messageList$.next(messageList.slice().reverse()); // On pousse les nouvelles données dans l'attribut messageList$
-  }
-
-  /**
-   * Fonction extractMessage.
-   * Cette fonction permet d'extraire les données reçues à travers les requêtes HTTP. Elle est appelée dans la fonction
-   * sendMessage et permet de directement récuperer un MessageModel.
-   * Elle va également faire un nouvel appel pour récupérer la liste complete des messages pour pouvoir mettre à jour la
-   * liste des messages dans les composants.
-   * @param response
-   * @param route
-   * @returns {any|{}}
-   */
-  private extractMessageAndGetMessages(response: Response, route: string): MessageModel {
-    this.getMessages(route);
-    return new MessageModel(); // A remplacer ! On retourne ici un messageModel vide seulement pour que Typescript ne lève pas d'erreur !
+    this.messageList$.next(messageList.slice().reverse());
   }
 
   private extractImgUrl(messageText: string): string {
-    const reg = new RegExp("https?:\/\/[^ \t\n]*(.jpg|.png|.jpeg)");
     let result;
-    if ((result = messageText.match(reg)) != null) {
-      return result[0];
-    }
-    return null;
+    result = messageText.match(IMGURL);
+    return result[0];
   }
 
   private extractYTURL(messageText: string): string {
-    const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\? \t\n]*).*/;
-    const match = messageText.match(regExp);
-    if (match && match[2].length === 11) {
+    const match = messageText.match(YOUTUBEURL);
+    if (match[2].length === 11) {
       return "https://www.youtube.com/embed/" + match[2];
-    } else {
-      return null;
     }
   }
 
   private extractTweetURL(messageText: string): string {
-    const regExp = /^.*(https?:\/\/twitter.com\/[^ \t\n]+\/status\/[\d]+).*/;
-    const match = messageText.match(regExp);
-    if (match) {
-      return "http://twitframe.com/show?url=" + match[0];
-    } else {
-      return null;
-    }
+    const match = messageText.match(TWEETURL);
+    return "http://twitframe.com/show?url=" + match[0];
+  }
+
+  private extractInstaURL(messageText: string): string {
+    const match = messageText.match(INSTAGRAMURL);
+    return match[0] + "/embed/";
   }
 
   private replaceEmotes(message: MessageModel) {
@@ -167,17 +137,5 @@ export class MessageService {
         message.content = message.content.replace(emotes[i], rep[i]);
       }
     }
-  }
-
-  private setUrl(message: MessageModel, url: string) {
-    const headers = new Headers({"Origin": "http://www.jqueryscript.net"});
-    const options = new RequestOptions({headers: headers});
-    this.http.get(url, options)
-      .subscribe(
-        (rep) => {
-          if (rep.headers.get("Content-Type").startsWith("image")) {
-            message.imgUrl = url;
-          }
-        });
   }
 }

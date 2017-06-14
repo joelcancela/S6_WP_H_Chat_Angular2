@@ -32,13 +32,13 @@ export class InfoBarComponent implements OnInit {
   public switchPseudo() {
     const name = <HTMLInputElement>document.getElementById("newNick");
     let strname: string = name.value;
-    const letters = new RegExp("/[^A-Za-z0-9 ]/", "");
+    const letters = /[^A-Za-z+]/gi;
+    strname = strname.replace(letters, "");
     if (strname !== "") {
-      strname.replace(letters, "");
       strname = strname.toLocaleLowerCase();
-      console.log("Changing nick to " + strname);
       this.userService.updateNick(strname);
       this.currentPseudo = strname;
+      console.log(strname);
       window.location.reload();
     }
   }
