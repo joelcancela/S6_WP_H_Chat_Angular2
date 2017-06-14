@@ -39,7 +39,7 @@ export class ChannelModalContentComponent {
   }
 
   createChannel() {
-    this.isError = false;g
+    this.isError = false;
     this.channelService.addChannel(this.channelName)
       .then(rep => {
         this.refreshChannels();
