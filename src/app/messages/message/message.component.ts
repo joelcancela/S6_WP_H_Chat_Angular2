@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 
 import { MessageModel } from "../../../shared/models/MessageModel";
+import {getComponent} from "@angular/core/src/linker/component_factory_resolver";
 
 @Component({
   selector: "app-message",
@@ -22,8 +23,8 @@ export class MessageComponent implements OnInit {
    * pas dans le constructeur. Si vous souhaitez manipuler votre message lors du chargement du composant, vous devez
    * le faire dans le ngOnInit.
    */
-  ngOnInit() { }
-
-
-
+  ngOnInit() {
+  }
 }
+
+

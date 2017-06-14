@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="251.0"  xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="dvt.exemple.quizz.QuizzControl">
+   <children>
+      <BorderPane prefHeight="251.0" >
+         <top>
+            <Label fx:id="question" text="question" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="52.0" />
+               </font>
+            </Label>
+         </top>
+         <center>
+            <GridPane BorderPane.alignment="CENTER">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0"  />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0"  />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0"  />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="reponse1" mnemonicParsing="false" text="Réponse 1">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="reponse2" mnemonicParsing="false" text="Réponse 2" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="reponse3" mnemonicParsing="false" text="Réponse 3" GridPane.columnIndex="2">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Button>
+               </children>
+            </GridPane>
+         </center>
+         <bottom>
+            <Label fx:id="info" text="Bravo" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </Label>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>

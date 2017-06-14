@@ -1,0 +1,25 @@
+/* préférences de fontes pour écrire grand */
+
+.selectedbutton{
+    -fx-font-size: 80px;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+}
+
+.unselectedbutton{
+    -fx-font-size: 80px;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+}
+
+.button{
+    -fx-font-size: 80px;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+}
+
+.label{
+    -fx-font-size: 80px;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+}

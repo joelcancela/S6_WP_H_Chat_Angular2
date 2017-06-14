@@ -9,20 +9,6 @@
   overflow-x: hidden;
 }
 
-.chat-header {
-  height: 5vh;
-  min-height: 5vh;
-  text-align: center;
-  margin: auto;
-}
-
-.header-wrap span {
-  color: #212121;
-  font-size: 3vh;
-  line-height: 3vh;
-  font-weight: bold;
-}
-
 ::-webkit-scrollbar {
   width: 12px;
 }

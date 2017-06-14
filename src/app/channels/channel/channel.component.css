@@ -3,10 +3,11 @@ h5{
   font-size: 2vh;
 }
 
-  .channel-item{
-    background-color: #EEEEEE;
-    border:none;
-  }
+.channel-item{
+  background-color: #EEEEEE;
+  border:none;
+  font-family: 'Open Sans', sans-serif;
+}
 
 .channel-item:hover{
   color: #E3F2FD;

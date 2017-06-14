@@ -1,0 +1,61 @@
+/* style de couleur devint pour les couleurs */
+/* .il y a seulement les ocmposant utilisés dans les exemples, à vous de compléter en
+ * respectant la cohérence des couleurs.
+ * NOTA: pour choisir les couleurs : http://www.w3schools.com/colors/colors_picker.asp
+ */ 
+ 
+ /* très contrasté bleu, fond foncé, texte clair  */
+
+.root{
+   -fx-background: #e6e6ff;
+}
+
+.grid-pane{
+	-fx-background-color: #e6e6ff;
+}
+
+.fond{
+	-fx-fill: #e6e6ff;
+}
+
+.button{
+	 -fx-background-color: 
+  		#e6e6ff,
+        #00004d; 
+    -fx-background-insets: 0,5;
+    -fx-background-radius: 0,20;
+    -fx-padding: 10,10,10,10;
+    -fx-text-fill: #e6e6ff;
+}
+
+.label{	 
+	-fx-background-color: 
+ 		#00004d,
+ 		#e6e6ff;
+    -fx-background-insets: 0,5; 
+    -fx-background-radius: 0,20; 
+    -fx-padding: 10,10,10,10; 
+    -fx-text-fill:#00004D;
+}
+
+.selectedbutton{ 
+	 -fx-background-color: /* 2 couleurs superposées */
+ 		#00004d,
+ 		#e6e6ff;
+    -fx-background-insets: 0,5; /* on fait un bord => on diminue la surface du blanc */
+    -fx-background-radius: 0,20; /* boutons arrondis */
+    -fx-padding: 10,10,10,10; /* espaces réservés autour du texte */
+    -fx-text-fill:#00004d;
+}
+
+.unselectedbutton{
+	 -fx-background-color: 
+  		#e6e6ff,
+        #00004d; 
+    -fx-background-insets: 0,5;
+    -fx-background-radius: 0,20;
+    -fx-padding: 10,10,10,10;
+    -fx-text-fill: #e6e6ff;
+}
+
+

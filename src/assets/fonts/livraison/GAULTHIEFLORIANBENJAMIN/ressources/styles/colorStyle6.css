@@ -1,0 +1,62 @@
+/* style de couleur devint pour les couleurs */
+/* .il y a seulement les ocmposant utilisés dans les exemples, à vous de compléter en
+ * respectant la cohérence des couleurs.
+ * NOTA: pour choisir les couleurs : http://www.w3schools.com/colors/colors_picker.asp
+ */ 
+ 
+ /* contrasté rose, fond clair, texte foncé  */
+
+
+.root{
+   -fx-background: #4d3319;
+}
+
+.grid-pane{
+	-fx-background-color: #4d3319;
+}
+
+.fond{
+	-fx-fill: #4d3319;
+}
+
+.button{
+	 -fx-background-color: 
+  		#4d3319, 
+  		#f2e6d9;
+    -fx-background-insets: 0,5;
+    -fx-background-radius: 0,20;
+    -fx-padding: 10,10,10,10;
+    -fx-text-fill: #4d3319;
+}
+
+.label{	 
+	 -fx-background-color: 
+  		#f2e6d9,
+        #4d3319; 
+    -fx-background-insets: 0,5;
+    -fx-background-radius: 0,20;
+    -fx-padding: 10,10,10,10;
+    -fx-text-fill: #f2e6d9;
+}
+
+.selectedbutton{ 
+	 -fx-background-color: 
+  		#f2e6d9,
+        #4d3319; 
+    -fx-background-insets: 0,5;
+    -fx-background-radius: 0,20;
+    -fx-padding: 10,10,10,10;
+    -fx-text-fill: #f2e6d9;
+}
+
+.unselectedbutton{
+	 -fx-background-color: /* 2 couleurs superposées */
+ 		#4d3319,
+ 		#f2e6d9;
+    -fx-background-insets: 0,5; /* on fait un bord => on diminue la surface du blanc */
+    -fx-background-radius: 0,20; /* boutons arrondis */
+    -fx-padding: 10,10,10,10; /* espaces réservés autour du texte */
+    -fx-text-fill:#4d3319;
+}
+
+

@@ -83,7 +83,6 @@ export class MessageListComponent implements OnInit {
   }
 
   refreshMessages() {
-    console.log("Refreshed");
     setTimeout(() => {
       this.messageService.getMessages(this.route);
       this.refreshMessages();
