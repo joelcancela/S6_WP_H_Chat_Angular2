@@ -15,25 +15,29 @@ export class MessageListComponent implements OnInit {
   public messageList: MessageModel[];
   private maxPage;
   private reachedEnd: boolean;
+  public lock: boolean;
 
   constructor(private messageService: MessageService, private channelService: ChannelService,
               private userService: UserService) {
     this.messageList = [];
-    this.maxPage = 0;
+    this.maxPage = 1;
     this.reachedEnd = false;
+    this.lock = false;
   }
 
   private enableMpMode() {
+    this.lock = true;
     this.messageList = [];
     this.reachedEnd = false;
-    this.maxPage = 0;
+    this.maxPage = 1;
     this.messageService.switchToMPMode(this.userService.currentMP, this.userService.currentNick);
   }
 
   private enableThreadMode() {
+    this.lock = true;
     this.messageList = [];
     this.reachedEnd = false;
-    this.maxPage = 0;
+    this.maxPage = 1;
     this.messageService.switchToThreadMode(this.channelService.currentChannelID);
   }
 
@@ -103,6 +107,7 @@ export class MessageListComponent implements OnInit {
     setTimeout(() => {
       this.messageService.getMessages();
       this.refreshMessages();
+      this.lock = false;
     }, 2000);
   }
 
@@ -121,7 +126,7 @@ export class MessageListComponent implements OnInit {
   }
 
   public onScroll(event: Event) {
-    if (event.srcElement.scrollTop === 0) {
+    if (event.srcElement.scrollTop === 0 && !this.lock) {
       this.retrieveHistory();
     }
   };
