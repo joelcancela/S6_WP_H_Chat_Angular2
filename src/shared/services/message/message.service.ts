@@ -63,13 +63,20 @@ export class MessageService {
   public getMessages() {
     const finalUrl = this.url + this.route;
     this.http.get(finalUrl)
-      .subscribe((response) => this.extractAndUpdateMessageList(response));
+      .subscribe((response) => {
+        const messageList = response.json() || [];
+        console.dir(messageList);
+        this.analyzeMessageContent(messageList);
+        this.pushMessages(messageList);
+      });
   }
 
   public getHistory(page: number): Promise<any> {
     const finalUrl = this.url + this.route + "?page=" + page;
     return this.http.get(finalUrl).map((response => {
-      return response.json() || [];
+      const messageList = response.json() || [];
+      this.analyzeMessageContent(messageList);
+      return messageList;
     })).catch((error: Response | any) => {
       return Observable.throw(error.json());
     }).toPromise();
@@ -87,17 +94,7 @@ export class MessageService {
       () => (this.getMessages()), (err) => (console.log(err)));
   }
 
-  /**
-   * Fonction extractAndUpdateMessageList.
-   * Cette fonction permet d'extraire la liste des messages de la 'response' reçue et ensuite de mettre à jour la liste
-   * des message dans l'observable messageList$.
-   * Elle est appelée dans la fonction getMessages et permet de directement récuperer une liste de MessageModel. Pour récupérer
-   * les données de la reponse, il suffit d'appeler la fonction .json() qui retourne le body de la réponse.
-   * @param response
-   */
-  extractAndUpdateMessageList(response: Response) {
-    const messageList = response.json() || [];
-    console.dir(messageList);
+  public analyzeMessageContent(messageList?: MessageModel[]) {
     for (let i = 0; i < messageList.length; i++) {
       const messageContent = messageList[i].content;
       if (IMGURL.test(messageContent)) {
@@ -111,6 +108,9 @@ export class MessageService {
       }
       this.replaceEmotes(messageList[i]);
     }
+  }
+
+  private pushMessages(messageList: MessageModel[]) {
     if (messageList !== null && messageList.length !== 0) {
       this.messageList$.next(messageList.slice().reverse());
     } else {
