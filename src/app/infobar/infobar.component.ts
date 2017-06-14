@@ -5,8 +5,9 @@ import {InfoService} from "../../shared/services/info/info.service";
 @Component({
   selector: "app-infobar",
   templateUrl: "./infobar.component.html",
-  styleUrls: ["./infobar.component.css"]
+  styleUrls: ["./infobar.component.css"],
 })
+
 export class InfoBarComponent implements OnInit {
   public info: string;
   public currentPseudo: string;
@@ -16,17 +17,33 @@ export class InfoBarComponent implements OnInit {
   }
 
   ngOnInit() {
+    document.getElementById("switchbar").style.visibility = "hidden";
     this.infoService.currentInfoUpdate.subscribe(() => {
-      this.info = this.infoService.currentInfo;
+      let newInfo = this.infoService.currentInfo;
+      if (newInfo.length > 40) {
+        newInfo = newInfo.slice(0, 40) + "...";
+      }
+      this.info = newInfo;
     });
+  }
+
+  switchBar() {
+    const element = document.getElementById("pseudo");
+    element.parentNode.removeChild(element);
+    document.getElementById("switchbar").style.visibility = "visible";
   }
 
   public switchPseudo() {
     const name = <HTMLInputElement>document.getElementById("newNick");
-    if (name.value !== "") {
-      this.userService.updateNick(name.value);
-      this.currentPseudo = name.value;
+    let strname: string = name.value;
+    const letters = /[^A-Za-z+]/gi;
+    strname = strname.replace(letters, "");
+    if (strname !== "") {
+      strname = strname.toLocaleLowerCase();
+      this.userService.updateNick(strname);
+      this.currentPseudo = strname;
+      console.log(strname);
+      window.location.reload();
     }
   }
-
 }

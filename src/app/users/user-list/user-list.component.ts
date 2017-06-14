@@ -1,5 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {UserModel} from "../../../shared/models/UserModel";
 import {UserService} from "../../../shared/services/";
 
 @Component({
@@ -8,7 +7,7 @@ import {UserService} from "../../../shared/services/";
   styleUrls: ["./user-list.component.css"]
 })
 export class UserListComponent implements OnInit {
-  public userList: UserModel[];
+  public userList: string[];
 
   constructor(private userService: UserService) {
   }
@@ -27,4 +26,14 @@ export class UserListComponent implements OnInit {
     }, 15000);
   }
 
+  searchUsers() {
+    const search = <HTMLInputElement>document.getElementById("searchbar");
+    const strsearch: string = search.value;
+    this.userList.forEach(function (element) {
+      document.getElementById("user-" + element).style.display = "block";
+      if (!element.includes(strsearch) && strsearch !== "") {
+        document.getElementById("user-" + element).style.display = "none";
+      }
+    });
+  }
 }

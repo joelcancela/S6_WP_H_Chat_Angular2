@@ -1,9 +1,12 @@
-<h2>{{info}}</h2>
-<p>
-  Pseudo:
-  <input type="text" id="newNick">
-  <button (click)="switchPseudo()">
-    Switch
-  </button>
-  Current name: {{currentPseudo}}
-</p>
+<div class="chat-header header-wrap row">
+  <div class="col-md-9">
+    <span>{{info}} - User name :  </span>
+  </div>
+  <button class="btn btn-default" id="pseudo" lass="col-md-3" (click)="switchBar()" type="button"><span>{{currentPseudo}}</span></button>
+  <div class="input-group col-md-3" id="switchbar">
+    <input type="text" id="newNick" class="form-control" placeholder="{{currentPseudo}}" (keyup.enter)="switchPseudo()">
+    <span class="input-group-btn" (click)="switchPseudo()">
+        <button class="btn btn-default" type="button">Switch !</button>
+      </span>
+  </div><!-- /input-group -->
+</div>

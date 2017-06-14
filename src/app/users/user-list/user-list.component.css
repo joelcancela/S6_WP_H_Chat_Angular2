@@ -4,22 +4,9 @@
 }
 
 .users-list {
-  height: 95vh;
-  min-height: 95vh;
+  height: 90vh;
+  min-height: 90vh;
   overflow-x: hidden;
-}
-
-.chat-header {
-  height: 5vh;
-  min-height: 5vh;
-  text-align: center;
-  margin: auto;
-}
-
-h1 {
-  color: #212121;
-  font-size: 3vh;
-  line-height: 3vh;
 }
 
 ::-webkit-scrollbar {
@@ -29,4 +16,8 @@ h1 {
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background-color: #212121;
+}
+
+.chat-header {
+  height: 10vh;
 }

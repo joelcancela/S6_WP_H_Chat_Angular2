@@ -10,6 +10,7 @@ h5{
 .user-item{
   background-color: #EEEEEE;
   border:none;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .user-item:hover{

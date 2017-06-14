@@ -98,7 +98,7 @@ export class MessageService {
       } else if (TWEETURL.test(messageContent)) {
         messageList[i].tweet = this.extractTweetURL(messageContent);
       } else if (INSTAGRAMURL.test(messageContent)) {
-        messageList[i].tweet = this.extractInstaURL(messageContent);
+        messageList[i].instagram = this.extractInstaURL(messageContent);
       }
 
       this.replaceEmotes(messageList[i]);
@@ -126,7 +126,8 @@ export class MessageService {
 
   private extractInstaURL(messageText: string): string {
     const match = messageText.match(INSTAGRAMURL);
-    return match[0] + "/embed/";
+    console.log(match);
+    return match[1] + "/embed/";
   }
 
   private replaceEmotes(message: MessageModel) {

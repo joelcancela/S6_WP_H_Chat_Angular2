@@ -1,2 +1,26 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 /* You can add global styles to this file, and also import other style files */
+
+
+
+.chat-header {
+  height: 5vh;
+  text-align: center;
+  line-height: 5vh; /* hauteur de ligne (identique) */
+  white-space: nowrap; /* interdiction de passer à la ligne */
+  font-weight: bold;
+  font-family: 'Lato', sans-serif;
+}
+
+
+
+.header-wrap span {
+  color: #212121;
+  font-size: 3vh;
+  line-height: 3vh;
+  font-weight: bold;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Rokkitt');
+@import url('https://fonts.googleapis.com/css?family=Lato');

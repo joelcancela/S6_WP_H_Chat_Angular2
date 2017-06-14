@@ -1,5 +1,11 @@
 <div class="header-wrap chat-header col-sm-12">
-  <h1> Users </h1>
+  <span> Users </span>
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="User search..." id="searchbar" (keyup.enter)="searchUsers()">
+    <span class="input-group-btn">
+        <button class="btn btn-default" type="button" (click)="searchUsers()">Go!</button>
+      </span>
+  </div><!-- /input-group -->
 </div>
 <div class="pre-scrollable users-list col-sm-12 row-sm-12 list-group list-group-info">
   <div *ngFor="let current of userList" role="tablist">
