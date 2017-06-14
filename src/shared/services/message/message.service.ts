@@ -46,7 +46,9 @@ export class MessageService {
   public getMessages(route: string) {
     const finalUrl = this.url + route;
     this.http.get(finalUrl)
-      .subscribe((response) => this.extractAndUpdateMessageList(response));
+      .subscribe((response) => this.extractAndUpdateMessageList(response),
+        (error) => {
+        });
   }
 
   public getHistory(route: string, page: number): Promise<any> {

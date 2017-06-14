@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from "@angular/core";
 import {ChanelModel} from "../../../shared/models/ChannelModel";
 import {ChannelService} from "../../../shared/services/channel/channel.service";
 import {InfoService} from "../../../shared/services/info/info.service";
+import {isUndefined} from "util";
 
 @Component({
   selector: "app-channel",
@@ -20,8 +21,12 @@ export class ChannelComponent implements OnInit {
 
   ngOnInit() {
     const element = document.getElementById("channel" + this.channelService.currentChannelID);
-    element.classList.add("current");
-    this.infoService.updateTitle("Channel " + element.innerText);
+    if (element == null) {
+      this.infoService.updateTitle("Channel ");
+    } else {
+      element.classList.add("current");
+      this.infoService.updateTitle("Channel " + element.innerText);
+    }
   }
 
   switchChannel(id: number) {
