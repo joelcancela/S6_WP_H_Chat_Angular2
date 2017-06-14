@@ -14,9 +14,17 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.refreshUsers();
+  }
+
+  public refreshUsers() {
+    console.log("Fetching user list...");
     this.userService.getUsers().then(response => {
       this.userList = response;
     });
+    setTimeout(() => {
+      this.refreshUsers();
+    }, 15000);
   }
 
 }
