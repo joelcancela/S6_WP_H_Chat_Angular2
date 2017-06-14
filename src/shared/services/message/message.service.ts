@@ -8,6 +8,7 @@ import {ReplaySubject} from "rxjs/ReplaySubject";
 import {URLSERVER} from "shared/constants/urls";
 import {IMGURL, INSTAGRAMURL, TWEETURL, YOUTUBEURL} from "../../constants/regexs";
 import {isUndefined} from "util";
+import {EMOTES, REG_EMOTES} from "shared/constants/emotes";
 
 @Injectable()
 export class MessageService {
@@ -163,13 +164,10 @@ export class MessageService {
   }
 
   private replaceEmotes(message: MessageModel) {
-    const emotes = [new RegExp(":\\)"), new RegExp(";\\)"), new RegExp(":'\\("), new RegExp(":\\("), new RegExp(":D"),
-      new RegExp(":p"), new RegExp("<3"), new RegExp(":o")];
-    const rep = ["🙂", "😉", "😢", "☹", "😃", "😛", "💗", "😯"];
     let result;
-    for (const i in emotes) {
-      if ((result = message.content.match(emotes[i])) != null) {
-        message.content = message.content.replace(emotes[i], rep[i]);
+    for (let i = 0; i < REG_EMOTES.length; i++) {
+      while ((result = message.content.match(REG_EMOTES[i])) != null) {
+        message.content = message.content.replace(REG_EMOTES[i], EMOTES[i]);
       }
     }
   }
