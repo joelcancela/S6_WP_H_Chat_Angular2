@@ -24,4 +24,15 @@ export class ChannelListComponent implements OnInit {
       }
     });
   }
+
+  public searchChannels() {
+    const search = <HTMLInputElement>document.getElementById("searchbar");
+    const strsearch: string = search.value;
+    this.channelList.forEach(function (element) {
+      document.getElementById("channel" + element.id).style.display = "block";
+      if (!element.name.includes(strsearch) && strsearch !== "") {
+        document.getElementById("channel" + element.id).style.display = "none";
+      }
+    });
+  }
 }
