@@ -61,7 +61,6 @@ export class MessageListComponent implements OnInit {
         this.enableMpMode();
       }
     });
-    this.messageService.getMessages();
     this.messageService.messageList$.subscribe((messages) => {
       const objDiv = document.getElementById("messages-list");
       if (objDiv.scrollTop + objDiv.offsetHeight === objDiv.scrollHeight) {

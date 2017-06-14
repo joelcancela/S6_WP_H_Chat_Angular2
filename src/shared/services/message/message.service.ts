@@ -37,6 +37,9 @@ export class MessageService {
   }
 
   public switchToThreadMode(id?: number) {
+    if (id === -1) {
+      return;
+    }
     this.mpMode = false;
     this.route = "threads/" + id + "/messages";
     this.getMessages();

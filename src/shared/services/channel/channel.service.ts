@@ -13,7 +13,7 @@ export class ChannelService {
   private pageNumber = 0;
   private timer: any;
   // Channel ID
-  currentChannelID = 0;
+  currentChannelID = -1;
   currentChannelSubject: Subject<number>;
   currentChannelUpdate: Observable<number>;
   // Channel list
