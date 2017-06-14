@@ -10,6 +10,7 @@ import {ChannelService} from "../../../shared/services/channel/channel.service";
 export class ChannelListComponent implements OnInit {
 
   public channelList: ChanelModel[];
+  private firstChan = true;
 
   constructor(private channelService: ChannelService) {
   }
@@ -17,7 +18,10 @@ export class ChannelListComponent implements OnInit {
   ngOnInit() {
     this.channelService.getChannelList().subscribe(newValue => {
       this.channelList = newValue;
-      this.channelService.updateChannelID(this.channelList[0].id);
+      if (this.firstChan && this.channelList.length > 1) {
+        this.channelService.updateChannelID(this.channelList[0].id);
+        this.firstChan = false;
+      }
     });
   }
 }
