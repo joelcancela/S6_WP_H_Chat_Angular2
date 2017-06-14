@@ -14,7 +14,7 @@ export class ChannelComponent implements OnInit {
   private channelNumber: number;
 
   constructor(private channelService: ChannelService, private infoService: InfoService) {
-    let date = new Date().toISOString();
+    const date = new Date().toISOString();
     this.channel = new ChanelModel(this.channelNumber, "Général", date, date);
   }
 
@@ -25,10 +25,18 @@ export class ChannelComponent implements OnInit {
   }
 
   switchChannel(id: number) {
-    if (id == this.channelService.currentChannelID) {
+    if (id === this.channelService.currentChannelID) {
       return;
-    }
-    else {
+    } else if (this.channelService.currentChannelID === -1) {
+      this.channelService.updateChannelID(id);
+      const channel = document.getElementById("channel" + id);
+      channel.classList.add("current");
+      this.infoService.updateTitle("Channel " + channel.innerText);
+      setTimeout(function () {
+        const objDiv = document.getElementById("messages-list");
+        objDiv.scrollTop = objDiv.scrollHeight;
+      }, 500);
+    } else {
       let channel = document.getElementById("channel" + this.channelService.currentChannelID);
       channel.classList.remove("current");
       this.channelService.updateChannelID(id);
@@ -36,7 +44,7 @@ export class ChannelComponent implements OnInit {
       channel.classList.add("current");
       this.infoService.updateTitle("Channel " + channel.innerText);
       setTimeout(function () {
-        var objDiv = document.getElementById("messages-list");
+        const objDiv = document.getElementById("messages-list");
         objDiv.scrollTop = objDiv.scrollHeight;
       }, 500);
     }

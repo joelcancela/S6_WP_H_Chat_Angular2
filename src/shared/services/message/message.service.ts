@@ -6,6 +6,7 @@ import "rxjs/add/operator/catch";
 import {MessageModel} from "../../models/MessageModel";
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {URLSERVER} from "shared/constants/urls";
+import {IMGURL, INSTAGRAMURL, TWEETURL, YOUTUBEURL} from "../../constants/regexs";
 
 @Injectable()
 export class MessageService {
@@ -96,13 +97,15 @@ export class MessageService {
     // fait CTRL + Click pour voir la déclaration et la documentation
     const messageList = response.json() || []; // ExtractMessage: Si response.json() est undefined ou null,
     for (let i = 0; i < messageList.length; i++) {
-      let url;
-      if ((url = this.extractImgUrl(messageList[i].content)) != null) {
-        messageList[i].imgUrl = url;
-      } else if ((url = this.extractYTURL(messageList[i].content)) != null) {
-        messageList[i].ytUrl = url;
-      } else if ((url = this.extractTweetURL(messageList[i].content)) != null) {
-        messageList[i].tweet = url;
+      const messageContent = messageList[i].content;
+      if (IMGURL.test(messageContent)) {
+        messageList[i].imgUrl = this.extractImgUrl(messageContent);
+      } else if (YOUTUBEURL.test(messageContent)) {
+        messageList[i].ytUrl = this.extractYTURL(messageContent);
+      } else if (TWEETURL.test(messageContent)) {
+        messageList[i].tweet = this.extractTweetURL(messageContent);
+      } else if (INSTAGRAMURL.test(messageContent)) {
+        messageList[i].tweet = this.extractInstaURL(messageContent);
       }
 
       this.replaceEmotes(messageList[i]);
@@ -127,32 +130,26 @@ export class MessageService {
   }
 
   private extractImgUrl(messageText: string): string {
-    const reg = new RegExp("https?:\/\/[^ \t\n]*(.jpg|.png|.jpeg|.svg)");
     let result;
-    if ((result = messageText.match(reg)) != null) {
-      return result[0];
-    }
-    return null;
+    result = messageText.match(IMGURL);
+    return result[0];
   }
 
   private extractYTURL(messageText: string): string {
-    const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\? \t\n]*).*/;
-    const match = messageText.match(regExp);
-    if (match && match[2].length === 11) {
+    const match = messageText.match(YOUTUBEURL);
+    if (match[2].length === 11) {
       return "https://www.youtube.com/embed/" + match[2];
-    } else {
-      return null;
     }
   }
 
   private extractTweetURL(messageText: string): string {
-    const regExp = /^.*(https?:\/\/twitter.com\/[^ \t\n]+\/status\/[\d]+).*/;
-    const match = messageText.match(regExp);
-    if (match) {
-      return "http://twitframe.com/show?url=" + match[0];
-    } else {
-      return null;
-    }
+    const match = messageText.match(TWEETURL);
+    return "http://twitframe.com/show?url=" + match[0];
+  }
+
+  private extractInstaURL(messageText: string): string {
+    const match = messageText.match(INSTAGRAMURL);
+    return match[0] + "/embed/";
   }
 
   private replaceEmotes(message: MessageModel) {
@@ -165,17 +162,5 @@ export class MessageService {
         message.content = message.content.replace(emotes[i], rep[i]);
       }
     }
-  }
-
-  private setUrl(message: MessageModel, url: string) {
-    const headers = new Headers({"Origin": "http://www.jqueryscript.net"});
-    const options = new RequestOptions({headers: headers});
-    this.http.get(url, options)
-      .subscribe(
-        (rep) => {
-          if (rep.headers.get("Content-Type").startsWith("image")) {
-            message.imgUrl = url;
-          }
-        });
   }
 }
