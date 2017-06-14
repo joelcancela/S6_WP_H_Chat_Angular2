@@ -15,6 +15,9 @@ export class ChannelListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.channelService.getChannelList().subscribe(newValue => {this.channelList = newValue; this.channelService.updateChannelID(this.channelList[0].id)});
+    this.channelService.getChannelList().subscribe(newValue => {
+      this.channelList = newValue;
+      this.channelService.updateChannelID(this.channelList[0].id);
+    });
   }
 }

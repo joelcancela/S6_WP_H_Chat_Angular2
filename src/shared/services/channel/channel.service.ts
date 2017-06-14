@@ -10,13 +10,13 @@ import {Subject} from "rxjs/Subject";
 export class ChannelService {
 
   private url: string;
-  private pageNumber: number = 0;
+  private pageNumber = 0;
   private timer: any;
-  //Channel ID
-  currentChannelID: number = 0;
+  // Channel ID
+  currentChannelID = 0;
   currentChannelSubject: Subject<number>;
   currentChannelUpdate: Observable<number>;
-  //Channel list
+  // Channel list
   channelList: ChanelModel[] = [];
   channelListSubject: Subject<ChanelModel[]>;
   channelListUpdate: Observable<ChanelModel[]>;
@@ -39,14 +39,15 @@ export class ChannelService {
   }
 
   updateChannelList(array) {
-    if (array.length == 0) {
+    if (array.length === 0) {
       clearInterval(this.timer);
       return;
     }
     this.channelList = this.channelList.concat(array);
     this.channelListSubject.next(this.channelList);
-    if (this.pageNumber == 1)
+    if (this.pageNumber === 1) {
       this.updateChannelID(this.channelList[0].id);
+    }
   }
 
   private extractResponseAndUpdateChannelList(response: Response): ChanelModel[] {
@@ -62,7 +63,7 @@ export class ChannelService {
   }
 
   public getChannelPage(): Promise<any> {
-    var request = this.http.get(this.url + "?page=" + this.pageNumber)
+    const request = this.http.get(this.url + "?page=" + this.pageNumber)
       .map(response => {
         return this.extractResponseAndUpdateChannelList(response);
       }).catch((error: Response | any) => {
@@ -73,11 +74,11 @@ export class ChannelService {
   }
 
   public addChannel(name: string) {
-    let headers = new Headers({"Content-Type": "application/json"});
-    let options = new RequestOptions({headers: headers});
+    const headers = new Headers({"Content-Type": "application/json"});
+    const options = new RequestOptions({headers: headers});
     return this.http.post(this.url, {"name": name}, options)
       .map(response => {
-        return this.extractResponseAndUpdateChannelList(response)
+        return this.extractResponseAndUpdateChannelList(response);
       }).catch((error: Response | any) => {
         return Observable.throw(error.json());
       }).toPromise();

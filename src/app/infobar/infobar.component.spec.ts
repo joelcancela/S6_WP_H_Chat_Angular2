@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 
 import {InfoBarComponent} from "./infobar.component";
 
-describe('InfoBarComponent', () => {
+describe("InfoBarComponent", () => {
   let component: InfoBarComponent;
   let fixture: ComponentFixture<InfoBarComponent>;
 
@@ -19,7 +19,7 @@ describe('InfoBarComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
