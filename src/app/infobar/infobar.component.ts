@@ -24,7 +24,6 @@ export class InfoBarComponent implements OnInit {
   public switchPseudo() {
     const name = <HTMLInputElement>document.getElementById("newNick");
     if (name.value !== "") {
-      console.log("Changing nick to " + name.value);
       this.userService.updateNick(name.value);
       this.currentPseudo = name.value;
     }

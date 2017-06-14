@@ -31,13 +31,15 @@ import {ChannelService} from "../../../shared/services/channel/channel.service";
 })
 export class ChannelModalContent {
 
-  channelName: string = "nouveauChannel";
+  channelName: string = "";
 
   constructor(public activeModal: NgbActiveModal, private channelService: ChannelService) {
   }
 
-  createChannel(){//TODO
+  createChannel(){
     this.channelService.addChannel(this.channelName);
+    this.channelService.resetChannels();
+    this.activeModal.dismiss();
   }
 }
 
@@ -51,6 +53,7 @@ export class ChannelModalComponent {
 
   open() {
     const modalRef = this.modalService.open(ChannelModalContent);
+    document.getElementById("channelName").focus();
   }
 
 }

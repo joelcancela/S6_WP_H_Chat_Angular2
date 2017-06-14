@@ -45,7 +45,6 @@ export class MessageService {
    */
   public getMessages(route: string) {
     const finalUrl = this.url + route;
-    console.log("requested " + finalUrl);
     this.http.get(finalUrl)
       .subscribe((response) => this.extractAndUpdateMessageList(response));
   }
@@ -88,6 +87,7 @@ export class MessageService {
   extractAndUpdateMessageList(response: Response) {
     const messageList = response.json() || [];
     console.dir(messageList);
+    const messageList = response.json() || [];
     for (let i = 0; i < messageList.length; i++) {
       const messageContent = messageList[i].content;
       if (IMGURL.test(messageContent)) {

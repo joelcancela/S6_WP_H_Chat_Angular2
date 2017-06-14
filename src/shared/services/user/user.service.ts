@@ -43,7 +43,6 @@ export class UserService {
 
   public updateNick(newNick: string) {
     this.currentNick = newNick;
-    console.log("user service: nick changed to " + newNick);
     this.nickSubject.next(newNick);
     localStorage.setItem("nickname", newNick);
   }
