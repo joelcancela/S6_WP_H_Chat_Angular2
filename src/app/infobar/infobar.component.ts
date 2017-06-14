@@ -17,7 +17,6 @@ export class InfoBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    document.getElementById("switchbar").style.visibility = "hidden";
     this.infoService.currentInfoUpdate.subscribe(() => {
       let newInfo = this.infoService.currentInfo;
       if (newInfo.length > 37) {
@@ -25,12 +24,6 @@ export class InfoBarComponent implements OnInit {
       }
       this.info = newInfo;
     });
-  }
-
-  switchBar() {
-    const element = document.getElementById("pseudo");
-    element.parentNode.removeChild(element);
-    document.getElementById("switchbar").style.visibility = "visible";
   }
 
   public switchPseudo() {
