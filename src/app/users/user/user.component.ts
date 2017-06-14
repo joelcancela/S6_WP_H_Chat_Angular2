@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from "@angular/core";
 import {UserModel} from "../../../shared/models/UserModel";
 import {UserService} from "../../../shared/services/user/user.service";
 import {InfoService} from "../../../shared/services/info/info.service";
+import {ChannelService} from "../../../shared/services/channel/channel.service";
 
 @Component({
   selector: "app-user",
@@ -11,7 +12,7 @@ import {InfoService} from "../../../shared/services/info/info.service";
 export class UserComponent implements OnInit {
   @Input() user: UserModel;
 
-  constructor(private userService: UserService, private infoService: InfoService) {
+  constructor(private userService: UserService, private infoService: InfoService, private channelService: ChannelService) {
     this.user = new UserModel("test");
   }
 
@@ -21,6 +22,7 @@ export class UserComponent implements OnInit {
   loadMP(name: string) {
     this.userService.updateUserMP(name);
     this.infoService.updateTitle("MP: " + name);
+    this.channelService.updateChannelID(-1);
   }
 
 }
