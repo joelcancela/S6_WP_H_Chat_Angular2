@@ -87,7 +87,6 @@ export class MessageService {
   extractAndUpdateMessageList(response: Response) {
     const messageList = response.json() || [];
     console.dir(messageList);
-    const messageList = response.json() || [];
     for (let i = 0; i < messageList.length; i++) {
       const messageContent = messageList[i].content;
       if (IMGURL.test(messageContent)) {
