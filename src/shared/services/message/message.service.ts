@@ -7,6 +7,7 @@ import {MessageModel} from "../../models/MessageModel";
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {URLSERVER} from "shared/constants/urls";
 import {IMGURL, INSTAGRAMURL, TWEETURL, YOUTUBEURL} from "../../constants/regexs";
+import {isUndefined} from "util";
 
 @Injectable()
 export class MessageService {
@@ -126,13 +127,15 @@ export class MessageService {
 
   private extractYTURL(messageText: string): string {
     const match = messageText.match(YOUTUBEURL);
-    const timeReg = /[&|?]t=(\d)*h?(\d)*m?(\d)+s/;
+    const timeReg = /[&|?]t=((\d*)h)?((\d*)m)?(\d+)s/;
     let time;
     match[2] = match[2].replace("\&feature=youtu\.be", "");
     console.log(match[2]);
     if ((time = match[2].match(timeReg))) {
       console.log(time);
-      const seconds = (time[1] * 60 * 60) + (time[2] * 60) + time[3] * 1;
+      const hours = isUndefined(time[2]) ? 0 : time[2];
+      const minutes = isUndefined(time[4]) ? 0 : time[4];
+      const seconds = (hours * 60 * 60) + (minutes * 60) + (time[5] * 1);
       console.log(seconds);
       match[2] = match[2].replace(timeReg, "?start=" + seconds);
     }
