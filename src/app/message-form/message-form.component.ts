@@ -48,7 +48,6 @@ export class MessageFormComponent implements OnInit {
       return;
     } else if (this.message.content.startsWith("/meteo ")) {
       this.meteo.getMeteo(this.message.content).then((answer) => {
-        console.log(answer);
         this.messageService.sendMessage(new MessageModel(1, answer, this.userService.currentNick,
           new Date().toISOString(), new Date().toISOString(), 1));
         inputElement.value = "";
@@ -56,10 +55,13 @@ export class MessageFormComponent implements OnInit {
       return;
     } else if (new RegExp(TRAD_TEMPLATE).test(this.message.content)) {
       this.translateService.translate(this.message.content).then((answer) => {
-        console.log(answer);
-        this.messageService.sendMessage(new MessageModel(1, answer, this.userService.currentNick,
-          new Date().toISOString(), new Date().toISOString(), 1));
-        inputElement.value = "";
+        if (!answer) {
+          inputElement.value = " Commande traduction invalide";
+        } else {
+          this.messageService.sendMessage(new MessageModel(1, answer, this.userService.currentNick,
+            new Date().toISOString(), new Date().toISOString(), 1));
+          inputElement.value = "";
+        }
       });
       return;
     } else {
