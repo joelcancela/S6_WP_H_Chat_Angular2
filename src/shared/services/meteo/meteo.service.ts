@@ -14,7 +14,7 @@ export class MeteoService {
     const reg = /\/meteo ([^\t\n]+)/;
     const city = cmd.match(reg)[1];
     let temp, wind, description;
-    return this.http.get(URLMETEO + city + "&appid=" + OPENWEATHERAPIKEY)
+    return this.http.get(URLMETEO + city + "&appid=" + OPENWEATHERAPIKEY + "&lang=fr")
       .map((response) => {
         description = response.json()["weather"][0]["description"];
         console.log(description);
