@@ -35,4 +35,8 @@ export class ChannelListComponent implements OnInit {
       }
     });
   }
+
+  public refreshChannels() {
+    this.channelService.resetChannels();
+  }
 }

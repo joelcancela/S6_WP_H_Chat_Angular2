@@ -1,6 +1,7 @@
 <div class="header-wrap chat-header col-sm-12">
   <span>Channels</span>
   <app-channel-modal-component></app-channel-modal-component>
+  <button type="button" (click)="refreshChannels()" class="btn btn-sm btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button>
 </div>
 <div class="input-group">
   <input type="text" class="form-control" placeholder="Channel search..." id="searchbarChannel" (keyup)="searchChannels()">
