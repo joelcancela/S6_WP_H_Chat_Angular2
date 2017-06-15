@@ -60,7 +60,6 @@ export class MessageService {
    *          Pour l'envoie des messages la route doit avoir la structure suivante: :id/messages avec ":id" étant
    *          un nombre entier correspondant à l'identifiant (id) du channel.
    * Exemple de route: 1/messages
-   * @returns {Observable<R>}
    */
   public getMessages() {
     const finalUrl = this.url + this.route;
@@ -95,6 +94,9 @@ export class MessageService {
    * @param message Le message à envoyer. Ce message est de type MessageModel.
    */
   public sendMessage(message: MessageModel) {
+    if (message.content.trim().length === 0) {
+      return;
+    }
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
     this.http.post(this.url + this.route, message, options).map((res: Response) => res.json()).subscribe(
@@ -136,13 +138,10 @@ export class MessageService {
     const timeReg = /[&|?]t=((\d*)h)?((\d*)m)?(\d+)s/;
     let time;
     match[2] = match[2].replace("\&feature=youtu\.be", "");
-    console.log(match[2]);
     if ((time = match[2].match(timeReg))) {
-      console.log(time);
       const hours = isUndefined(time[2]) ? 0 : time[2];
       const minutes = isUndefined(time[4]) ? 0 : time[4];
       const seconds = (hours * 60 * 60) + (minutes * 60) + (time[5] * 1);
-      console.log(seconds);
       match[2] = match[2].replace(timeReg, "?start=" + seconds);
     }
     if (match[2].includes("list")) {
