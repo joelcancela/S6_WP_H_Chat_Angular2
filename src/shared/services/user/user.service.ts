@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {URLUSERS} from "../../constants/urls";
+import {usersURL} from "../../constants/urls";
 import {Http, Response} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
@@ -11,18 +11,18 @@ export class UserService {
   private nickSubject: Subject<string>;
   currentMPUserUpdate: Observable<string>;
   currentMP: string;
-  currentNick: string;
+  public currentNick: string;
   currentNickUpdate: Observable<string>;
 
   constructor(private http: Http) {
-    this.userFetchUrl = URLUSERS;
+    this.userFetchUrl = usersURL;
     this.userMPSubject = new Subject();
     this.nickSubject = new Subject();
     this.currentMPUserUpdate = this.userMPSubject.asObservable();
     this.currentNickUpdate = this.nickSubject.asObservable();
     this.currentNick = localStorage.getItem("nickname");
     if (this.currentNick === "" || this.currentNick === null) {
-      this.currentNick = "tigli";
+      this.currentNick = "user";
       localStorage.setItem("nickname", this.currentNick);
     }
     this.nickSubject.next(name);
@@ -37,6 +37,9 @@ export class UserService {
   }
 
   public updateUserMP(name: string) {
+    if (this.currentMP === name) {
+      return;
+    }
     this.currentMP = name;
     this.userMPSubject.next(name);
   }

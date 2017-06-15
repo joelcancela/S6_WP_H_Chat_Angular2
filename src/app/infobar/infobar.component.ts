@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {UserService} from "../../shared/services/user/user.service";
 import {InfoService} from "../../shared/services/info/info.service";
 import {el} from "@angular/platform-browser/testing/src/browser_util";
+import {current} from "codelyzer/util/syntaxKind";
 
 @Component({
   selector: "app-infobar",
@@ -21,6 +22,7 @@ export class InfoBarComponent implements OnInit {
 
   ngOnInit() {
     document.getElementById("content").style.minWidth = "100%";
+    this.userService.currentNickUpdate.subscribe(newNick => this.currentPseudo = newNick);
     this.infoService.currentInfoUpdate.subscribe(() => {
       let newInfo = this.infoService.currentInfo;
       if (newInfo.length > 37) {

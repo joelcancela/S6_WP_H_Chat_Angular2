@@ -5,10 +5,10 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import {MessageModel} from "../../models/MessageModel";
 import {ReplaySubject} from "rxjs/ReplaySubject";
-import {URLSERVER} from "shared/constants/urls";
-import {IMGURL, INSTAGRAMURL, TWEETURL, YOUTUBEURL} from "../../constants/regexs";
+import {serverURL} from "shared/constants/urls";
+import {imgURL, instagramURL, tweetURL, youtubeURL} from "../../constants/regexs";
 import {isUndefined} from "util";
-import {EMOTES, REG_EMOTES} from "shared/constants/emotes";
+import {emotes, regEmotes} from "shared/constants/emotes";
 
 @Injectable()
 export class MessageService {
@@ -32,7 +32,7 @@ export class MessageService {
   public mpMode: boolean;
 
   constructor(private http: Http) {
-    this.url = URLSERVER;
+    this.url = serverURL;
     this.messageList$ = new ReplaySubject(1);
     this.messageList$.next([new MessageModel()]);
     this.mpMode = false;
@@ -60,7 +60,6 @@ export class MessageService {
    *          Pour l'envoie des messages la route doit avoir la structure suivante: :id/messages avec ":id" étant
    *          un nombre entier correspondant à l'identifiant (id) du channel.
    * Exemple de route: 1/messages
-   * @returns {Observable<R>}
    */
   public getMessages() {
     const finalUrl = this.url + this.route;
@@ -95,6 +94,9 @@ export class MessageService {
    * @param message Le message à envoyer. Ce message est de type MessageModel.
    */
   public sendMessage(message: MessageModel) {
+    if (message.content.trim().length === 0) {
+      return;
+    }
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
     this.http.post(this.url + this.route, message, options).map((res: Response) => res.json()).subscribe(
@@ -104,13 +106,13 @@ export class MessageService {
   public analyzeMessageContent(messageList?: MessageModel[]) {
     for (let i = 0; i < messageList.length; i++) {
       const messageContent = messageList[i].content;
-      if (IMGURL.test(messageContent)) {
+      if (imgURL.test(messageContent)) {
         messageList[i].imgUrl = this.extractImgUrl(messageContent);
-      } else if (YOUTUBEURL.test(messageContent)) {
+      } else if (youtubeURL.test(messageContent)) {
         messageList[i].ytUrl = this.extractYTURL(messageContent);
-      } else if (TWEETURL.test(messageContent)) {
+      } else if (tweetURL.test(messageContent)) {
         messageList[i].tweet = this.extractTweetURL(messageContent);
-      } else if (INSTAGRAMURL.test(messageContent)) {
+      } else if (instagramURL.test(messageContent)) {
         messageList[i].instagram = this.extractInstaURL(messageContent);
       }
       this.replaceEmotes(messageList[i]);
@@ -127,48 +129,46 @@ export class MessageService {
 
   private extractImgUrl(messageText: string): string {
     let result;
-    result = messageText.match(IMGURL);
+    result = messageText.match(imgURL);
     return result[0];
   }
 
   private extractYTURL(messageText: string): string {
-    const match = messageText.match(YOUTUBEURL);
+    const match = messageText.match(youtubeURL);
     const timeReg = /[&|?]t=((\d*)h)?((\d*)m)?(\d+)s/;
     let time;
-    match[2] = match[2].replace("\&feature=youtu\.be", "");
-    console.log(match[2]);
-    if ((time = match[2].match(timeReg))) {
-      console.log(time);
+    match[4] = match[4].replace("\&feature=youtu\.be", "");
+    if ((time = match[4].match(timeReg))) {
       const hours = isUndefined(time[2]) ? 0 : time[2];
       const minutes = isUndefined(time[4]) ? 0 : time[4];
       const seconds = (hours * 60 * 60) + (minutes * 60) + (time[5] * 1);
-      console.log(seconds);
-      match[2] = match[2].replace(timeReg, "?start=" + seconds);
+      match[4] = match[4].replace(timeReg, "?start=" + seconds);
     }
-    if (match[2].includes("list")) {
-      return "https://www.youtube.com/embed/watch?v=" + match[2];
-    } else if (match[1].includes("playlist?list=")) {
-      return "https://www.youtube.com/embed/playlist?list=" + match[2];
+    if (match[4].includes("list")) {
+      return "https://www.youtube.com/embed/watch?v=" + match[4];
+    } else if (match[3].includes("playlist?list=")) {
+      return "https://www.youtube.com/embed/playlist?list=" + match[4];
     }
-    return "https://www.youtube.com/embed/" + match[2];
+    return "https://www.youtube.com/embed/" + match[4];
   }
 
   private extractTweetURL(messageText: string): string {
-    const match = messageText.match(TWEETURL);
+    const match = messageText.match(tweetURL);
     return "http://twitframe.com/show?url=" + match[0];
   }
 
   private extractInstaURL(messageText: string): string {
-    const match = messageText.match(INSTAGRAMURL);
+    const match = messageText.match(instagramURL);
     return match[1] + "/embed/";
   }
 
   private replaceEmotes(message: MessageModel) {
     let result;
-    for (let i = 0; i < REG_EMOTES.length; i++) {
-      while ((result = message.content.match(REG_EMOTES[i])) != null) {
-        message.content = message.content.replace(REG_EMOTES[i], EMOTES[i]);
+    for (let i = 0; i < regEmotes.length; i++) {
+      while ((result = message.content.match(regEmotes[i])) != null) {
+        message.content = message.content.replace(regEmotes[i], emotes[i]);
       }
     }
   }
+
 }

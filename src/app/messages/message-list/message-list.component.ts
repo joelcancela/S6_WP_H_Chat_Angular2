@@ -26,19 +26,20 @@ export class MessageListComponent implements OnInit {
   }
 
   private enableMpMode() {
-    this.lock = true;
-    this.messageList = [];
-    this.reachedEnd = false;
-    this.maxPage = 1;
+    this.lockScrollAndResetMessages();
     this.messageService.switchToMPMode(this.userService.currentMP, this.userService.currentNick);
   }
 
   private enableThreadMode() {
+    this.lockScrollAndResetMessages();
+    this.messageService.switchToThreadMode(this.channelService.currentChannelID);
+  }
+
+  private lockScrollAndResetMessages() {
     this.lock = true;
     this.messageList = [];
     this.reachedEnd = false;
     this.maxPage = 1;
-    this.messageService.switchToThreadMode(this.channelService.currentChannelID);
   }
 
   /**
@@ -79,7 +80,7 @@ export class MessageListComponent implements OnInit {
     setTimeout(function () {
       const objDiv = document.getElementById("messages-list");
       objDiv.scrollTop = objDiv.scrollHeight;
-    }, 400);
+    }, 600);
   }
 
   private addNewMessages(messages: MessageModel[]) {
@@ -128,6 +129,10 @@ export class MessageListComponent implements OnInit {
     if (event.srcElement.scrollTop === 0 && !this.lock) {
       this.retrieveHistory();
     }
-  };
+  }
+
+  public isAllowed(message?: MessageModel): boolean {
+    return localStorage.getItem("m_" + message.from) !== "muted";
+  }
 
 }

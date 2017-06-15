@@ -55,12 +55,16 @@ export class MessageModel {
    */
   public instagram: string;
 
-  constructor(id?: number, content?: string, from?: string, createdAt?: string, updatedAt?: string, threadId?: number) {
+  public scheduledAt: string;
+
+  constructor(id?: number, content?: string, from?: string, createdAt?: string, updatedAt?: string, threadId?: number,
+              scheduledAt?: string) {
     this.id = id;
     this.content = content;
     this.from = from;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.threadId = threadId;
+    this.scheduledAt = scheduledAt;
   }
 }
