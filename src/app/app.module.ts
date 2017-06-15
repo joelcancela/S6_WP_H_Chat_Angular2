@@ -21,6 +21,7 @@ import {InfoBarComponent} from "./infobar/infobar.component";
 import { LinkifyPipe } from "../shared/pipes/linkify.pipe";
 import {InfoService} from "../shared/services/info/info.service";
 import { DateFormatPipe } from "../shared/pipes/date-format.pipe";
+import {AiService} from "../shared/services/ai/ai.service";
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { DateFormatPipe } from "../shared/pipes/date-format.pipe";
     NgbModule.forRoot(),
   ],
   entryComponents: [ChannelModalContentComponent],
-  providers: [MessageService, ChannelService, UserService, InfoService],
+  providers: [MessageService, ChannelService, UserService, InfoService, AiService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

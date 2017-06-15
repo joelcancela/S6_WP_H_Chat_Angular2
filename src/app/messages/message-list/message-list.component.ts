@@ -4,6 +4,7 @@ import {MessageService} from "../../../shared/services";
 import {MessageModel} from "../../../shared/models/MessageModel";
 import {ChannelService} from "../../../shared/services/channel/channel.service";
 import {UserService} from "../../../shared/services/user/user.service";
+import {AiService} from "../../../shared/services/ai/ai.service";
 
 @Component({
   selector: "app-message-list",
@@ -18,7 +19,7 @@ export class MessageListComponent implements OnInit {
   public lock: boolean;
 
   constructor(private messageService: MessageService, private channelService: ChannelService,
-              private userService: UserService) {
+              private userService: UserService, private aiService: AiService) {
     this.messageList = [];
     this.maxPage = 1;
     this.reachedEnd = false;

@@ -22,7 +22,7 @@ export class UserService {
     this.currentNickUpdate = this.nickSubject.asObservable();
     this.currentNick = localStorage.getItem("nickname");
     if (this.currentNick === "" || this.currentNick === null) {
-      this.currentNick = "tigli";
+      this.currentNick = "user";
       localStorage.setItem("nickname", this.currentNick);
     }
     this.nickSubject.next(name);

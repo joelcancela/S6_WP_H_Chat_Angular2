@@ -3,6 +3,7 @@ import {Component, OnInit} from "@angular/core";
 import {MessageService} from "../../shared/services";
 import {MessageModel} from "../../shared/models/MessageModel";
 import {UserService} from "../../shared/services/user/user.service";
+import {AiService} from "../../shared/services/ai/ai.service";
 
 @Component({
   selector: "app-message-form",
@@ -13,7 +14,7 @@ export class MessageFormComponent implements OnInit {
 
   public message: MessageModel;
 
-  constructor(private messageService: MessageService, private userService: UserService) {
+  constructor(private messageService: MessageService, private userService: UserService, private aiService: AiService) {
     this.message = new MessageModel(1, "", userService.currentNick, new Date().toISOString(),
       new Date().toISOString(), 1);
   }
@@ -34,7 +35,15 @@ export class MessageFormComponent implements OnInit {
    */
   sendMessage() {
     const inputElement = <HTMLInputElement>document.getElementById("name");
-    this.messageService.sendMessage(this.message);
+    const messageContent = this.message.content;
+    if (messageContent.charAt(0) === "/") {
+      if (messageContent.startsWith("/ia ")) {
+        this.messageService.sendMessage(this.message);
+        this.aiService.sendRequest(messageContent);
+      }
+    } else {
+      this.messageService.sendMessage(this.message);
+    }
     inputElement.value = "";
     setTimeout(function () {
       const objDiv = document.getElementById("messages-list");
