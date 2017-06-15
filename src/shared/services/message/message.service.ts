@@ -137,19 +137,19 @@ export class MessageService {
     const match = messageText.match(youtubeURL);
     const timeReg = /[&|?]t=((\d*)h)?((\d*)m)?(\d+)s/;
     let time;
-    match[2] = match[2].replace("\&feature=youtu\.be", "");
-    if ((time = match[2].match(timeReg))) {
+    match[4] = match[4].replace("\&feature=youtu\.be", "");
+    if ((time = match[4].match(timeReg))) {
       const hours = isUndefined(time[2]) ? 0 : time[2];
       const minutes = isUndefined(time[4]) ? 0 : time[4];
       const seconds = (hours * 60 * 60) + (minutes * 60) + (time[5] * 1);
-      match[2] = match[2].replace(timeReg, "?start=" + seconds);
+      match[4] = match[4].replace(timeReg, "?start=" + seconds);
     }
-    if (match[2].includes("list")) {
-      return "https://www.youtube.com/embed/watch?v=" + match[2];
-    } else if (match[1].includes("playlist?list=")) {
-      return "https://www.youtube.com/embed/playlist?list=" + match[2];
+    if (match[4].includes("list")) {
+      return "https://www.youtube.com/embed/watch?v=" + match[4];
+    } else if (match[3].includes("playlist?list=")) {
+      return "https://www.youtube.com/embed/playlist?list=" + match[4];
     }
-    return "https://www.youtube.com/embed/" + match[2];
+    return "https://www.youtube.com/embed/" + match[4];
   }
 
   private extractTweetURL(messageText: string): string {
