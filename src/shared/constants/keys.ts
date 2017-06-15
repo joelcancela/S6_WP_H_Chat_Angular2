@@ -1,0 +1,2 @@
+export const OPENWEATHERAPIKEY = "375d0a6cd1f0774238c8efced059f674";
+

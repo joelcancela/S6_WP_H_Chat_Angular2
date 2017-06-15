@@ -22,6 +22,7 @@ import {LinkifyPipe} from "../shared/pipes/linkify.pipe";
 import {InfoService} from "../shared/services/info/info.service";
 import {DateFormatPipe} from "../shared/pipes/date-format.pipe";
 import {TranslateService} from "../shared/services/translate/translate.service";
+import {MeteoService} from "../shared/services/meteo/meteo.service";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import {TranslateService} from "../shared/services/translate/translate.service";
     NgbModule.forRoot(),
   ],
   entryComponents: [ChannelModalContentComponent],
-  providers: [MessageService, ChannelService, UserService, InfoService, TranslateService],
+  providers: [MessageService, ChannelService, UserService, InfoService, TranslateService, MeteoService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
