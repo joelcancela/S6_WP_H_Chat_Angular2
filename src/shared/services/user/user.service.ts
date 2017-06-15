@@ -37,6 +37,9 @@ export class UserService {
   }
 
   public updateUserMP(name: string) {
+    if (this.currentMP === name) {
+      return;
+    }
     this.currentMP = name;
     this.userMPSubject.next(name);
   }
