@@ -3,9 +3,15 @@
 <div>
   <div class="container-fluid">
     <div class="row">
-      <nav class="col-sm-3 col-md-3 hidden-xs-down bg-faded sidebar row-lg-12" id="left-sidebar">
-        <app-channel-list></app-channel-list>
-      </nav>
+
+      <div class="col-md-3">
+        <div class="sidenav" id="channelSidenav" >
+          <nav class="col-sm-3 col-md-3 hidden-xs-down bg-faded row-lg-12" id="left-sidebar">
+            <app-channel-list></app-channel-list>
+          </nav>
+        </div>
+      </div>
+
       <div class="col-sm-6 col-xs-12" id="content">
         <div class="section-wrap">
           <div class="header-wrap">
@@ -15,11 +21,15 @@
           <app-message-form></app-message-form>
         </div>
       </div>
-      <div class="col-md-3 hidden-xs-down bg-faded sidebar row-lg-12" id="right-sidebar">
-        <div id="users">
-          <app-user-list></app-user-list>
-        </div>
+
+      <div id="usersSidenav" class="sidenav">
+        <nav class="col-sm-3 hidden-xs-down bg-faded row-lg-12" id="right-sidebar" (click)="openUsers()">
+          <div id="users">
+            <app-user-list></app-user-list>
+          </div>
+        </nav>
       </div>
+
     </div>
   </div>
 </div>

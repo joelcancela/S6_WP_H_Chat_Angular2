@@ -1,9 +1,10 @@
-h1 {
-  text-align: center;
-}
+/** USERS LIST, CHANNELS LIST AND MESSAGES LIST */
 
-.sidebar{
-  height: 100%;
+#content {
+  left: 0%;
+  right: 0;
+  min-width: 100%;
+  background-color: #FAFAFA;
 }
 
 #left-sidebar, #content, #right-sidebar {
@@ -15,30 +16,23 @@ h1 {
   height:100vh;
 }
 
+#right-sidebar {
+  left: 100%;
+  min-width: 100%;
+  right: 0;
+}
+
 #left-sidebar, #right-sidebar{
   background-color: #EEEEEE;
 }
 
 #left-sidebar {
   left: 0;
-  width: 20%;
+  min-width: 100%;
 }
 
-#content {
-  left: 20%;
-  right: 0;
-  min-width: 60%;
-  background-color: #FAFAFA;
-}
-
-#channelButton{
-  display: none;
-}
-
-#right-sidebar {
-  left: 80%;
-  width: 20%;
-  right: 0;
+#channelSidenav{
+  left:0;
 }
 
 .panel-wrap {
@@ -58,15 +52,38 @@ h1 {
 }
 
 @media (max-width: 760px) {
-  #content, #right-sidebar{
-    left: 0;
-    right:0;
-    top:0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-  }
 
-  #content{
-  }
+}
+
+/** SIDENAV CSS **/
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
 }

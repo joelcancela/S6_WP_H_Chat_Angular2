@@ -25,6 +25,15 @@ export class MessageComponent implements OnInit {
    * le faire dans le ngOnInit.
    */
   ngOnInit() {
+    setTimeout(() => {
+      const message = document.getElementById("message" + this.message.id);
+      if (message.getElementsByTagName("iframe").length  + message.getElementsByTagName("img").length  <= 1) {
+        message.getElementsByClassName("picturething").item(0).remove();
+      }
+      if (message.getElementsByClassName("embedTweet").item(0).getElementsByTagName("iframe").length === 0) {
+        message.getElementsByClassName("embedTweet").item(0).remove();
+      }
+    }, 500);
   }
 
   getAvatar(pseudo: string): string {

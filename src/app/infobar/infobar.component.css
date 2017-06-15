@@ -1,18 +1,15 @@
-#channelsButton, #usersButton{
-  display: none;
-}
-
-#swapButton{
-  display: none;
-}
+/** Button for pseudo swap **/
 
 #swapButton button{
   height: 100%;
 }
 
+/** Mobile view **/
+
 @media (max-width: 780px) {
 
   .chat-header {
+    height: 10vh;
     font-size: 2vw;
   }
 
@@ -20,17 +17,18 @@
     display: none;
   }
 
-  .input-group {
+  .pseudoButton {
     width: 50%;
-    height: 10vh;
   }
 
-  #channelsButton, #usersButton {
+  .channelsButton, .usersButton {
     width: 25%;
     height: 10vh;
-  }
-
-  #channelsButton, #usersButton {
     display: block;
   }
+
+  #swapButton button{
+    display: none;
+  }
+
 }

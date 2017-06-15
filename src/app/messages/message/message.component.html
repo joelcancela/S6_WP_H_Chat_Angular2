@@ -1,39 +1,41 @@
-<div class="message" id="message{{message.id}}">
+<div class="card" id="message{{message.id}}">
   <div class="row">
-    <div class="col-md-1 avatar">
-      <img class="media-object" [src]="getAvatar(message.from)">
+    <div class="col-md-2 avatar">
+      <img class="card-img-left" [src]="getAvatar(message.from)" alt="Avatar">
     </div>
-    <div class="col-md-5 autor">
-      <span class="autor">{{message.from}}</span>
-    </div>
-    <div class="col-md-3 separator"></div>
-    <div class="col-md-3 hour">
-      <span class="hour">{{message.createdAt | dateFormat}}</span>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-md-3">
+          <span class="autor">{{message.from}}</span>
+        </div>
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-3">
+          <span class="hour">{{message.createdAt | dateFormat}}</span>
+        </div>
+      </div>
+      <div class="row">
         <span class="message-content" [innerHTML]="message.content | linkify">{{message.content}}</span>
       </div>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-md-3"></div>
-  <div class="col-md-6">
-    <div *ngIf="message.imgUrl">
-      <a href={{message.imgUrl}} target="_blank">
-        <img class="embedImage" [src]="message.imgUrl">
-      </a>
-    </div>
-    <div *ngIf="message.ytUrl">
-      <iframe class="embedVideo" [src]="message.ytUrl | safe" ></iframe>
-    </div>
-    <div>
-      <iframe class="embedTweet" *ngIf="message.tweet" [src]="message.tweet | safe" frameborder="0"></iframe>
-    </div>
-    <div *ngIf="message.instagram">
-      <iframe class="embedInstagram" [src]="message.instagram | safe" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+
+  <div class="row picturething" id="picturething">
+    <div class="col-md-6 iframeContainer">
+      <div *ngIf="message.imgUrl">
+        <a href={{message.imgUrl}} target="_blank">
+          <img class="embedImage" [src]="message.imgUrl">
+        </a>
+      </div>
+      <div class="embedVideo" *ngIf="message.ytUrl">
+        <iframe  [src]="message.ytUrl | safe" ></iframe>
+      </div>
+      <div class="embedTweet">
+        <iframe *ngIf="message.tweet" [src]="message.tweet | safe" frameborder="0"></iframe>
+      </div>
+      <div class="embedInstagram" *ngIf="message.instagram">
+        <iframe  [src]="message.instagram | safe" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+      </div>
     </div>
   </div>
-  <div class="col-md-3"></div>
 </div>
