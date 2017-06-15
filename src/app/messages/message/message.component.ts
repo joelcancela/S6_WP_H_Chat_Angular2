@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from "@angular/core";
 
 import {MessageModel} from "../../../shared/models/MessageModel";
-import {getComponent} from "@angular/core/src/linker/component_factory_resolver";
 
 @Component({
   selector: "app-message",
