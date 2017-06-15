@@ -3,6 +3,8 @@ import {Component, OnInit} from "@angular/core";
 import {MessageService} from "../../shared/services";
 import {MessageModel} from "../../shared/models/MessageModel";
 import {UserService} from "../../shared/services/user/user.service";
+import {TranslateService} from "../../shared/services/translate/translate.service";
+import {TRAD_TEMPLATE} from "../../shared/constants/regexs";
 
 @Component({
   selector: "app-message-form",
@@ -13,7 +15,8 @@ export class MessageFormComponent implements OnInit {
 
   public message: MessageModel;
 
-  constructor(private messageService: MessageService, private userService: UserService) {
+  constructor(private messageService: MessageService, private userService: UserService,
+              private translateService: TranslateService) {
     this.message = new MessageModel(1, "", userService.currentNick, new Date().toISOString(),
       new Date().toISOString(), 1);
   }
@@ -34,12 +37,18 @@ export class MessageFormComponent implements OnInit {
    */
   sendMessage() {
     const inputElement = <HTMLInputElement>document.getElementById("name");
+    if (new RegExp(TRAD_TEMPLATE).test(this.message.content)) {
+      this.translateService.translate(this.message.content).then((answer) => {
+        console.log(answer);
+        this.messageService.sendMessage(new MessageModel(1, answer, this.userService.currentNick,
+          new Date().toISOString(), new Date().toISOString(), 1));
+        inputElement.value = "";
+      });
+      return;
+    }
     this.messageService.sendMessage(this.message);
     inputElement.value = "";
-    setTimeout(function () {
-      const objDiv = document.getElementById("messages-list");
-      objDiv.scrollTop = objDiv.scrollHeight;
-    }, 200);
-
   }
+
+
 }

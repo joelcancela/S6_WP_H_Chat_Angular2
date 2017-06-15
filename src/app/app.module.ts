@@ -18,9 +18,10 @@ import {ChannelModalComponent, ChannelModalContentComponent} from "./channels/ch
 import {SafePipe} from "../shared/pipes/safe.pipe";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {InfoBarComponent} from "./infobar/infobar.component";
-import { LinkifyPipe } from "../shared/pipes/linkify.pipe";
+import {LinkifyPipe} from "../shared/pipes/linkify.pipe";
 import {InfoService} from "../shared/services/info/info.service";
-import { DateFormatPipe } from "../shared/pipes/date-format.pipe";
+import {DateFormatPipe} from "../shared/pipes/date-format.pipe";
+import {TranslateService} from "../shared/services/translate/translate.service";
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { DateFormatPipe } from "../shared/pipes/date-format.pipe";
     NgbModule.forRoot(),
   ],
   entryComponents: [ChannelModalContentComponent],
-  providers: [MessageService, ChannelService, UserService, InfoService],
+  providers: [MessageService, ChannelService, UserService, InfoService, TranslateService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

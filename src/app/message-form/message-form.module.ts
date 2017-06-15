@@ -1,9 +1,11 @@
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import {CommonModule} from "@angular/common";
+import {NgModule} from "@angular/core";
+import {FormsModule} from "@angular/forms";
 
-import { MessageFormComponent } from "./message-form.component";
-import { MessageService } from "../../shared/services/message/message.service";
+import {MessageFormComponent} from "./message-form.component";
+import {MessageService} from "../../shared/services/message/message.service";
+import {UserService} from "../../shared/services/user/user.service";
+import {TranslateService} from "../../shared/services/translate/translate.service";
 
 @NgModule({
   declarations: [
@@ -14,6 +16,7 @@ import { MessageService } from "../../shared/services/message/message.service";
     FormsModule
   ],
   exports: [MessageFormComponent],
-  providers: [MessageService]
+  providers: [MessageService, UserService, TranslateService]
 })
-export class MessageFormModule { }
+export class MessageFormModule {
+}

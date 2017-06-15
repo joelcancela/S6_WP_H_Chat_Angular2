@@ -79,7 +79,7 @@ export class MessageListComponent implements OnInit {
     setTimeout(function () {
       const objDiv = document.getElementById("messages-list");
       objDiv.scrollTop = objDiv.scrollHeight;
-    }, 400);
+    }, 600);
   }
 
   private addNewMessages(messages: MessageModel[]) {
