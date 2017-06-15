@@ -64,6 +64,7 @@ export class MessageFormComponent implements OnInit {
       return;
     } else {
       this.messageService.sendMessage(this.message);
+      inputElement.value = "";
     }
   }
 
