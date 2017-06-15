@@ -25,6 +25,7 @@ import {DateFormatPipe} from "../shared/pipes/date-format.pipe";
 import {TranslateService} from "../shared/services/translate/translate.service";
 import {MeteoService} from "../shared/services/meteo/meteo.service";
 import {LoginComponent, LoginModalContentComponent} from "./login/login.component";
+import {MessageSchedulerService} from "../shared/services/messageScheduler/message-scheduler.service";
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import {LoginComponent, LoginModalContentComponent} from "./login/login.componen
     NgbModule.forRoot(),
   ],
   entryComponents: [ChannelModalContentComponent, LoginModalContentComponent],
-  providers: [MessageService, ChannelService, UserService, InfoService, TranslateService, MeteoService, AiService],
+  providers: [MessageService, ChannelService, UserService, InfoService, TranslateService, MeteoService, AiService, MessageSchedulerService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

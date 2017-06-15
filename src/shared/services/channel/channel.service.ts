@@ -94,4 +94,11 @@ export class ChannelService {
   }
 
 
+  getChannelID(nameChannel: string) {
+    for (let i = 0; i < this.channelList.length; i++) {
+      if (this.channelList[i].name === nameChannel) {
+        return this.channelList[i].id;
+      }
+    }
+  }
 }

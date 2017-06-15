@@ -6,7 +6,8 @@ import {UserService} from "../../shared/services/user/user.service";
 import {AiService} from "../../shared/services/ai/ai.service";
 import {MeteoService} from "../../shared/services/meteo/meteo.service";
 import {TranslateService} from "../../shared/services/translate/translate.service";
-import {TRAD_TEMPLATE} from "../../shared/constants/regexs";
+import {SCHEDULER_MESSAGE, TRAD_TEMPLATE} from "../../shared/constants/regexs";
+import {MessageSchedulerService} from "../../shared/services/messageScheduler/message-scheduler.service";
 
 @Component({
   selector: "app-message-form",
@@ -19,7 +20,8 @@ export class MessageFormComponent implements OnInit {
 
 
   constructor(private messageService: MessageService, private userService: UserService,
-              private translateService: TranslateService, private meteo: MeteoService, private aiService: AiService) {
+              private translateService: TranslateService, private meteo: MeteoService,
+              private aiService: AiService, private messageScheduler: MessageSchedulerService) {
     this.message = new MessageModel(1, "", userService.currentNick, new Date().toISOString(),
       new Date().toISOString(), 1);
   }
@@ -64,6 +66,10 @@ export class MessageFormComponent implements OnInit {
           inputElement.value = "";
         }
       });
+      return;
+    } else if (this.message.content.startsWith("/schedule ")) {
+      this.messageScheduler.scheduleMessage(this.message.content);
+      inputElement.value = "";
       return;
     } else {
       this.messageService.sendMessage(this.message);
