@@ -38,17 +38,16 @@ export class MessageFormComponent implements OnInit {
    */
   sendMessage() {
     const inputElement = <HTMLInputElement>document.getElementById("name");
-
-    if (new RegExp(TRAD_TEMPLATE).test(this.message.content)) {
-      this.translateService.translate(this.message.content).then((answer) => {
+    if (this.message.content.startsWith("/meteo ")) {
+      this.meteo.getMeteo(this.message.content).then((answer) => {
         console.log(answer);
         this.messageService.sendMessage(new MessageModel(1, answer, this.userService.currentNick,
           new Date().toISOString(), new Date().toISOString(), 1));
         inputElement.value = "";
       });
       return;
-    } else if (this.message.content.startsWith("/meteo ")) {
-      this.meteo.getMeteo(this.message.content).then((answer) => {
+    } else if (new RegExp(TRAD_TEMPLATE).test(this.message.content)) {
+      this.translateService.translate(this.message.content).then((answer) => {
         console.log(answer);
         this.messageService.sendMessage(new MessageModel(1, answer, this.userService.currentNick,
           new Date().toISOString(), new Date().toISOString(), 1));
@@ -59,4 +58,5 @@ export class MessageFormComponent implements OnInit {
     this.messageService.sendMessage(this.message);
     inputElement.value = "";
   }
+
 }
