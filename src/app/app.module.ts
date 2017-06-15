@@ -24,6 +24,7 @@ import {AiService} from "../shared/services/ai/ai.service";
 import {DateFormatPipe} from "../shared/pipes/date-format.pipe";
 import {TranslateService} from "../shared/services/translate/translate.service";
 import {MeteoService} from "../shared/services/meteo/meteo.service";
+import {LoginComponent, LoginModalContentComponent} from "./login/login.component";
 
 @NgModule({
   declarations: [
@@ -38,9 +39,11 @@ import {MeteoService} from "../shared/services/meteo/meteo.service";
     ChannelModalComponent,
     SafePipe,
     ChannelModalContentComponent,
+    LoginModalContentComponent,
     InfoBarComponent,
     LinkifyPipe,
     DateFormatPipe,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,7 @@ import {MeteoService} from "../shared/services/meteo/meteo.service";
     HttpModule,
     NgbModule.forRoot(),
   ],
-  entryComponents: [ChannelModalContentComponent],
+  entryComponents: [ChannelModalContentComponent, LoginModalContentComponent],
   providers: [MessageService, ChannelService, UserService, InfoService, TranslateService, MeteoService, AiService],
   bootstrap: [AppComponent]
 })

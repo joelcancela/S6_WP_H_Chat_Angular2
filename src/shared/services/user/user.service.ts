@@ -11,7 +11,7 @@ export class UserService {
   private nickSubject: Subject<string>;
   currentMPUserUpdate: Observable<string>;
   currentMP: string;
-  currentNick: string;
+  public currentNick: string;
   currentNickUpdate: Observable<string>;
 
   constructor(private http: Http) {

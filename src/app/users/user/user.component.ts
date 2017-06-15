@@ -17,6 +17,17 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
+    setTimeout(() => {
+      const muteButton = document.getElementById("muteButton-" + this.user);
+      if (localStorage.getItem(this.user.name) === "-1") {
+        muteButton.textContent = "Unmute";
+      } else {
+        muteButton.textContent = "Mute";
+      }
+    }, 1000);
+  }
+
+  public muteUser() {
   }
 
   loadMP(name: string) {
