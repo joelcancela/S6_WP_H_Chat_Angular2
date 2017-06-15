@@ -12,22 +12,31 @@ import {ChannelService} from "../../../shared/services/channel/channel.service";
 export class UserComponent implements OnInit {
   @Input() user: UserModel;
 
-  constructor(private userService: UserService, private infoService: InfoService, private channelService: ChannelService) {
+  constructor(private userService: UserService, private infoService: InfoService,
+              private channelService: ChannelService) {
     this.user = new UserModel("test");
   }
 
   ngOnInit() {
     setTimeout(() => {
       const muteButton = document.getElementById("muteButton-" + this.user);
-      if (localStorage.getItem(this.user.name) === "-1") {
-        muteButton.textContent = "Unmute";
-      } else {
+      if (localStorage.getItem("m_" + this.user) === null) {
         muteButton.textContent = "Mute";
+      } else {
+        muteButton.textContent = "Unmute";
       }
     }, 1000);
   }
 
-  public muteUser() {
+  public muteUser(user: string) {
+    const muteButton = document.getElementById("muteButton-" + user);
+    if (localStorage.getItem("m_" + user) === "muted") {
+      localStorage.removeItem("m_" + user);
+      muteButton.textContent = "Mute";
+    } else {
+      muteButton.textContent = "Unmute";
+      localStorage.setItem("m_" + user, "muted");
+    }
   }
 
   loadMP(name: string) {
