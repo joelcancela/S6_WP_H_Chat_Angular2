@@ -14,7 +14,7 @@ export class AiService {
   constructor(private http: Http, private messageService: MessageService) {
   }
 
-  sendRequest(message: string) {
+  sendRequest(message: string, instance: MessageService) {
     const query = message.substr(4, message.length);
 
     const headers = new Headers({"Content-Type": "application/json"});
@@ -28,13 +28,13 @@ export class AiService {
     };
     this.http.post(this.urlAPI, body, options)
       .map((res: Response) => res.json())
-      .subscribe((value) => this.sendMessage(value.result.fulfillment.speech), (err) =>
+      .subscribe((value) => this.sendMessage(value.result.fulfillment.speech, instance), (err) =>
         (console.log(err)));
   }
 
 
-  private sendMessage(speech: string) {
-    const msg = new MessageModel(1, speech, "aibot");
-    this.messageService.sendMessage(msg);
+  private sendMessage(speech: string, instance: MessageService) {
+    const msg = new MessageModel(1, speech, "aibot", new Date().toISOString(), new Date().toISOString(), 1);
+    instance.sendMessage(msg);
   }
 }

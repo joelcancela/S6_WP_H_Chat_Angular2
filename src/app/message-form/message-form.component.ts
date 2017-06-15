@@ -44,7 +44,7 @@ export class MessageFormComponent implements OnInit {
     if (messageContent.startsWith("/ia ")) {
       this.messageService.sendMessage(this.message);
       inputElement.value = "";
-      this.aiService.sendRequest(messageContent);
+      this.aiService.sendRequest(messageContent, this.messageService);
       return;
     } else if (this.message.content.startsWith("/meteo ")) {
       this.meteo.getMeteo(this.message.content).then((answer) => {
