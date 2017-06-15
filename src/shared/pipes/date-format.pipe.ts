@@ -15,9 +15,9 @@ export class DateFormatPipe implements PipeTransform {
     const dateA = new Date(date);
     const datePipe = new DatePipe("fr-FR");
     if (day === dateA.getDay()) {
-      return datePipe.transform(dateA, "H:m");
+      return datePipe.transform(dateA, "H:mm");
     } else {
-      return datePipe.transform(dateA, "dd/MM/yyyy - H:m");
+      return datePipe.transform(dateA, "dd/MM/yyyy - H:mm");
     }
   }
 
