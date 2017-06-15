@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from "@angular/core";
 import {ChanelModel} from "../../../shared/models/ChannelModel";
 import {ChannelService} from "../../../shared/services/channel/channel.service";
 import {InfoService} from "../../../shared/services/info/info.service";
-import {isUndefined} from "util";
 
 @Component({
   selector: "app-channel",

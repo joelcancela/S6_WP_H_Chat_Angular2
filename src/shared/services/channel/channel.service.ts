@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Headers, Http, RequestOptions, Response} from "@angular/http";
-import {URLSERVER} from "shared/constants/urls";
+import {serverURL} from "shared/constants/urls";
 import {ChanelModel} from "../../models/ChannelModel";
 import {Observable} from "rxjs/Observable";
 import "rxjs/Rx";
@@ -22,7 +22,7 @@ export class ChannelService {
   channelListUpdate: Observable<ChanelModel[]>;
 
   constructor(private http: Http) {
-    this.url = URLSERVER + "/threads/";
+    this.url = serverURL + "/threads/";
     // Observable for channel ID
     this.currentChannelSubject = new Subject();
     this.currentChannelUpdate = this.currentChannelSubject.asObservable();

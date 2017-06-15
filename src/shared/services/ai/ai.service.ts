@@ -2,8 +2,6 @@ import {Injectable} from "@angular/core";
 import {Http, Headers, RequestOptions, Response} from "@angular/http";
 import {MessageService} from "../message/message.service";
 import {MessageModel} from "../../models/MessageModel";
-import {Subject} from "rxjs/Subject";
-import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class AiService {

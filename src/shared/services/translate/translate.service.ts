@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Http} from "@angular/http";
-import {URLTRAD} from "../../constants/urls";
-import {TRANSLATE_KEY} from "../../constants/keys";
+import {tradURL} from "../../constants/urls";
+import {translateKey} from "../../constants/keys";
 
 @Injectable()
 export class TranslateService {
@@ -16,7 +16,7 @@ export class TranslateService {
     cmd = cmd.replace(language, "");
     const to = cmd.match(language)[0];
     cmd = cmd.replace(language, "");
-    return this.http.get(URLTRAD + "?key=" + TRANSLATE_KEY + "&text=" + cmd + "&lang=" + from + "-" + to)
+    return this.http.get(tradURL + "?key=" + translateKey + "&text=" + cmd + "&lang=" + from + "-" + to)
       .map((response) => {
       console.log(response.json());
         return response.json()["text"][0];

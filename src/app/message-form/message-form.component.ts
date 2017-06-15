@@ -6,8 +6,8 @@ import {UserService} from "../../shared/services/user/user.service";
 import {AiService} from "../../shared/services/ai/ai.service";
 import {MeteoService} from "../../shared/services/meteo/meteo.service";
 import {TranslateService} from "../../shared/services/translate/translate.service";
-import {SCHEDULER_MESSAGE, TRAD_TEMPLATE} from "../../shared/constants/regexs";
 import {MessageSchedulerService} from "../../shared/services/messageScheduler/message-scheduler.service";
+import {tradTemplate} from "../../shared/constants/regexs";
 
 @Component({
   selector: "app-message-form",
@@ -56,7 +56,7 @@ export class MessageFormComponent implements OnInit {
         inputElement.value = "";
       });
       return;
-    } else if (new RegExp(TRAD_TEMPLATE).test(this.message.content)) {
+    } else if (new RegExp(tradTemplate).test(this.message.content)) {
       this.translateService.translate(this.message.content).then((answer) => {
         if (!answer) {
           inputElement.value = " Commande traduction invalide";

@@ -5,10 +5,10 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import {MessageModel} from "../../models/MessageModel";
 import {ReplaySubject} from "rxjs/ReplaySubject";
-import {URLSERVER} from "shared/constants/urls";
-import {IMGURL, INSTAGRAMURL, TWEETURL, YOUTUBEURL} from "../../constants/regexs";
+import {serverURL} from "shared/constants/urls";
+import {imgURL, instagramURL, tweetURL, youtubeURL} from "../../constants/regexs";
 import {isUndefined} from "util";
-import {EMOTES, REG_EMOTES} from "shared/constants/emotes";
+import {emotes, regEmotes} from "shared/constants/emotes";
 
 @Injectable()
 export class MessageService {
@@ -32,7 +32,7 @@ export class MessageService {
   public mpMode: boolean;
 
   constructor(private http: Http) {
-    this.url = URLSERVER;
+    this.url = serverURL;
     this.messageList$ = new ReplaySubject(1);
     this.messageList$.next([new MessageModel()]);
     this.mpMode = false;
@@ -104,13 +104,13 @@ export class MessageService {
   public analyzeMessageContent(messageList?: MessageModel[]) {
     for (let i = 0; i < messageList.length; i++) {
       const messageContent = messageList[i].content;
-      if (IMGURL.test(messageContent)) {
+      if (imgURL.test(messageContent)) {
         messageList[i].imgUrl = this.extractImgUrl(messageContent);
-      } else if (YOUTUBEURL.test(messageContent)) {
+      } else if (youtubeURL.test(messageContent)) {
         messageList[i].ytUrl = this.extractYTURL(messageContent);
-      } else if (TWEETURL.test(messageContent)) {
+      } else if (tweetURL.test(messageContent)) {
         messageList[i].tweet = this.extractTweetURL(messageContent);
-      } else if (INSTAGRAMURL.test(messageContent)) {
+      } else if (instagramURL.test(messageContent)) {
         messageList[i].instagram = this.extractInstaURL(messageContent);
       }
       this.replaceEmotes(messageList[i]);
@@ -127,12 +127,12 @@ export class MessageService {
 
   private extractImgUrl(messageText: string): string {
     let result;
-    result = messageText.match(IMGURL);
+    result = messageText.match(imgURL);
     return result[0];
   }
 
   private extractYTURL(messageText: string): string {
-    const match = messageText.match(YOUTUBEURL);
+    const match = messageText.match(youtubeURL);
     const timeReg = /[&|?]t=((\d*)h)?((\d*)m)?(\d+)s/;
     let time;
     match[2] = match[2].replace("\&feature=youtu\.be", "");
@@ -154,20 +154,20 @@ export class MessageService {
   }
 
   private extractTweetURL(messageText: string): string {
-    const match = messageText.match(TWEETURL);
+    const match = messageText.match(tweetURL);
     return "http://twitframe.com/show?url=" + match[0];
   }
 
   private extractInstaURL(messageText: string): string {
-    const match = messageText.match(INSTAGRAMURL);
+    const match = messageText.match(instagramURL);
     return match[1] + "/embed/";
   }
 
   private replaceEmotes(message: MessageModel) {
     let result;
-    for (let i = 0; i < REG_EMOTES.length; i++) {
-      while ((result = message.content.match(REG_EMOTES[i])) != null) {
-        message.content = message.content.replace(REG_EMOTES[i], EMOTES[i]);
+    for (let i = 0; i < regEmotes.length; i++) {
+      while ((result = message.content.match(regEmotes[i])) != null) {
+        message.content = message.content.replace(regEmotes[i], emotes[i]);
       }
     }
   }

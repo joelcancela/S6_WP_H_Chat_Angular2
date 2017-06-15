@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {URLUSERS} from "../../constants/urls";
+import {usersURL} from "../../constants/urls";
 import {Http, Response} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
@@ -15,7 +15,7 @@ export class UserService {
   currentNickUpdate: Observable<string>;
 
   constructor(private http: Http) {
-    this.userFetchUrl = URLUSERS;
+    this.userFetchUrl = usersURL;
     this.userMPSubject = new Subject();
     this.nickSubject = new Subject();
     this.currentMPUserUpdate = this.userMPSubject.asObservable();

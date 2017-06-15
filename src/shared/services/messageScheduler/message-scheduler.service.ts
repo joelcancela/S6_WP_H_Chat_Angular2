@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
-import {SCHEDULER_MESSAGE, SCHEDULER_MESSAGE_HOURS} from "../../constants/regexs";
+import {scheduler_message, scheduler_message_hours} from "../../constants/regexs";
 import {ChannelService} from "../channel/channel.service";
 import {Http, Headers, Response, RequestOptions} from "@angular/http";
-import {URLSERVER} from "../../constants/urls";
+import {serverURL} from "../../constants/urls";
 import {MessageModel} from "../../models/MessageModel";
 import {UserService} from "../user/user.service";
 
@@ -13,7 +13,7 @@ export class MessageSchedulerService {
   }
 
   scheduleMessage(content: string) {
-    const parse = new RegExp(SCHEDULER_MESSAGE).exec(content);
+    const parse = new RegExp(scheduler_message).exec(content);
     const nameChannel = parse[1];
     const idChannel = this.channelService.getChannelID(nameChannel);
     const dateToSchedule = this.computeDate(parse[2]);
@@ -24,14 +24,14 @@ export class MessageSchedulerService {
 
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
-    this.http.post(URLSERVER + "threads/" + idChannel + "/messages", message, options).map((res: Response) => res.json()).subscribe(
+    this.http.post(serverURL + "threads/" + idChannel + "/messages", message, options).map((res: Response) => res.json()).subscribe(
       () => {
       }, (err) => (console.log(err)));
 
   }
 
   private computeDate(dateToParse: string) {
-    const parseHours = new RegExp(SCHEDULER_MESSAGE_HOURS).exec(dateToParse);
+    const parseHours = new RegExp(scheduler_message_hours).exec(dateToParse);
     const hours = parseHours[1];
     const min = parseHours[2];
     const date = new Date();
