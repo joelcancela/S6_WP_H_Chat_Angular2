@@ -43,8 +43,8 @@ export class MessageFormComponent implements OnInit {
     const messageContent = this.message.content;
     if (messageContent.startsWith("/ia ")) {
       this.messageService.sendMessage(this.message);
-      this.aiService.sendRequest(messageContent);
       inputElement.value = "";
+      this.aiService.sendRequest(messageContent);
       return;
     } else if (this.message.content.startsWith("/meteo ")) {
       this.meteo.getMeteo(this.message.content).then((answer) => {
@@ -59,8 +59,8 @@ export class MessageFormComponent implements OnInit {
         console.log(answer);
         this.messageService.sendMessage(new MessageModel(1, answer, this.userService.currentNick,
           new Date().toISOString(), new Date().toISOString(), 1));
-        inputElement.value = "";
       });
+      inputElement.value = "";
       return;
     } else {
       this.messageService.sendMessage(this.message);
