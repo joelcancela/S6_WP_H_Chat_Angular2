@@ -95,7 +95,7 @@ card .row{
   max-height:700px;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 1200px) and (max-height: 780px) {
   .card{
     width: 100%;
   }

@@ -29,7 +29,7 @@ export class ChannelComponent implements OnInit {
   }
 
   switchChannel(id: number) {
-    if (window.innerWidth < 780) {
+    if ( window.innerWidth < 1200 && window.innerHeight < 780 ) {
       this.phoneCloseSidebar();
     }
 

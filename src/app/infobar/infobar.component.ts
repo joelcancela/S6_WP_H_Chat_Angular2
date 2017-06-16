@@ -25,13 +25,17 @@ export class InfoBarComponent implements OnInit {
     this.userService.currentNickUpdate.subscribe(newNick => this.currentPseudo = newNick);
     this.infoService.currentInfoUpdate.subscribe(() => {
       let newInfo = this.infoService.currentInfo;
-      if (window.innerWidth < 780 && newInfo.length > 20) {
+      if (window.innerWidth < 1200 && newInfo.length > 20) {
         newInfo = newInfo.slice(7, 24) + "(...)";
       } else if (newInfo.length > 37) {
         newInfo = newInfo.slice(0, 37) + "(...)";
       }
       this.info = newInfo;
     });
+    if ( window.innerWidth > 1200 ) {
+      this.openUsers();
+      this.openChannels();
+    }
   }
 
   public switchPseudo() {
@@ -49,14 +53,14 @@ export class InfoBarComponent implements OnInit {
   }
 
   displayButton() {
-    if (window.innerWidth > 780) {
+    if (window.innerWidth > 1200) {
       document.getElementById("swapButton").style.display = "inline";
     }
   }
 
   // TODO clean ces deux méthodes [FABIEN]
   openChannels() {
-    if ( window.innerWidth > 780) {
+    if ( window.innerWidth > 1200 && window.innerHeight > 780) {
       let width = Number(document.getElementById("content").style.minWidth.replace("%", ""));
       if (document.getElementById("channelSidenav").style.width === "" || document.getElementById("channelSidenav").style.width === "0px") {
         width = width - this.sidebarWidth;
@@ -78,7 +82,8 @@ export class InfoBarComponent implements OnInit {
   }
 
   openUsers() {
-    if ( window.innerWidth > 780) {
+    console.log( window.innerWidth + " && " + window.innerHeight);
+    if ( window.innerWidth > 1200 && window.innerHeight > 780) {
       let width = Number(document.getElementById("content").style.minWidth.replace("%", ""));
       if (document.getElementById("usersSidenav").style.width === "" || document.getElementById("usersSidenav").style.width === "0px") {
         width = width - this.sidebarWidth;

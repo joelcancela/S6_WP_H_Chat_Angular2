@@ -30,6 +30,10 @@ input{
   min-height: 100%;
 }
 
+#name {
+  padding: 2%;
+}
+
 .send-message .btn:hover {
   -webkit-transition : background-color 2s ease;
   -moz-transition : background-color 2s ease;

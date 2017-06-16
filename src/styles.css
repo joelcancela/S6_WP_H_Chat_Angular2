@@ -10,7 +10,7 @@ body {
 
 
 
-@media (max-width: 760px) {
+@media (max-width: 1200px) and (max-height: 780px) {
   #left-sidebar, #right-sidebar{
     width: 0%;
   }
@@ -27,7 +27,7 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 1200px) and (max-height: 780px ) {
 
   .chat-header {
     height: 20vh;
