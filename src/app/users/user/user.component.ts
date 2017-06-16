@@ -22,9 +22,9 @@ export class UserComponent implements OnInit {
     setTimeout(() => {
       const muteButton = document.getElementById("muteButton-" + this.user);
       if (localStorage.getItem("m_" + this.user) === null) {
-        muteButton.innerHTML = "<i class=\"fa fa-microphone-slash fa-2x\" aria-hidden=\"true\"></i>";
-      } else {
         muteButton.innerHTML = "<i class=\"fa fa-microphone fa-2x\" aria-hidden=\"true\"></i>";
+      } else {
+        muteButton.innerHTML = "<i class=\"fa fa-microphone-slash fa-2x\" aria-hidden=\"true\"></i>";
       }
       // concat users name if too long to be displayed
       this.userConcat = this.user + "";
@@ -38,15 +38,15 @@ export class UserComponent implements OnInit {
     const muteButton = document.getElementById("muteButton-" + user);
     if (localStorage.getItem("m_" + user) === "muted") {
       localStorage.removeItem("m_" + user);
-      muteButton.innerHTML = "<i class=\"fa fa-microphone-slash fa-2x\" aria-hidden=\"true\"></i>";
-    } else {
       muteButton.innerHTML = "<i class=\"fa fa-microphone fa-2x\" aria-hidden=\"true\"></i>";
+    } else {
+      muteButton.innerHTML = "<i class=\"fa fa-microphone-slash fa-2x\" aria-hidden=\"true\"></i>";
       localStorage.setItem("m_" + user, "muted");
     }
   }
 
   loadMP(name: string) {
-    if (window.innerWidth < 780) {
+    if (window.innerWidth < 1200 && window.innerHeight < 780 ) {
       this.phoneCloseSidebar();
     }
     this.userService.updateUserMP(name);
