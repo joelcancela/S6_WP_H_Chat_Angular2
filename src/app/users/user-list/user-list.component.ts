@@ -28,6 +28,9 @@ export class UserListComponent implements OnInit {
     }, 15000);
   }
 
+  /**
+   * Filters through the users list.
+   */
   searchUsers() {
     const search = <HTMLInputElement>document.getElementById("searchbar");
     const strsearch: string = search.value;

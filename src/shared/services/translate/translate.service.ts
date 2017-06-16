@@ -3,6 +3,9 @@ import {Http} from "@angular/http";
 import {tradURL} from "../../constants/urls";
 import {translateKey} from "../../constants/keys";
 
+/**
+ * Manages the /trad command.
+ */
 @Injectable()
 export class TranslateService {
 

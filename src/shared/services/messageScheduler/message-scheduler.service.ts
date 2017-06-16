@@ -6,6 +6,9 @@ import {serverURL} from "../../constants/urls";
 import {MessageModel} from "../../models/MessageModel";
 import {UserService} from "../user/user.service";
 
+/**
+ * Manages message scheduling.
+ */
 @Injectable()
 export class MessageSchedulerService {
 

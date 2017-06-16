@@ -35,6 +35,9 @@ export class MessageListComponent implements OnInit {
     this.messageService.switchToThreadMode(this.channelService.currentChannelID);
   }
 
+  /**
+   * Prevents from retrieving history when loading a new channel or MPs (we start on top of the window).
+   */
   private lockScrollAndResetMessages() {
     this.lock = true;
     this.messageList = [];
@@ -45,11 +48,6 @@ export class MessageListComponent implements OnInit {
   /**
    * Fonction ngOnInit.
    * Cette fonction est appelée après l"execution de tous les constructeurs de toutes les classes typescript.
-   * Cette dernière s"avère très utile lorsque l"on souhaite attendre des valeurs venant de d"autres composants.
-   * Le composant MessageComponent prend en @Input un message. Les @Input ne sont accessibles uniquement à partir du ngOnInit,
-   * pas dans le constructeur.
-   * En general, l"utilisation des services dans le NgOnInit est une bonne practice. Le constructeur ne doit servir qu"à
-   * l"initialisation simple des variables. Pour plus d"information sur le ngOnInit, il y a un lien dans le README.
    */
   ngOnInit() {
     this.enableThreadMode();
@@ -87,6 +85,10 @@ export class MessageListComponent implements OnInit {
     }, 600);
   }
 
+  /**
+   * Updates the message display each time we receive new messages.
+   * @param messages the last 20 messages of the current channel or MP
+   */
   private updateMessageList(messages: MessageModel[]) {
     if (!this.checkMessagesIntegrity(messages)) {
       return;
@@ -99,6 +101,16 @@ export class MessageListComponent implements OnInit {
     this.addNewMessages(messages);
   }
 
+  /**
+   * Checks if the messages should be displayed or not.
+   * This needs to be done because the user might switch channels twice between two refreshes.
+   * The messages won't be added in these cases :
+   * - in thread mode, if they're from a different thread than the current one;
+   * - in MP mode, if they're from an user different than the current nick or the person we're sending the MPs to;
+   * - the messages are from an MP and we're in thread mode, or vice-versa.
+   * @param messages the messages to analyze
+   * @returns {boolean} true if the messages should be displayed in the window, false otherwise
+   */
   private checkMessagesIntegrity(messages: MessageModel[]): boolean {
     if (messages === null || messages.length === 0) {
       return false;
@@ -145,6 +157,10 @@ export class MessageListComponent implements OnInit {
     }, 2000);
   }
 
+  /**
+   * Retrieve one page of history from this channel and set up for eventually retrieving the next.
+   * Bumps the user down so he can scroll up further to trigger the method again.
+   */
   public retrieveHistory() {
     if (!this.reachedEnd) {
       this.messageService.getHistory(this.maxPage).then((response) => {
@@ -159,12 +175,21 @@ export class MessageListComponent implements OnInit {
     }
   }
 
+  /**
+   * Detects when we're on top of the window and attempts to retrieve history.
+   * @param event the scroll event
+   */
   public onScroll(event: Event) {
     if (event.srcElement.scrollTop === 0 && !this.lock) {
       this.retrieveHistory();
     }
   }
 
+  /**
+   * Checks whether a message is from an user that is not muted or not.
+   * @param message the message to check
+   * @returns {boolean} true if the message should be displayed, false otherwise
+   */
   public isAllowed(message ?: MessageModel): boolean {
     return localStorage.getItem("m_" + message.from) !== "muted";
   }

@@ -4,6 +4,9 @@ import {meteoURL} from "shared/constants/urls";
 import {openWeatherAPIKey} from "shared/constants/keys";
 import {Observable} from "rxjs/Observable";
 
+/**
+ * Manages the /meteo command.
+ */
 @Injectable()
 export class MeteoService {
 

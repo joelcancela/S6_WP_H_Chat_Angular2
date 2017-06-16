@@ -26,6 +26,9 @@ export class ChannelListComponent implements OnInit {
     });
   }
 
+  /**
+   * Filters the channel by name.
+   */
   public searchChannels() {
     const search = <HTMLInputElement>document.getElementById("searchbarChannel");
     const strsearch: string = search.value.toLowerCase();
