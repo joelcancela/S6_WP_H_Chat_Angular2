@@ -23,10 +23,8 @@ export class InfoBarComponent implements OnInit {
     this.userService.currentNickUpdate.subscribe(newNick => this.currentPseudo = newNick);
     this.infoService.currentInfoUpdate.subscribe(() => {
       let newInfo = this.infoService.currentInfo;
-      if (window.innerWidth < 1200 && newInfo.length > 20) {
+      if (newInfo.length > 20) {
         newInfo = newInfo.slice(7, 24) + "(...)";
-      } else if (newInfo.length > 37) {
-        newInfo = newInfo.slice(0, 37) + "(...)";
       }
       this.info = newInfo;
     });
@@ -45,7 +43,7 @@ export class InfoBarComponent implements OnInit {
   }
 
   displayButton() {
-    if (window.innerWidth < 1200) {
+    if (window.innerWidth > 1200) {
       document.getElementById("swapButton").style.display = "inline";
     }
   }
