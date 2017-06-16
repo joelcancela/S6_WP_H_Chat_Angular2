@@ -52,7 +52,7 @@ export class ChannelComponent implements OnInit {
     }
   }
 
-  phoneCloseSidebar(){
+  phoneCloseSidebar() {
     document.getElementById("channelSidenav").style.width = "0%";
     document.getElementById("left-sidebar").classList.add("hidden-xs-down");
     document.getElementById("newNick").style.display = "block";
