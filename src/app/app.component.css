@@ -51,10 +51,6 @@
   margin: auto;
 }
 
-@media (max-width: 760px) {
-
-}
-
 /** SIDENAV CSS **/
 
 .sidenav {
@@ -81,9 +77,14 @@
 }
 
 .sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
+
+}
+
+.closebtn{
+  display: none;
+  float: right;
+}
+
+@media (max-width: 760px) {
+
 }

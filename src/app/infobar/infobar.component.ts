@@ -25,8 +25,10 @@ export class InfoBarComponent implements OnInit {
     this.userService.currentNickUpdate.subscribe(newNick => this.currentPseudo = newNick);
     this.infoService.currentInfoUpdate.subscribe(() => {
       let newInfo = this.infoService.currentInfo;
-      if (newInfo.length > 37) {
-        newInfo = newInfo.slice(0, 37) + "...";
+      if (window.innerWidth < 780 && newInfo.length > 20) {
+        newInfo = newInfo.slice(7, 24) + "(...)";
+      } else if (newInfo.length > 37) {
+        newInfo = newInfo.slice(0, 37) + "(...)";
       }
       this.info = newInfo;
     });
@@ -47,12 +49,12 @@ export class InfoBarComponent implements OnInit {
   }
 
   displayButton() {
-    console.log(window.innerWidth);
     if (window.innerWidth > 780) {
       document.getElementById("swapButton").style.display = "inline";
     }
   }
 
+  // TODO clean ces deux méthodes [FABIEN]
   openChannels() {
     if ( window.innerWidth > 780) {
       let width = Number(document.getElementById("content").style.minWidth.replace("%", ""));
@@ -68,23 +70,35 @@ export class InfoBarComponent implements OnInit {
         document.getElementById("content").style.left = "0%";
       }
     } else {
-
+      document.getElementById("channelSidenav").style.width = "100%";
+      document.getElementById("left-sidebar").classList.remove("hidden-xs-down");
+      document.getElementById("newNick").style.display = "none";
+      document.getElementById("typing-zone").style.display = "none";
     }
   }
 
   openUsers() {
-    let width = Number(document.getElementById("content").style.minWidth.replace("%", ""));
-    if (document.getElementById("usersSidenav").style.width === "" || document.getElementById("usersSidenav").style.width === "0px") {
-      width = width - this.sidebarWidth;
-      document.getElementById("usersSidenav").style.width = this.sidebarWidth + "%";
-      document.getElementById("usersSidenav").style.left = 100 - this.sidebarWidth + "%";
-      document.getElementById("content").style.minWidth = width + "%";
-      document.getElementById("right-sidebar").style.left = "0";
+    if ( window.innerWidth > 780) {
+      let width = Number(document.getElementById("content").style.minWidth.replace("%", ""));
+      if (document.getElementById("usersSidenav").style.width === "" || document.getElementById("usersSidenav").style.width === "0px") {
+        width = width - this.sidebarWidth;
+        document.getElementById("usersSidenav").style.width = this.sidebarWidth + "%";
+        document.getElementById("usersSidenav").style.left = 100 - this.sidebarWidth + "%";
+        document.getElementById("content").style.minWidth = width + "%";
+        document.getElementById("right-sidebar").style.left = "0";
+      } else {
+        width = width + this.sidebarWidth;
+        document.getElementById("usersSidenav").style.width = "0";
+        document.getElementById("usersSidenav").style.left = 100 + "%";
+        document.getElementById("content").style.minWidth = width + "%";
+      }
     } else {
-      width = width + this.sidebarWidth;
-      document.getElementById("usersSidenav").style.width = "0";
-      document.getElementById("usersSidenav").style.left = 100 + "%";
-      document.getElementById("content").style.minWidth = width + "%";
+      document.getElementById("usersSidenav").style.width = "100%";
+      document.getElementById("usersSidenav").style.left = "0%";
+      document.getElementById("right-sidebar").style.left = "0%";
+      document.getElementById("right-sidebar").classList.remove("hidden-xs-down");
+      document.getElementById("newNick").style.display = "none";
+      document.getElementById("typing-zone").style.display = "none";
     }
   }
 }

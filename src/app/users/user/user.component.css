@@ -18,3 +18,33 @@ h5{
   background-color: #2196F3;
 }
 
+.btn{
+  float: right;
+  height: 100%;
+  background-color: transparent;
+  border-color: transparent;
+  color: #0275d8;
+}
+
+.btn:hover{
+  background-color: #1976D2;
+  border-color: transparent;
+  color: #0D47A1;
+}
+
+@media (max-width: 760px) {
+
+  .closebtn{
+    display: block;
+    float: right;
+  }
+
+  .pseudo{
+    width: 90%;
+  }
+
+  .mute-button{
+    width: 10%;
+    padding:0;
+  }
+}

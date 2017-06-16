@@ -1,13 +1,29 @@
-<div class="header-wrap chat-header col-sm-12">
-  <span>Channels</span>
-  <app-channel-modal-component></app-channel-modal-component>
-  <button type="button" (click)="refreshChannels()" class="btn btn-sm btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+<div class="row">
+
+  <div class="header-wrap chat-header col-md-12">
+
+    <div class="dropdown" id="channelsDropdown" (click)="manageDropdown()">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Channels
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <app-channel-modal-component></app-channel-modal-component>
+        <a class="dropdown-item" (click)="refreshChannels()" href="#">Refresh channels</a>
+      </div>
+    </div>
+
+  </div>
+
 </div>
-<div class="input-group">
-  <input type="text" class="form-control" placeholder="Channel search..." id="searchbarChannel" (keyup)="searchChannels()">
+<div class="row">
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="Channel search..." id="searchbarChannel" (keyup)="searchChannels()">
+  </div>
 </div>
-<div class="pre-scrollable nav-pills chanels-list col-sm-12 row-sm-12 list-group list-group-info">
-  <div *ngFor="let channel of channelList" role="tablist">
-    <app-channel [channel]="channel"></app-channel>
+<div class="row">
+  <div class="pre-scrollable nav-pills chanels-list col-sm-12 row-sm-12 list-group list-group-info">
+    <div *ngFor="let channel of channelList" role="tablist">
+      <app-channel [channel]="channel"></app-channel>
+    </div>
   </div>
 </div>

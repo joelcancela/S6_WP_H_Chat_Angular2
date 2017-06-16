@@ -1,11 +1,11 @@
-<div id="user-{{user}}">
-  <div class="float-left">
-    <a href="#" (click)="loadMP(user)" class="list-group-item user-item">
-      - {{user}}
-    </a>
-  </div>
-  <div class="float-right">
-    <button type="button" class="btn btn-sm btn-primary" id="muteButton-{{user}}" (click)="muteUser(user)"></button>
+<div id="user-{{userConcat}}">
+  <div class="row">
+    <div class="col-md-10 pseudo" >
+      <a href="#" (click)="loadMP(user)" class="list-group-item user-item">- {{userConcat}}</a>
+    </div>
+    <div class="col-md-2 mute-button">
+      <button type="button" class="btn btn-sm btn-primary" id="muteButton-{{user}}" (click)="muteUser(user)"></button>
+    </div>
   </div>
 </div>
 

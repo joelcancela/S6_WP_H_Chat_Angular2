@@ -28,13 +28,16 @@ export class LoginComponent {
     </div>
     <div class="modal-body">
       <div class="form-group row">
-        <div class="col-md-4">
+        <div class="col-md-5">
           <label for="nickname">Enter your nickname: </label>
         </div>
-        <div class="col-md-5">
-          <input [(ngModel)]="nickname" type="text" class="form-control" id="nickname" (keyup.enter)="chooseNickname()"></div>
-        <div class="col-md-3">
-          <button type="button" class="btn btn-primary btn-sm" (click)="chooseNickname()">Let's go!</button>
+        <div class="col-md-7">
+          <div class="input-group">
+            <input [(ngModel)]="nickname" type="text" class="form-control" id="nickname" (keyup.enter)="chooseNickname()">
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-primary btn-sm" (click)="chooseNickname()">Let's go!</button>
+              </span>
+          </div>
         </div>
       </div>
     </div>
@@ -43,6 +46,7 @@ export class LoginComponent {
     </div>
   `
 })
+
 
 
 export class LoginModalContentComponent {

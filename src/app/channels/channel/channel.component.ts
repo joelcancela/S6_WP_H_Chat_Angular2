@@ -29,6 +29,10 @@ export class ChannelComponent implements OnInit {
   }
 
   switchChannel(id: number) {
+    if (window.innerWidth < 780) {
+      this.phoneCloseSidebar();
+    }
+
     if (id === this.channelService.currentChannelID) {
       return;
     } else if (this.channelService.currentChannelID === -1) {
@@ -48,5 +52,11 @@ export class ChannelComponent implements OnInit {
     }
   }
 
+  phoneCloseSidebar(){
+    document.getElementById("channelSidenav").style.width = "0%";
+    document.getElementById("left-sidebar").classList.add("hidden-xs-down");
+    document.getElementById("newNick").style.display = "block";
+    document.getElementById("typing-zone").style.display = "block";
+  }
 
 }

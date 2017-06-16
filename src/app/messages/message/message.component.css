@@ -86,6 +86,7 @@ card .row{
 
 .card{
   width: 75%;
+  margin: 0;
   margin-bottom: 1%;
   font-family: 'Open Sans', sans-serif;
 }
@@ -95,6 +96,25 @@ card .row{
 }
 
 @media (max-width: 780px) {
+  .card{
+    width: 100%;
+  }
 
+  .avatar{
+    width:25%;
+  }
+
+  .autor{
+    width: 25%;
+  }
+
+  .infos{
+    width: 75%;
+  }
+
+  .message{
+    width: 100%;
+    margin: 0;
+  }
 }
 
