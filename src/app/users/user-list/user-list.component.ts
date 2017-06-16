@@ -20,7 +20,6 @@ export class UserListComponent implements OnInit {
   }
 
   public refreshUsers() {
-    console.log("Fetching user list...");
     this.userService.getUsers().then(response => {
       this.userList = response;
     });
@@ -42,7 +41,7 @@ export class UserListComponent implements OnInit {
 
   closeUsers() {
     if ( window.innerWidth > 1200) {
-      let width = Number(document.getElementById("content").style.minWidth.replace("%", ""));
+      const width = Number(document.getElementById("content").style.minWidth.replace("%", ""));
       document.getElementById("usersSidenav").style.width = "0";
       document.getElementById("usersSidenav").style.left = 100 + "%";
       document.getElementById("content").style.minWidth = width + this.sidebarWidth + "%";

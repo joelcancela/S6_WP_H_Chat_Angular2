@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {scheduler_message, scheduler_message_day, scheduler_message_hours} from "../../constants/regexs";
 import {ChannelService} from "../channel/channel.service";
-import {Http, Headers, Response, RequestOptions} from "@angular/http";
+import {Headers, Http, RequestOptions, Response} from "@angular/http";
 import {serverURL} from "../../constants/urls";
 import {MessageModel} from "../../models/MessageModel";
 import {UserService} from "../user/user.service";
@@ -24,9 +24,8 @@ export class MessageSchedulerService {
 
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
-    this.http.post(serverURL + "threads/" + idChannel + "/messages", message, options).map((res: Response) => res.json()).subscribe(
-      () => {
-      }, (err) => (console.log(err)));
+    this.http.post(serverURL + "threads/" + idChannel + "/messages", message, options).map(
+      (res: Response) => res.json()).subscribe(() => {}, (err) => (console.log(err)));
 
   }
 
@@ -44,7 +43,6 @@ export class MessageSchedulerService {
       const year = parseDay[3];
       date.setFullYear(+year, +month - 1, +day);
     }
-    console.log("Message prévu pour: " + date);
     return date.toISOString();
   }
 }

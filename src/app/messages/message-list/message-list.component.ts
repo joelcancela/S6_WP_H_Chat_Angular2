@@ -71,9 +71,13 @@ export class MessageListComponent implements OnInit {
       if (objDiv.scrollTop + objDiv.offsetHeight > objDiv.scrollHeight - 5) {
         this.scrollDownMessages();
       }
-      this.addNewMessages(messages);
+      this.updateMessageList(messages);
     });
+    // this.messageService.getMessages();
     this.refreshMessages();
+    setTimeout(() => {
+      this.scrollDownMessages();
+    }, 1600);
   }
 
   public scrollDownMessages() {
@@ -83,23 +87,53 @@ export class MessageListComponent implements OnInit {
     }, 600);
   }
 
-  private addNewMessages(messages: MessageModel[]) {
+  private updateMessageList(messages: MessageModel[]) {
+    if (!this.checkMessagesIntegrity(messages)) {
+      return;
+    }
     if (this.messageList === null || this.messageList.length === 0) {
+      // no messages, we can replace the list directly
       this.messageList = messages;
-    } else if (messages !== null) {
-      let i = messages.length - 1;
-      const last = this.messageList[this.messageList.length - 1];
-      if (i === -1 || last.id === messages[i].id) {
-        return;
+      return;
+    }
+    this.addNewMessages(messages);
+  }
+
+  private checkMessagesIntegrity(messages: MessageModel[]): boolean {
+    if (messages === null || messages.length === 0) {
+      return false;
+    }
+    if (messages[0].threadId !== this.channelService.currentChannelID) {
+      // incoherence in ids: either we're in MP mode or the messages are from a wrong channel
+      if (this.channelService.currentChannelID !== -1) {
+        return false;
       }
-      while (i > 0 && last.id !== messages[i].id) {
-        i--;
+      // channel ID of -1 means we're in MP mode
+      if (messages[0].from !== this.userService.currentMP && messages[0].from !== this.userService.currentNick) {
+        return false;
       }
+    }
+    return true;
+  }
+
+  /**
+   * Search backwards through the messages we just got until finding the last message currently displayed.
+   * Then add all the new messages after the last message displayed.
+   * @param messages the messages received from the server
+   */
+  private addNewMessages(messages: MessageModel[]) {
+    let i = messages.length - 1;
+    const last = this.messageList[this.messageList.length - 1];
+    if (i === -1 || last.id === messages[i].id) {
+      return;
+    }
+    while (i > 0 && last.id !== messages[i].id) {
+      i--;
+    }
+    i++;
+    while (i < messages.length) {
+      this.messageList.push(messages[i]);
       i++;
-      while (i < messages.length) {
-        this.messageList.push(messages[i]);
-        i++;
-      }
     }
   }
 
@@ -131,7 +165,7 @@ export class MessageListComponent implements OnInit {
     }
   }
 
-  public isAllowed(message?: MessageModel): boolean {
+  public isAllowed(message ?: MessageModel): boolean {
     return localStorage.getItem("m_" + message.from) !== "muted";
   }
 

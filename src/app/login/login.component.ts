@@ -40,6 +40,7 @@ export class LoginComponent {
           </div>
         </div>
       </div>
+      <span class="alert-info">Your nickname can only contain lowercase letters</span>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>

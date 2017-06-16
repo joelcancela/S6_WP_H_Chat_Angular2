@@ -44,13 +44,11 @@ export class MessageService {
     }
     this.mpMode = false;
     this.route = "threads/" + id + "/messages";
-    this.getMessages();
   }
 
   public switchToMPMode(currentMP?: string, currentNick?: string) {
     this.mpMode = true;
     this.route = "users/" + currentMP + "/messages?currentUserId=" + currentNick;
-    this.getMessages();
   }
 
   /**
@@ -66,7 +64,6 @@ export class MessageService {
     this.http.get(finalUrl)
       .subscribe((response) => {
         const messageList = response.json() || [];
-        console.dir(messageList);
         this.analyzeMessageContent(messageList);
         this.pushMessages(messageList);
       });
@@ -97,10 +94,12 @@ export class MessageService {
     if (message.content.trim().length === 0) {
       return;
     }
+    const next: MessageModel[] = [message];
+    this.messageList$.next(next);
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
     this.http.post(this.url + this.route, message, options).map((res: Response) => res.json()).subscribe(
-      () => (this.getMessages()), (err) => (console.log(err)));
+      () => {}, (err) => (console.log(err)));
   }
 
   public analyzeMessageContent(messageList?: MessageModel[]) {

@@ -4,7 +4,7 @@
               [(ngModel)]="message.content" name="name" class="form-control input-lg message-text"></textarea>
     <i class="icon icon-search"></i>
     <span class="input-group-btn">
-      <button class="btn btn-inverse" (click)="sendMessage()"><i class="fa fa-paper-plane fa-2x" aria-hidden="true"></i></button>
+      <button class="btn btn-inverse" (click)="sendMessage();$event.stopImmediatePropagation();"><i class="fa fa-paper-plane fa-2x" aria-hidden="true"></i></button>
     </span>
   </div>
 </div>

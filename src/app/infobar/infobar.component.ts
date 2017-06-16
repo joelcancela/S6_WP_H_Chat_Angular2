@@ -1,8 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {UserService} from "../../shared/services/user/user.service";
 import {InfoService} from "../../shared/services/info/info.service";
-import {el} from "@angular/platform-browser/testing/src/browser_util";
-import {current} from "codelyzer/util/syntaxKind";
 
 @Component({
   selector: "app-infobar",
@@ -40,15 +38,9 @@ export class InfoBarComponent implements OnInit {
 
   public switchPseudo() {
     const name = <HTMLInputElement>document.getElementById("newNick");
-    let strname: string = name.value;
-    const letters = /[^A-Za-z+]/gi;
-    strname = strname.replace(letters, "");
-    if (strname !== "") {
-      strname = strname.toLocaleLowerCase();
-      this.userService.updateNick(strname);
-      this.currentPseudo = strname;
-      console.log("switched name to " + strname);
-    }
+    const strname: string = name.value;
+    this.userService.updateNick(strname);
+    this.currentPseudo = strname;
     document.getElementById("swapButton").style.display = "none";
   }
 
@@ -60,30 +52,31 @@ export class InfoBarComponent implements OnInit {
 
   // TODO clean ces deux méthodes [FABIEN]
   openChannels() {
-    if ( window.innerWidth > 1200 ) {
-      let width = Number(document.getElementById("content").style.minWidth.replace("%", ""));
-      if (document.getElementById("channelSidenav").style.width === "" || document.getElementById("channelSidenav").style.width === "0px") {
-        console.log("note here");
-        width = width - this.sidebarWidth;
-        document.getElementById("channelSidenav").style.width = this.sidebarWidth + "%";
-        document.getElementById("content").style.minWidth = width + "%";
-        document.getElementById("content").style.left = this.sidebarWidth + "%";
+      if ( window.innerWidth > 1200 ) {
+        let width = Number(document.getElementById("content").style.minWidth.replace("%", ""));
+        if (document.getElementById("channelSidenav").style.width === ""
+          || document.getElementById("channelSidenav").style.width === "0px") {
+          console.log("note here");
+          width = width - this.sidebarWidth;
+          document.getElementById("channelSidenav").style.width = this.sidebarWidth + "%";
+          document.getElementById("content").style.minWidth = width + "%";
+          document.getElementById("content").style.left = this.sidebarWidth + "%";
+        } else {
+          width = width + this.sidebarWidth;
+          document.getElementById("content").style.minWidth = width + "%";
+          document.getElementById("channelSidenav").style.width = "0";
+          document.getElementById("content").style.left = "0%";
+        }
       } else {
-        width = width + this.sidebarWidth;
-        document.getElementById("content").style.minWidth = width + "%";
-        document.getElementById("channelSidenav").style.width = "0";
-        document.getElementById("content").style.left = "0%";
+        document.getElementById("channelSidenav").style.width = "100%";
+        document.getElementById("left-sidebar").classList.remove("hidden-xs-down");
+        document.getElementById("newNick").style.display = "none";
+        document.getElementById("typing-zone").style.display = "none";
       }
-    } else {
-      document.getElementById("channelSidenav").style.width = "100%";
-      document.getElementById("left-sidebar").classList.remove("hidden-xs-down");
-      document.getElementById("newNick").style.display = "none";
-      document.getElementById("typing-zone").style.display = "none";
-    }
   }
 
-  openUsers() {
-    if ( window.innerWidth > 1200) {
+  openUsers () {
+    if (window.innerWidth > 1200) {
       let width = Number(document.getElementById("content").style.minWidth.replace("%", ""));
       if (document.getElementById("usersSidenav").style.width === "" || document.getElementById("usersSidenav").style.width === "0px") {
         width = width - this.sidebarWidth;
