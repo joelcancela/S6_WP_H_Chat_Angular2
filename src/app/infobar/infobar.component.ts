@@ -32,7 +32,7 @@ export class InfoBarComponent implements OnInit {
       }
       this.info = newInfo;
     });
-    if ( window.innerWidth > 1200 ) {
+    if ( window.innerWidth < 1200 && window.innerHeight < 800) {
       this.openUsers();
       this.openChannels();
     }
@@ -53,27 +53,34 @@ export class InfoBarComponent implements OnInit {
   }
 
   displayButton() {
-    if (window.innerWidth > 1200) {
+    if (window.innerWidth < 1200) {
       document.getElementById("swapButton").style.display = "inline";
     }
   }
 
   // TODO clean ces deux méthodes [FABIEN]
   openChannels() {
-    if ( window.innerWidth > 1200 && window.innerHeight > 780) {
+    console.log("the width is " + console.log(window.innerWidth));
+    if ( window.innerWidth > 1200 ) {
       let width = Number(document.getElementById("content").style.minWidth.replace("%", ""));
       if (document.getElementById("channelSidenav").style.width === "" || document.getElementById("channelSidenav").style.width === "0px") {
+        console.log("note here");
+
         width = width - this.sidebarWidth;
         document.getElementById("channelSidenav").style.width = this.sidebarWidth + "%";
         document.getElementById("content").style.minWidth = width + "%";
         document.getElementById("content").style.left = this.sidebarWidth + "%";
       } else {
+        console.log("nein here");
+
         width = width + this.sidebarWidth;
         document.getElementById("content").style.minWidth = width + "%";
         document.getElementById("channelSidenav").style.width = "0";
         document.getElementById("content").style.left = "0%";
       }
     } else {
+      console.log("here");
+
       document.getElementById("channelSidenav").style.width = "100%";
       document.getElementById("left-sidebar").classList.remove("hidden-xs-down");
       document.getElementById("newNick").style.display = "none";
@@ -82,8 +89,7 @@ export class InfoBarComponent implements OnInit {
   }
 
   openUsers() {
-    console.log( window.innerWidth + " && " + window.innerHeight);
-    if ( window.innerWidth > 1200 && window.innerHeight > 780) {
+    if ( window.innerWidth > 1200) {
       let width = Number(document.getElementById("content").style.minWidth.replace("%", ""));
       if (document.getElementById("usersSidenav").style.width === "" || document.getElementById("usersSidenav").style.width === "0px") {
         width = width - this.sidebarWidth;
