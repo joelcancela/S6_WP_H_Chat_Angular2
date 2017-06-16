@@ -66,7 +66,7 @@ export class MessageListComponent implements OnInit {
     });
     this.messageService.messageList$.subscribe((messages) => {
       const objDiv = document.getElementById("messages-list");
-      if (objDiv.scrollTop + objDiv.offsetHeight > objDiv.scrollHeight - 5) {
+      if (objDiv.scrollTop + objDiv.offsetHeight === objDiv.scrollHeight) {
         this.scrollDownMessages();
       }
       this.updateMessageList(messages);
