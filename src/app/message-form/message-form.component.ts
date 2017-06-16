@@ -8,6 +8,7 @@ import {MeteoService} from "../../shared/services/meteo/meteo.service";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {MessageSchedulerService} from "../../shared/services/messageScheduler/message-scheduler.service";
 import {tradTemplate} from "../../shared/constants/regexs";
+import {ChannelService} from "../../shared/services/channel/channel.service";
 
 @Component({
   selector: "app-message-form",
@@ -20,6 +21,7 @@ export class MessageFormComponent implements OnInit {
 
 
   constructor(private messageService: MessageService, private userService: UserService,
+              private channelService: ChannelService,
               private translateService: TranslateService, private meteo: MeteoService,
               private aiService: AiService, private messageScheduler: MessageSchedulerService) {
     this.message = new MessageModel(1, "", userService.currentNick, new Date().toISOString(),
@@ -41,6 +43,7 @@ export class MessageFormComponent implements OnInit {
    * ainsi que le message à envoyer. Ce dernier correspond à l'objet MessageModel que l'utilisateur rempli à travers l'input.
    */
   sendMessage() {
+    this.message.threadId = this.channelService.currentChannelID;
     const inputElement = <HTMLInputElement>document.getElementById("name");
     const messageContent = this.message.content;
     if (messageContent.startsWith("/ia ")) {
@@ -50,9 +53,8 @@ export class MessageFormComponent implements OnInit {
       return;
     } else if (this.message.content.startsWith("/meteo ")) {
       this.meteo.getMeteo(this.message.content).then((answer) => {
-        console.log(answer);
         this.messageService.sendMessage(new MessageModel(1, answer, this.userService.currentNick,
-          new Date().toISOString(), new Date().toISOString(), 1));
+          new Date().toISOString(), new Date().toISOString(), this.channelService.currentChannelID));
         inputElement.value = "";
       });
       return;
@@ -62,7 +64,7 @@ export class MessageFormComponent implements OnInit {
           inputElement.value = " Commande traduction invalide";
         } else {
           this.messageService.sendMessage(new MessageModel(1, answer, this.userService.currentNick,
-            new Date().toISOString(), new Date().toISOString(), 1));
+            new Date().toISOString(), new Date().toISOString(), this.channelService.currentChannelID));
           inputElement.value = "";
         }
       });

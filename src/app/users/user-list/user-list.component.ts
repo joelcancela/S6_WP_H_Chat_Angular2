@@ -18,7 +18,6 @@ export class UserListComponent implements OnInit {
   }
 
   public refreshUsers() {
-    console.log("Fetching user list...");
     this.userService.getUsers().then(response => {
       this.userList = response;
     });

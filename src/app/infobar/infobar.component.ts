@@ -1,8 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {UserService} from "../../shared/services/user/user.service";
 import {InfoService} from "../../shared/services/info/info.service";
-import {el} from "@angular/platform-browser/testing/src/browser_util";
-import {current} from "codelyzer/util/syntaxKind";
 
 @Component({
   selector: "app-infobar",
@@ -47,7 +45,6 @@ export class InfoBarComponent implements OnInit {
       strname = strname.toLocaleLowerCase();
       this.userService.updateNick(strname);
       this.currentPseudo = strname;
-      console.log("switched name to " + strname);
     }
     document.getElementById("swapButton").style.display = "none";
   }

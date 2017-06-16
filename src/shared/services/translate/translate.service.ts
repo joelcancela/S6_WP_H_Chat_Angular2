@@ -18,7 +18,6 @@ export class TranslateService {
     cmd = cmd.replace(language, "");
     return this.http.get(tradURL + "?key=" + translateKey + "&text=" + cmd + "&lang=" + from + "-" + to)
       .map((response) => {
-      console.log(response.json());
         return response.json()["text"][0];
       }).catch((error: Response | any) => {
         console.log(error);

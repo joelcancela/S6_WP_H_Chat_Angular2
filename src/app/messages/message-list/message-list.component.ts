@@ -73,7 +73,11 @@ export class MessageListComponent implements OnInit {
       }
       this.updateMessageList(messages);
     });
+    // this.messageService.getMessages();
     this.refreshMessages();
+    setTimeout(() => {
+      this.scrollDownMessages();
+    }, 1600);
   }
 
   public scrollDownMessages() {
