@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {scheduler_message, scheduler_message_hours} from "../../constants/regexs";
+import {scheduler_message, scheduler_message_day, scheduler_message_hours} from "../../constants/regexs";
 import {ChannelService} from "../channel/channel.service";
 import {Http, Headers, Response, RequestOptions} from "@angular/http";
 import {serverURL} from "../../constants/urls";
@@ -13,11 +13,11 @@ export class MessageSchedulerService {
   }
 
   scheduleMessage(content: string) {
-    const parse = new RegExp(scheduler_message).exec(content);
+    const parse = scheduler_message.exec(content);
     const nameChannel = parse[1];
     const idChannel = this.channelService.getChannelID(nameChannel);
-    const dateToSchedule = this.computeDate(parse[2]);
-    const messageToSend = parse[3];
+    const dateToSchedule = this.computeDate(parse[2], parse[3]);
+    const messageToSend = parse[4];
 
     const message = new MessageModel(1, messageToSend, this.userService.currentNick,
       new Date().toISOString(), new Date().toISOString(), idChannel, dateToSchedule);
@@ -30,13 +30,21 @@ export class MessageSchedulerService {
 
   }
 
-  private computeDate(dateToParse: string) {
-    const parseHours = new RegExp(scheduler_message_hours).exec(dateToParse);
+  private computeDate(hour: string, dmy: string) {
+    const parseHours = scheduler_message_hours.exec(hour);
     const hours = parseHours[1];
     const min = parseHours[2];
     const date = new Date();
     date.setHours(+hours);
     date.setMinutes(+min, 0, 0);
+    if (scheduler_message_day.test(dmy)) {
+      const parseDay = scheduler_message_day.exec(dmy);
+      const day = parseDay[1];
+      const month = parseDay[2];
+      const year = parseDay[3];
+      date.setFullYear(+year, +month - 1, +day);
+    }
+    console.log("Message prévu pour: " + date);
     return date.toISOString();
   }
 }
