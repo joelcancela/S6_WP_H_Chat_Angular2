@@ -30,7 +30,7 @@ export class InfoBarComponent implements OnInit {
       }
       this.info = newInfo;
     });
-    if ( window.innerWidth < 1200 && window.innerHeight < 800) {
+    if (window.innerWidth < 1200 && window.innerHeight < 800) {
       this.openUsers();
       this.openChannels();
     }
@@ -38,14 +38,9 @@ export class InfoBarComponent implements OnInit {
 
   public switchPseudo() {
     const name = <HTMLInputElement>document.getElementById("newNick");
-    let strname: string = name.value;
-    const letters = /[^A-Za-z+]/gi;
-    strname = strname.replace(letters, "");
-    if (strname !== "") {
-      strname = strname.toLocaleLowerCase();
-      this.userService.updateNick(strname);
-      this.currentPseudo = strname;
-    }
+    const strname: string = name.value;
+    this.userService.updateNick(strname);
+    this.currentPseudo = strname;
     document.getElementById("swapButton").style.display = "none";
   }
 
@@ -58,7 +53,7 @@ export class InfoBarComponent implements OnInit {
   // TODO clean ces deux méthodes [FABIEN]
   openChannels() {
     console.log("the width is " + console.log(window.innerWidth));
-    if ( window.innerWidth > 1200 ) {
+    if (window.innerWidth > 1200) {
       let width = Number(document.getElementById("content").style.minWidth.replace("%", ""));
       if (document.getElementById("channelSidenav").style.width === "" || document.getElementById("channelSidenav").style.width === "0px") {
         console.log("note here");
@@ -86,7 +81,7 @@ export class InfoBarComponent implements OnInit {
   }
 
   openUsers() {
-    if ( window.innerWidth > 1200) {
+    if (window.innerWidth > 1200) {
       let width = Number(document.getElementById("content").style.minWidth.replace("%", ""));
       if (document.getElementById("usersSidenav").style.width === "" || document.getElementById("usersSidenav").style.width === "0px") {
         width = width - this.sidebarWidth;

@@ -45,9 +45,15 @@ export class UserService {
   }
 
   public updateNick(newNick: string) {
-    this.currentNick = newNick;
-    this.nickSubject.next(newNick);
-    localStorage.setItem("nickname", newNick);
+    const letters = /[^A-Za-z+]/gi;
+    const newNickTemp = newNick.replace(letters, "");
+    let finalNick = newNickTemp.toLocaleLowerCase();
+    if (finalNick === "") {
+      finalNick = "user";
+    }
+    this.currentNick = finalNick;
+    this.nickSubject.next(finalNick);
+    localStorage.setItem("nickname", finalNick);
   }
 
 
