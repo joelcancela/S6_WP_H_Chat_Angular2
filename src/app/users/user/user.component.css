@@ -32,7 +32,7 @@ h5{
   color: #0D47A1;
 }
 
-@media (max-width: 1200px) and (max-height: 780px) {
+@media (max-width: 1200px) {
 
   .closebtn{
     display: block;

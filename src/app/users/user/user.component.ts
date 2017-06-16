@@ -46,7 +46,7 @@ export class UserComponent implements OnInit {
   }
 
   loadMP(name: string) {
-    if (window.innerWidth < 1200 && window.innerHeight < 780 ) {
+    if (window.innerWidth < 1200 ) {
       this.phoneCloseSidebar();
     }
     this.userService.updateUserMP(name);

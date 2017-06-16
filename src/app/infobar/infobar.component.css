@@ -4,9 +4,23 @@
   height: 100%;
 }
 
+.fa-commenting{
+  height:100%;
+  width:100%;
+}
+
+.fa-users{
+  height:100%;
+  width:100%;
+}
+
 /** Mobile and horizontal tablet **/
 
-@media (max-width: 1200px) and (max-height: 780px){
+@media (max-width: 1200px) {
+
+  #info {
+    margin: auto;
+  }
 
   .chat-header {
     height: 10vh;

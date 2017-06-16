@@ -3,8 +3,12 @@
   <div class="header-wrap chat-header col-md-12">
 
     <div class="dropdown" id="channelsDropdown" (click)="manageDropdown()">
+
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Channels
+      </button>
+      <button type="button" class="close" aria-label="Close" (click)="closeChannels()">
+        <span aria-hidden="true">&times;</span>
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <app-channel-modal-component></app-channel-modal-component>

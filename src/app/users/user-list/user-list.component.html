@@ -1,5 +1,8 @@
 <div class="header-wrap chat-header col-sm-12">
   <span> Users </span>
+  <button type="button" class="close" aria-label="Close" (click)="closeUsers()">
+    <span aria-hidden="true">&times;</span>
+  </button>
   <div class="input-group">
     <input type="text" class="form-control" placeholder="User search..." id="searchbar" (keyup)="searchUsers()">
   </div>

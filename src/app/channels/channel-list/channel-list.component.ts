@@ -11,6 +11,7 @@ export class ChannelListComponent implements OnInit {
 
   public channelList: ChanelModel[];
   private firstChan = true;
+  private sidebarWidth = 20;
 
   constructor(private channelService: ChannelService) {
   }
@@ -45,6 +46,21 @@ export class ChannelListComponent implements OnInit {
       document.getElementById("channelsDropdown").classList.remove("show");
     } else {
       document.getElementById("channelsDropdown").classList.add("show");
+    }
+  }
+
+  closeChannels() {
+    if ( window.innerWidth > 1200 ) {
+      let width = Number(document.getElementById("content").style.minWidth.replace("%", ""));
+      width = width + this.sidebarWidth;
+      document.getElementById("content").style.minWidth = width + "%";
+      document.getElementById("channelSidenav").style.width = "0";
+      document.getElementById("content").style.left = "0%";
+    } else {
+      document.getElementById("channelSidenav").style.width = "0%";
+      document.getElementById("left-sidebar").classList.add("hidden-xs-down");
+      document.getElementById("newNick").style.display = "block";
+      document.getElementById("typing-zone").style.display = "block";
     }
   }
 }
