@@ -4,6 +4,10 @@ import {Http, Response} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
 
+/**
+ * Manages the current user name and current user we're sending Mps to.
+ * Also manages the requests to get the list of users.
+ */
 @Injectable()
 export class UserService {
   private userFetchUrl: string;
@@ -28,6 +32,9 @@ export class UserService {
     this.nickSubject.next(name);
   }
 
+  /**
+   * Fetches the user list.
+   */
   public getUsers(): Promise<any> {
     return this.http.get(this.userFetchUrl).map((response) => {
       return response.json();
@@ -36,6 +43,10 @@ export class UserService {
     }).toPromise();
   }
 
+  /**
+   * Updates the name of the user to send MPs to.
+   * @param name the new user to send Mps to
+   */
   public updateUserMP(name: string) {
     if (this.currentMP === name) {
       return;
@@ -44,6 +55,10 @@ export class UserService {
     this.userMPSubject.next(name);
   }
 
+  /**
+   * Updates the user current nickname.
+   * @param newNick the new username
+   */
   public updateNick(newNick: string) {
     const letters = /[^A-Za-z+]/gi;
     const newNickTemp = newNick.replace(letters, "");

@@ -39,10 +39,13 @@ export class ChannelModalContentComponent {
   constructor(public activeModal: NgbActiveModal, private channelService: ChannelService) {
   }
 
+  /**
+   * Creates a new channel.
+   */
   createChannel() {
     this.isError = false;
     this.channelService.addChannel(this.channelName)
-      .then(rep => {
+      .then(() => {
         this.refreshChannels();
       })
       .catch(err => this.isError = true);

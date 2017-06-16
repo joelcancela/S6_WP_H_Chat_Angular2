@@ -39,6 +39,11 @@ export class MessageComponent implements OnInit {
     }, 500);
   }
 
+  /**
+   * Gets a custom avatar generated from the name.
+   * @param pseudo the name of the user
+   * @returns {string} the address of his avatar
+   */
   getAvatar(pseudo: string): string {
     return "https://robohash.org/" + pseudo;
   }

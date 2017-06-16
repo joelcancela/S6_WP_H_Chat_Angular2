@@ -6,6 +6,9 @@ import {Observable} from "rxjs/Observable";
 import "rxjs/Rx";
 import {Subject} from "rxjs/Subject";
 
+/**
+ * Manages the current channel and the request for channel pagination.
+ */
 @Injectable()
 export class ChannelService {
 
@@ -36,11 +39,19 @@ export class ChannelService {
     this.update();
   }
 
+  /**
+   * Changes the current channel.
+   * @param newValue the new channel id
+   */
   updateChannelID(newValue: number) {
     this.currentChannelID = newValue;
     this.currentChannelSubject.next(this.currentChannelID);
   }
 
+  /**
+   * Updates the content of the channel page obeservable.
+   * @param array 20 or less channels
+   */
   updateChannelList(array) {
     if (array == null || array.length === 0) {
       clearInterval(this.timer);
@@ -62,6 +73,9 @@ export class ChannelService {
     return this.channelListUpdate;
   }
 
+  /**
+   * Requests a page of channel names.
+   */
   public getChannelPage(): Promise<any> {
     const request = this.http.get(this.url + "?page=" + this.pageNumber)
       .map(response => {
@@ -84,6 +98,9 @@ export class ChannelService {
       }).toPromise();
   }
 
+  /**
+   * Resets all known channels.
+   */
   resetChannels() {
     if (!this.inRefresh) {
       this.channelList = [];
@@ -99,7 +116,6 @@ export class ChannelService {
     }, 100);
 
   }
-
 
   getChannelID(nameChannel: string) {
     for (let i = 0; i < this.channelList.length; i++) {

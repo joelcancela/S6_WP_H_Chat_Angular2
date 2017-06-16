@@ -26,11 +26,14 @@ export class ChannelComponent implements OnInit {
     }
   }
 
+  /**
+   * Changes the current channel to a new one
+   * @param id the id of the new channel
+   */
   switchChannel(id: number) {
-    if ( window.innerWidth < 1200 && window.innerHeight < 780 ) {
+    if (window.innerWidth < 1200 && window.innerHeight < 780) {
       this.phoneCloseSidebar();
     }
-
     if (id === this.channelService.currentChannelID) {
       return;
     } else if (this.channelService.currentChannelID === -1) {

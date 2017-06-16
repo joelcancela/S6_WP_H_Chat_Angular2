@@ -13,21 +13,9 @@ import {emotes, regEmotes} from "shared/constants/emotes";
 @Injectable()
 export class MessageService {
 
-  /**
-   * Url pour accéder aux données. L'url est commun à toutes les fonctions du service.
-   * Il permet d'accéder aux channels. À partir de cet url, vous pourrez accéder aux messages.
-   * La documentation des methodes du service permet d'avoir plus d'information concernant la façon d'accèder aux messages.
-   */
   private url: string;
   private route: string;
 
-  /**
-   * MessageList$ est un type d'Observable particulier appelé ReplaySubject.
-   * MessageList$ est un flux d'évenements qui stock la liste des messages. A chaque fois que l'on fait une requète
-   * pour récupérer la liste des messages, messageList$ va pousser cette nouvelle liste dans son flux pour permettre
-   * aux composants qui l'écoutent de récupérer les messages. Pour plus d'infos sur les observables, voir le README.md du projet
-   * dans lequel vous trouverez une première explication sur les observables ainsi qu'une vidéo tutoriel.
-   */
   public messageList$: ReplaySubject<MessageModel[]>;
   public mpMode: boolean;
 
@@ -52,12 +40,7 @@ export class MessageService {
   }
 
   /**
-   * Fonction getMessage.
-   * Cette fonction permet de récupérer la liste des messages pour un channel donné. Elle prend en parametre:
-   * - route: La route. C'est la fin de l'url. Elle sera concaténée à l'attribut this.url pour former l'url complète.
-   *          Pour l'envoie des messages la route doit avoir la structure suivante: :id/messages avec ":id" étant
-   *          un nombre entier correspondant à l'identifiant (id) du channel.
-   * Exemple de route: 1/messages
+   * Fetches the last 20 messages of the current route.
    */
   public getMessages() {
     const finalUrl = this.url + this.route;
@@ -69,6 +52,10 @@ export class MessageService {
       });
   }
 
+  /**
+   * Fetches the history of the current route.
+   * @param page the page number of the request
+   */
   public getHistory(page: number): Promise<any> {
     let finalUrl = this.url + this.route;
     if (this.mpMode) {
@@ -86,9 +73,8 @@ export class MessageService {
   }
 
   /**
-   * Fonction sendMessage.
-   * Cette fonction permet l'envoi d'un message. Elle prend en paramêtre:
-   * @param message Le message à envoyer. Ce message est de type MessageModel.
+   * Sends a message on the current route.
+   * @param message the message to send
    */
   public sendMessage(message: MessageModel) {
     if (message.content.trim().length === 0) {
@@ -102,6 +88,10 @@ export class MessageService {
       () => {}, (err) => (console.log(err)));
   }
 
+  /**
+   * Checks the messages content for emojis and integrations
+   * @param messageList the list of messages to check
+   */
   public analyzeMessageContent(messageList?: MessageModel[]) {
     for (let i = 0; i < messageList.length; i++) {
       const messageContent = messageList[i].content;
@@ -118,6 +108,10 @@ export class MessageService {
     }
   }
 
+  /**
+   * Reverses the order of the message list before pushing it.
+   * @param messageList the list of messages
+   */
   private pushMessages(messageList: MessageModel[]) {
     if (messageList !== null && messageList.length !== 0) {
       this.messageList$.next(messageList.slice().reverse());

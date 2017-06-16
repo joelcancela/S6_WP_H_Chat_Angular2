@@ -2,6 +2,10 @@ import {Injectable} from "@angular/core";
 import {Subject} from "rxjs/Subject";
 import {Observable} from "rxjs/Observable";
 
+/**
+ * Manages the top bar information string. Displays either the current channel or the
+ * name of the user we're sending MPs to.
+ */
 @Injectable()
 export class InfoService {
   currentInfo: string;
