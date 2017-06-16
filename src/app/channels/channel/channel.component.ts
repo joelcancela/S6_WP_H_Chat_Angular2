@@ -20,9 +20,7 @@ export class ChannelComponent implements OnInit {
 
   ngOnInit() {
     const element = document.getElementById("channel" + this.channelService.currentChannelID);
-    if (element == null) {
-      this.infoService.updateTitle("Channel ");
-    } else {
+    if (element !== null) {
       element.classList.add("current");
       this.infoService.updateTitle("Channel " + element.innerText);
     }
