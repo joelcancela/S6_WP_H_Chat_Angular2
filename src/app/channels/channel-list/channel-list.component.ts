@@ -40,8 +40,8 @@ export class ChannelListComponent implements OnInit {
     this.channelService.resetChannels();
   }
 
-  public manageDropdown(){
-    if ( document.getElementById("channelsDropdown").classList.contains("show") ) {
+  public manageDropdown() {
+    if (document.getElementById("channelsDropdown").classList.contains("show")) {
       document.getElementById("channelsDropdown").classList.remove("show");
     } else {
       document.getElementById("channelsDropdown").classList.add("show");
