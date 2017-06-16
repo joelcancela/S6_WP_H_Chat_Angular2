@@ -6,7 +6,7 @@
 
 /** Mobile and horizontal tablet **/
 
-@media (max-width: 1200px) or (max-height: 780px){
+@media (max-width: 1200px) and (max-height: 780px){
 
   .chat-header {
     height: 10vh;

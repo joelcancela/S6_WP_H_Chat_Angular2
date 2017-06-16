@@ -95,6 +95,12 @@ card .row{
   max-height:700px;
 }
 
+.selfMessage{
+  float: right;
+  background-color: #BBDEFB;
+  color: #0D47A1;
+}
+
 @media (max-width: 1200px) and (max-height: 780px) {
   .card{
     width: 100%;
@@ -112,7 +118,7 @@ card .row{
     width: 75%;
   }
 
-  .message{
+  .message {
     width: 100%;
     margin: 0;
   }

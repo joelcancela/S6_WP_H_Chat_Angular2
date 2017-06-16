@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from "@angular/core";
 
 import {MessageModel} from "../../../shared/models/MessageModel";
+import {UserService} from "../../../shared/services/user/user.service";
 
 @Component({
   selector: "app-message",
@@ -11,7 +12,7 @@ export class MessageComponent implements OnInit {
 
   @Input() message: MessageModel;
 
-  constructor() {
+  constructor(private userService: UserService) {
     this.message = new MessageModel(0, "Hello!");
   }
 
@@ -26,10 +27,10 @@ export class MessageComponent implements OnInit {
   ngOnInit() {
     setTimeout(() => {
       const message = document.getElementById("message" + this.message.id);
-      if (message.getElementsByTagName("iframe").length  + message.getElementsByTagName("img").length  <= 1) {
-        message.getElementsByClassName("picturething").item(0).remove();
-      } else if (message.getElementsByClassName("embedTweet").item(0).getElementsByTagName("iframe").length === 0) {
-        message.getElementsByClassName("embedTweet").item(0).remove();
+      if ( this.message.from === this.userService.currentNick ) {
+        document.getElementById("message" + this.message.id).classList.add("selfMessage");
+      } else {
+        document.getElementById("message" + this.message.id).classList.remove("selfMessage");
       }
     }, 500);
   }

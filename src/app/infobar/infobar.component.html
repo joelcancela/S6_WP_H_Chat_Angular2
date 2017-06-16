@@ -7,9 +7,10 @@
   </div>
   <div class="col-md-10 col-xs-6 col-sm-6 pseudoButton">
     <div class="row">
-      <div class="col-md-6 " id="info">
+      <div class="col-md-4 " id="info">
         <span >{{info}}</span>
       </div>
+      <div class="col-md-2"></div>
       <div class="col-md-6" id="pseudo">
         <div class="col-md-6 input-group">
           <input type="text" id="newNick" class="form-control" value="{{currentPseudo}}" (focus)="displayButton()" (keyup.enter)="switchPseudo()" (blur)="switchPseudo()">

@@ -32,8 +32,8 @@
       <div class="embedVideo" *ngIf="message.ytUrl">
         <iframe  [src]="message.ytUrl | safe" ></iframe>
       </div>
-      <div class="embedTweet">
-        <iframe *ngIf="message.tweet" [src]="message.tweet | safe" frameborder="0"></iframe>
+      <div class="embedTweet" *ngIf="message.tweet">
+        <iframe [src]="message.tweet | safe" frameborder="0"></iframe>
       </div>
       <div class="embedInstagram" *ngIf="message.instagram">
         <iframe  [src]="message.instagram | safe" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
