@@ -20,6 +20,8 @@ export class ChannelService {
   channelList: ChanelModel[] = [];
   channelListSubject: Subject<ChanelModel[]>;
   channelListUpdate: Observable<ChanelModel[]>;
+  //
+  inRefresh = false;
 
   constructor(private http: Http) {
     this.url = serverURL + "/threads/";
@@ -30,6 +32,7 @@ export class ChannelService {
     this.channelListSubject = new Subject();
     this.channelListUpdate = this.channelListSubject.asObservable();
     //
+    this.inRefresh = true;
     this.update();
   }
 
@@ -39,8 +42,9 @@ export class ChannelService {
   }
 
   updateChannelList(array) {
-    if (array.length === 0) {
+    if (array == null || array.length === 0) {
       clearInterval(this.timer);
+      this.inRefresh = false;
       return;
     }
     this.channelList = this.channelList.concat(array);
@@ -81,9 +85,12 @@ export class ChannelService {
   }
 
   resetChannels() {
-    this.channelList = [];
-    this.pageNumber = 0;
-    this.update();
+    if (!this.inRefresh) {
+      this.channelList = [];
+      this.pageNumber = 0;
+      this.inRefresh = true;
+      this.update();
+    }
   }
 
   private update() {
