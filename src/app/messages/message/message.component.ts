@@ -28,9 +28,13 @@ export class MessageComponent implements OnInit {
     setTimeout(() => {
       const message = document.getElementById("message" + this.message.id);
       if ( this.message.from === this.userService.currentNick ) {
-        document.getElementById("message" + this.message.id).classList.add("selfMessage");
+        if (message !== null) {
+          message.classList.add("selfMessage");
+        }
       } else {
-        document.getElementById("message" + this.message.id).classList.remove("selfMessage");
+        if (message !== null) {
+          message.classList.remove("selfMessage");
+        }
       }
     }, 500);
   }
