@@ -1,4 +1,4 @@
-# Chat Team H
+# Angular2 Chat - Team H
 
 A cool chat made with Angular2 (Polytech'Nice SI3 2016-2017)
 
